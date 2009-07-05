@@ -720,62 +720,27 @@ class Controller {
  * @link http://book.cakephp.org/view/428/render
  */
 	function render($action = null, $layout = null, $file = null) {
-	  $this->beforeRender();
+	  $this->beforeFilter();
     $this->{$action}();
+    $this->afterFilter();
+    
+    $this->beforeRender();
     
     $view = new View($this);
     $this->output .= $view->render($action, $layout, $file);
     
-    echo $this->output;
-    return $this->output;
+    $this->afterRender();
     
-    /*
-		$viewClass = $this->view;
-		if ($this->view != 'View') {
-			if (strpos($viewClass, '.') !== false) {
-				list($plugin, $viewClass) = explode('.', $viewClass);
-			}
-			$viewClass = $viewClass . 'View';
-			App::import('View', $this->view);
-		}
-
-		$this->Component->beforeRender($this);
-
-		$this->params['models'] = $this->modelNames;
-
-		if (Configure::read() > 2) {
-			$this->set('cakeDebug', $this);
-		}
-
-		$View = new $viewClass($this);
-
-		if (!empty($this->modelNames)) {
-			$models = array();
-			foreach ($this->modelNames as $currentModel) {
-				if (isset($this->$currentModel) && is_a($this->$currentModel, 'Model')) {
-					$models[] = Inflector::underscore($currentModel);
-				}
-				if (isset($this->$currentModel) && is_a($this->$currentModel, 'Model') && !empty($this->$currentModel->validationErrors)) {
-					$View->validationErrors[Inflector::camelize($currentModel)] = $this->$currentModel->validationErrors;
-				}
-			}
-			$models = array_diff(ClassRegistry::keys(), $models);
-			foreach ($models as $currentModel) {
-				if (ClassRegistry::isKeySet($currentModel)) {
-					$currentObject = ClassRegistry::getObject($currentModel);
-					if (is_a($currentObject, 'Model') && !empty($currentObject->validationErrors)) {
-						$View->validationErrors[Inflector::camelize($currentModel)] = $currentObject->validationErrors;
-					}
-				}
-			}
-		}
-
-		$this->autoRender = false;
-		$this->output .= $View->render($action, $layout, $file);
-
-		return $this->output;
-		*/
+    return $this->output;
 	}
+	
+	/**
+	* This action gets called when there is a missing action.
+	*/
+	function missing_action() {
+	  // Do something here
+	}
+	
 /**
  * Returns the referring URL for this request.
  *
@@ -1092,6 +1057,12 @@ class Controller {
  */
 	function beforeRender() {
 	}
+/**
+* Called after all has been rendered.
+*/
+	function afterRender() {
+	}
+		
 /**
  * Called after the controller action is run and rendered.
  *

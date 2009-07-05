@@ -20,11 +20,7 @@ class View {
   
   function render($action, $layout, $file) {
     $this->viewPath = APP_BASE_URL . "/views/{$layout}";
-       
-    $this->output .= "Render Action: ". $action ."<br />";
-    $this->output .=  "Render Layout: ". $layout ."<br />";
-    $this->output .=  "Render File: ". $file ."<br />";
-    
+
     $content = $this->render_view($layout, $action);
     
     $this->output .= $this->render_layout($layout, $content);
@@ -32,25 +28,36 @@ class View {
     return $this->output;
   }
   
-  function render_view($controller, $action) {
+  function action_view($action) {
     $ext = $this->ext;
     $view_file = $this->viewPath . "/{$action}.{$ext}";
- 
-    $output = "";
+    
     if(file_exists($view_file)) {
-      $data_for_layout = array_merge($this->viewVars, array(
-        'title_for_layout' => $pageTitle,
-        'content_for_layout' => $content,
-        'scripts_for_layout' => array()
-      ));
-      
-      extract($data_for_layout, EXTR_SKIP);
-
-      ob_start();
-      include "{$view_file}";
-      $output = ob_get_contents();
-      ob_end_clean();
+      $file = $view_file;
+    } else {
+      $file = $this->viewPath . "/missing.{$ext}";
     }
+    return $file;  
+  }
+  
+  function render_view($controller, $action) {
+    $file = $this->action_view($action);
+    
+    $output = "";
+    $content = "";
+    
+    $data_for_layout = array_merge($this->viewVars, array(
+      'title_for_layout' => $pageTitle,
+      'content_for_layout' => $content,
+      'scripts_for_layout' => array()
+    ));
+    
+    extract($data_for_layout, EXTR_SKIP);
+    ob_start();
+    include $file;
+    $output = ob_get_contents();
+    ob_end_clean();
+  
     return $output;
   }
   
@@ -63,7 +70,7 @@ class View {
     if(!file_exists("{$layouts_path}/${file}.{$ext}")) {
       $file = $this->layout;
     } else {
-      echo "\n* Could not find layout to render {$file} \n";
+      $file = "missing";
     }
     
     if ($this->pageTitle !== false) {

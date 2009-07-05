@@ -30,6 +30,10 @@ class Dispatcher {
  */
 	var $params = null;
 	
+	var $output = null;
+	
+	var $command_line = false;
+	
   function dispatch($url = null, $additionalParams = array()) {
   	if ($this->base === false) {
 			$this->base = $this->baseUrl();
@@ -46,18 +50,57 @@ class Dispatcher {
 		}
     
 		$this->here = $this->base . '/' . $url;
+	  
+	  $controller = $this->__getController();
 
-		$controller = $this->__getController();				  
+		Router::setRequestInfo(array(
+			$this->params, array('base' => $this->base, 'here' => $this->here, 'webroot' => $this->webroot)
+		));
+	  
+	  if(!$controller)  {	    
+	    $controller = new ApplicationController();
+	    $this->_invoke($controller, $this->params, true);
+	    return;
+	  }
+	  	
+		$controller->base = $this->base;
+		$controller->here = $this->here;
+		$controller->webroot = $this->webroot;
+		$controller->params = $this->params;
+		$controller->action = $this->params['action'];
+  		
+		if (!empty($this->params['data'])) {
+			$controller->data = $this->params['data'];
+		} else {
+			$controller->data = null;
+		}	
+		$this->_invoke($controller, $this->params);
+  
+  }
+
+/**
+* This is where things get returned to the browser
+*/
+  function _invoke($controller, $params, $action_missing=false) {
+ 
 		$keys = array_flip(get_class_methods($controller));
-		
 		if(array_key_exists($this->params["action"], $keys)) {
 		  // Do something here when the action exists perhaps call the action?
-		  $controller->render($this->params['action'], $this->params['controller'], $this->params['action']);
+		  $this->output = $controller->render($this->params['action'], $this->params['controller'], $this->params['action']);
+		} else if($action_missing == true){
+		  $this->output = $controller->render("missing_action", "missing", $this->params['action']);
+		} else if($action_missing == false) {
+		  $this->output = $controller->render("missing_action", $this->params['controller'], $this->params['action']);		  
+		}
+		
+		if($this->command_line) {
+		  // Don't output the content if it's from the command line 
 		} else {
-		  // Do something when the action does not exits perhaps show a error page?
+		  // Since it's not from the command line output the content
+		  echo $this->output;
 		}
   }
-  
+
 
 	function getUrl($uri = null, $base = null) {
 		if (empty($_GET['url'])) {

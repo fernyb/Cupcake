@@ -111,6 +111,7 @@ describe("Dispatcher -> dispatch", function(){
       $_GET['url'] = $url = "users/profile";
       $_SERVER['argv'][0] = "url={$url}";
       $Dispatcher = new Dispatcher();
+      $Dispatcher->command_line = true;
       $Dispatcher->dispatch($_GET['url']);
       assert_equal("/users/profile", $Dispatcher->here);
     });

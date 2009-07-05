@@ -52,6 +52,7 @@ class Dispatcher {
 		
 		if(array_key_exists($this->params["action"], $keys)) {
 		  // Do something here when the action exists perhaps call the action?
+		  $controller->render($this->params['action'], $this->params['controller'], $this->params['action']);
 		} else {
 		  // Do something when the action does not exits perhaps show a error page?
 		}

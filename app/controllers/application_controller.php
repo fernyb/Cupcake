@@ -285,7 +285,6 @@ class Controller {
  *
  */
 	function __construct() {
-	/*
 		if ($this->name === null) {
 			$r = null;
 			if (!preg_match('/(.*)Controller/i', get_class($this), $r)) {
@@ -298,9 +297,7 @@ class Controller {
 			$this->viewPath = Inflector::underscore($this->name);
 		}
 		
-		$this->modelClass = Inflector::classify($this->name);
-		$this->modelKey = Inflector::underscore($this->modelClass);
-		
+		/*
 		$this->Component = new Component();
     
 		$childMethods = get_class_methods($this);
@@ -317,7 +314,6 @@ class Controller {
 		
 		parent::__construct();
 		*/
-		
 	}
 /**
  * Merge components, helpers, and uses vars from AppController and PluginAppController.
@@ -724,9 +720,16 @@ class Controller {
  * @link http://book.cakephp.org/view/428/render
  */
 	function render($action = null, $layout = null, $file = null) {
-	  
-		$this->beforeRender();
-
+	  $this->beforeRender();
+    $this->{$action}();
+    
+    $view = new View($this);
+    $this->output .= $view->render($action, $layout, $file);
+    
+    echo $this->output;
+    return $this->output;
+    
+    /*
 		$viewClass = $this->view;
 		if ($this->view != 'View') {
 			if (strpos($viewClass, '.') !== false) {
@@ -771,6 +774,7 @@ class Controller {
 		$this->output .= $View->render($action, $layout, $file);
 
 		return $this->output;
+		*/
 	}
 /**
  * Returns the referring URL for this request.

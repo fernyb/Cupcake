@@ -274,6 +274,20 @@ class Inflector {
 		$this->singularRules = array('singularRules' => $singularRules, 'uninflected' => $uninflected, 'irregular' => $irregular);
 		$this->singularized = array();
 	}
+
+/**
+ * Returns the given underscored_word_group as a Human Readable Word Group.
+ * (Underscores are replaced by spaces and capitalized following words.)
+ *
+ * @param string $lower_case_and_underscored_word String to be made more readable
+ * @return string Human-readable string
+ * @access public
+ * @static
+ * @link http://book.cakephp.org/view/572/Class-methods
+ */
+	function humanize($lowerCaseAndUnderscoredWord) {
+		return ucwords(str_replace("_", " ", $lowerCaseAndUnderscoredWord));
+	}
 				
 }
 	

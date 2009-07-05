@@ -40,18 +40,19 @@ class View {
     return $file;  
   }
   
-  function render_view($controller, $action) {
-    $file = $this->action_view($action);
-    
-    $output = "";
-    $content = "";
-    
-    $data_for_layout = array_merge($this->viewVars, array(
-      'title_for_layout' => $pageTitle,
-      'content_for_layout' => $content,
+  function data_for_layout($params=array()) {
+     $data = array_merge($params, array(
+      'title_for_layout' => $this->pageTitle,
+      'content_for_layout' => $this->content,
       'scripts_for_layout' => array()
     ));
-    
+    return $data;
+  }
+  
+  function render_view($controller, $action) {
+    $file = $this->action_view($action);
+    $data_for_layout = $this->data_for_layout($this->viewVars);
+  
     extract($data_for_layout, EXTR_SKIP);
     ob_start();
     include $file;
@@ -61,17 +62,32 @@ class View {
     return $output;
   }
   
-  function render_layout($file=null, $content="", $view_vars=array()) {
+  function layout_path() {
+    return realpath(APP_BASE_URL . "/views/layouts");
+  }
+  
+  function layout_view($file=null) {
     $ext = $this->ext;
-    $layouts_path = APP_BASE_URL . "/views/layouts";
+    $layouts_path = $this->layout_path();
+    
     if($file == null) {
-      $file = $this->layout;
+      $filename = $this->layout;
+    } else {
+      $filename = $file;
     }
-    if(!file_exists("{$layouts_path}/${file}.{$ext}")) {
+    
+    $layout_file = "{$layouts_path}/{$filename}.{$ext}";
+    
+    if(file_exists($layout_file)) {
       $file = $this->layout;
     } else {
       $file = "missing";
     }
+    return $file;
+  }
+  
+  function render_layout($file=null, $content="", $view_vars=array()) {
+    $file = $this->layout_view($file);
     
     if ($this->pageTitle !== false) {
 			$pageTitle = $this->pageTitle;

@@ -75,8 +75,11 @@ class MockSpecification
     }
     
     public function to_php() {
-        
-        $php = "class {$this->class_name}";
+        //
+        // Just subclass the original class and when stubing 
+        // we re-declare the method and return what we expect
+        //
+        $php = "class {$this->class_name}Mock extends {$this->class_name}";
         
         if ($this->superclass) {
             $php .= " extends {$this->superclass}";

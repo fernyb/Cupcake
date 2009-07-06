@@ -1,7 +1,8 @@
 <?php
+/**
+* Add your routes here
+*/
 
-Router::connect("/", array("controller" => "main", "action" => "show"));
-Router::connect("/users", array("controller" => "main", "action" => "users"));
-
+Router::connect("/", array("controller" => "application", "action" => "show"));
 
 ?>

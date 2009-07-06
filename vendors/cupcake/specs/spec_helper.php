@@ -1,6 +1,6 @@
 <?php
 define("CONFIGS", dirname(__FILE__) . "/config/");
-define("APP_BASE_URL", dirname(__FILE__) . "/../../../app");
+define("APP_BASE_URL", dirname(__FILE__) . "/app");
 define("DS", DIRECTORY_SEPARATOR);
 define("APP_DIR", "app");
 define("WEBROOT_DIR", "public");

@@ -49,7 +49,7 @@ class Dispatcher {
 			$this->params = array_merge($this->parseParams($url), $additionalParams);
 		}
     
-		$this->here = $this->base . '/' . $url;
+		$this->here = $this->base . "/" . $url;
 	  
 	  $controller = $this->__getController();
 
@@ -84,13 +84,14 @@ class Dispatcher {
   function _invoke($controller, $params, $action_missing=false) {
  
 		$keys = array_flip(get_class_methods($controller));
-		if(array_key_exists($this->params["action"], $keys)) {
+		
+		if(array_key_exists($params["action"], $keys)) {
 		  // Do something here when the action exists perhaps call the action?
-		  $this->output = $controller->render($this->params['action'], $this->params['controller'], $this->params['action']);
+		  $this->output = $controller->render($params['action'], $params['controller'], $params['action']);
 		} else if($action_missing == true){
-		  $this->output = $controller->render("missing_action", "missing", $this->params['action']);
+		  $this->output = $controller->render("missing_action", "missing", $params['action']);
 		} else if($action_missing == false) {
-		  $this->output = $controller->render("missing_action", $this->params['controller'], $this->params['action']);		  
+		  $this->output = $controller->render("missing_action", $params['controller'], $params['action']);		  
 		}
 		
 		if($this->command_line) {

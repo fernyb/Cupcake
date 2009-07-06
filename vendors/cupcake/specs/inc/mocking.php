@@ -59,6 +59,12 @@ class MockSpecification
         return $mock_method;
     }
     
+    public function should_receive($method_pattern) {
+        $mock_method = new MockMethodSpecification($this, $method_pattern);
+        $this->methods[$method_pattern] = $mock_method;
+        return $mock_method;
+    }
+    
     //
     //
     
@@ -180,7 +186,14 @@ class MockMethodSpecification
         }
         return $this;
     }
-    
+
+    public function and_return($thing) {
+        if ($thing instanceof Closure) {
+            $this->closure = $thing;
+        }
+        return $this;
+    }
+          
     public function back() {
         return $this->mock;
     }

@@ -19,7 +19,7 @@ class View {
 	}
   
   function render($action, $layout, $file) {
-    $this->viewPath = APP_BASE_URL . "/views/{$layout}";
+    $this->viewPath = APP_BASE_URL . DS . "views". DS ."{$layout}";
 
     $content = $this->render_view($layout, $action);
     
@@ -30,12 +30,12 @@ class View {
   
   function action_view($action) {
     $ext = $this->ext;
-    $view_file = $this->viewPath . "/{$action}.{$ext}";
+    $view_file = $this->viewPath . DS . "{$action}.{$ext}";
     
     if(file_exists($view_file)) {
       $file = $view_file;
     } else {
-      $file = $this->viewPath . "/missing.{$ext}";
+      $file = $this->viewPath . DS . "missing.{$ext}";
     }
     return $file;  
   }
@@ -63,7 +63,7 @@ class View {
   }
   
   function layout_path() {
-    return realpath(APP_BASE_URL . "/views/layouts");
+    return realpath(APP_BASE_URL . "/" . "views/layouts");
   }
   
   function layout_view($file=null) {
@@ -76,7 +76,7 @@ class View {
       $filename = $file;
     }
     
-    $layout_file = "{$layouts_path}/{$filename}.{$ext}";
+    $layout_file = "{$layouts_path}" . "/" ."{$filename}.{$ext}";
     
     if(file_exists($layout_file)) {
       $file = $this->layout;
@@ -87,13 +87,17 @@ class View {
   }
   
   function render_layout($file=null, $content="", $view_vars=array()) {
-    $file = $this->layout_view($file);
+    $ext = $this->ext;
+    $filename = $this->layout_view($file);
+    $layout_path = $this->layout_path();
     
     if ($this->pageTitle !== false) {
 			$pageTitle = $this->pageTitle;
 		} else {
 			$pageTitle = Inflector::humanize($this->viewPath);
 		}
+		
+		$render_file = "{$layout_path}" . "/" . "${filename}.{$ext}";
 		
     $data_for_layout = array_merge($this->viewVars, array(
 			'title_for_layout' => $pageTitle,
@@ -103,7 +107,7 @@ class View {
     extract($data_for_layout, EXTR_SKIP);
     
     ob_start();
-    include "{$layouts_path}/${file}.{$ext}";
+    include $render_file;
     $output = ob_get_contents();
     ob_end_clean();
     

@@ -37,13 +37,7 @@ class Router {
   		if (!isset($default['action'])) {
   			$default['action'] = 'index';
   		}
-  		if (isset($default[$_this->__admin])) {
-  			$default['prefix'] = $_this->__admin;
-  		}
-  		if (isset($default['prefix'])) {
-  			$_this->__prefixes[] = $default['prefix'];
-  			$_this->__prefixes = array_keys(array_flip($_this->__prefixes));
-  		}
+  		
   		$_this->routes[] = array($route, $default, $params);
   		return $_this->routes;
 	}
@@ -608,6 +602,19 @@ class Router {
 		return $this->routes[$i];
 	}	
 
+
+/**
+ * Clears all routes
+ *
+ * @access public
+ * @static
+ */
+ static function clearRoutes() {
+   $_this = Router::getInstance();
+   $_this->routes = array();
+   $_this->__prefixes = array();
+ }
+   
 
 /**
  * Returns the list of prefixes used in connected routes

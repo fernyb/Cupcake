@@ -1,0 +1,118 @@
+<link rel="stylesheet" href="/Users/fernyb/php/cupcake/vendors/cupcake/specs/coverage/coverage.css" type="text/css" media="screen" /><div><strong>/Users/fernyb/php/cupcake/vendors/cupcake/view.php</strong></div><br /><table border="0" cellpadding="0" cellspacing="0"><tr><td class="line-number">0</td><td class="code green"><pre><?php
+</pre></td></tr><tr><td class="line-number">1</td><td class="code green"><pre>class View {
+</pre></td></tr><tr><td class="line-number">2</td><td class="code red"><pre>  var $ext = "html.php";
+</pre></td></tr><tr><td class="line-number">3</td><td class="code green"><pre>  var $layout = "application";
+</pre></td></tr><tr><td class="line-number">4</td><td class="code green"><pre>  var $output = "";
+</pre></td></tr><tr><td class="line-number">5</td><td class="code green"><pre>  var $pageTitle = false;
+</pre></td></tr><tr><td class="line-number">6</td><td class="code green"><pre>  var $viewVars = array();
+</pre></td></tr><tr><td class="line-number">7</td><td class="code green"><pre>  var $viewPath = false;
+</pre></td></tr><tr><td class="line-number">8</td><td class="code green"><pre>  var $controller = false;
+</pre></td></tr><tr><td class="line-number">9</td><td class="code green"><pre>  
+</pre></td></tr><tr><td class="line-number">10</td><td class="code green"><pre>  var $name = null;
+</pre></td></tr><tr><td class="line-number">11</td><td class="code green"><pre>  var $action = null;
+</pre></td></tr><tr><td class="line-number">12</td><td class="code green"><pre>  
+</pre></td></tr><tr><td class="line-number">13</td><td class="code green"><pre>  function __construct(&$controller) {
+</pre></td></tr><tr><td class="line-number">14</td><td class="code green"><pre>		if (is_object($controller)) {
+</pre></td></tr><tr><td class="line-number">15</td><td class="code red"><pre>		  $this->controller = clone $controller;
+</pre></td></tr><tr><td class="line-number">16</td><td class="code red"><pre>			$this->viewVars = $this->controller->viewVars;
+</pre></td></tr><tr><td class="line-number">17</td><td class="code red"><pre>		}
+</pre></td></tr><tr><td class="line-number">18</td><td class="code red"><pre>	}
+</pre></td></tr><tr><td class="line-number">19</td><td class="code red"><pre>  
+</pre></td></tr><tr><td class="line-number">20</td><td class="code green"><pre>  function render($action, $layout, $file) {
+</pre></td></tr><tr><td class="line-number">21</td><td class="code green"><pre>    $this->viewPath = APP_BASE_URL . DS . "views". DS ."{$layout}";
+</pre></td></tr><tr><td class="line-number">22</td><td class="code red"><pre>
+</pre></td></tr><tr><td class="line-number">23</td><td class="code green"><pre>    $content = $this->render_view($layout, $action);
+</pre></td></tr><tr><td class="line-number">24</td><td class="code red"><pre>    
+</pre></td></tr><tr><td class="line-number">25</td><td class="code green"><pre>    $this->output .= $this->render_layout($layout, $content);
+</pre></td></tr><tr><td class="line-number">26</td><td class="code red"><pre>    
+</pre></td></tr><tr><td class="line-number">27</td><td class="code green"><pre>    return $this->output;
+</pre></td></tr><tr><td class="line-number">28</td><td class="code red"><pre>  }
+</pre></td></tr><tr><td class="line-number">29</td><td class="code green"><pre>  
+</pre></td></tr><tr><td class="line-number">30</td><td class="code green"><pre>  function action_view($action) {
+</pre></td></tr><tr><td class="line-number">31</td><td class="code green"><pre>    $ext = $this->ext;
+</pre></td></tr><tr><td class="line-number">32</td><td class="code red"><pre>    $view_file = $this->viewPath . DS . "{$action}.{$ext}";
+</pre></td></tr><tr><td class="line-number">33</td><td class="code red"><pre>    
+</pre></td></tr><tr><td class="line-number">34</td><td class="code green"><pre>    if(file_exists($view_file)) {
+</pre></td></tr><tr><td class="line-number">35</td><td class="code red"><pre>      $file = $view_file;
+</pre></td></tr><tr><td class="line-number">36</td><td class="code red"><pre>    } else {
+</pre></td></tr><tr><td class="line-number">37</td><td class="code red"><pre>      $file = $this->viewPath . DS . "missing.{$ext}";
+</pre></td></tr><tr><td class="line-number">38</td><td class="code red"><pre>    }
+</pre></td></tr><tr><td class="line-number">39</td><td class="code green"><pre>    return $file;  
+</pre></td></tr><tr><td class="line-number">40</td><td class="code red"><pre>  }
+</pre></td></tr><tr><td class="line-number">41</td><td class="code green"><pre>  
+</pre></td></tr><tr><td class="line-number">42</td><td class="code green"><pre>  function data_for_layout($params=array()) {
+</pre></td></tr><tr><td class="line-number">43</td><td class="code green"><pre>     $data = array_merge($params, array(
+</pre></td></tr><tr><td class="line-number">44</td><td class="code red"><pre>      'title_for_layout' => $this->pageTitle,
+</pre></td></tr><tr><td class="line-number">45</td><td class="code red"><pre>      'content_for_layout' => $this->content,
+</pre></td></tr><tr><td class="line-number">46</td><td class="code red"><pre>      'scripts_for_layout' => array()
+</pre></td></tr><tr><td class="line-number">47</td><td class="code red"><pre>    ));
+</pre></td></tr><tr><td class="line-number">48</td><td class="code red"><pre>    return $data;
+</pre></td></tr><tr><td class="line-number">49</td><td class="code red"><pre>  }
+</pre></td></tr><tr><td class="line-number">50</td><td class="code green"><pre>  
+</pre></td></tr><tr><td class="line-number">51</td><td class="code green"><pre>  function render_view($controller, $action) {
+</pre></td></tr><tr><td class="line-number">52</td><td class="code green"><pre>    $file = $this->action_view($action);
+</pre></td></tr><tr><td class="line-number">53</td><td class="code red"><pre>    $data_for_layout = $this->data_for_layout($this->viewVars);
+</pre></td></tr><tr><td class="line-number">54</td><td class="code red"><pre>  
+</pre></td></tr><tr><td class="line-number">55</td><td class="code green"><pre>    extract($data_for_layout, EXTR_SKIP);
+</pre></td></tr><tr><td class="line-number">56</td><td class="code red"><pre>    ob_start();
+</pre></td></tr><tr><td class="line-number">57</td><td class="code red"><pre>    include $file;
+</pre></td></tr><tr><td class="line-number">58</td><td class="code red"><pre>    $output = ob_get_contents();
+</pre></td></tr><tr><td class="line-number">59</td><td class="code red"><pre>    ob_end_clean();
+</pre></td></tr><tr><td class="line-number">60</td><td class="code red"><pre>  
+</pre></td></tr><tr><td class="line-number">61</td><td class="code green"><pre>    return $output;
+</pre></td></tr><tr><td class="line-number">62</td><td class="code red"><pre>  }
+</pre></td></tr><tr><td class="line-number">63</td><td class="code green"><pre>  
+</pre></td></tr><tr><td class="line-number">64</td><td class="code green"><pre>  function layout_path() {
+</pre></td></tr><tr><td class="line-number">65</td><td class="code green"><pre>    return realpath(APP_BASE_URL . "/" . "views/layouts");
+</pre></td></tr><tr><td class="line-number">66</td><td class="code red"><pre>  }
+</pre></td></tr><tr><td class="line-number">67</td><td class="code green"><pre>  
+</pre></td></tr><tr><td class="line-number">68</td><td class="code green"><pre>  function layout_view($file=null) {
+</pre></td></tr><tr><td class="line-number">69</td><td class="code green"><pre>    $ext = $this->ext;
+</pre></td></tr><tr><td class="line-number">70</td><td class="code red"><pre>    $layouts_path = $this->layout_path();
+</pre></td></tr><tr><td class="line-number">71</td><td class="code red"><pre>    
+</pre></td></tr><tr><td class="line-number">72</td><td class="code green"><pre>    if($file == null) {
+</pre></td></tr><tr><td class="line-number">73</td><td class="code red"><pre>      $filename = $this->layout;
+</pre></td></tr><tr><td class="line-number">74</td><td class="code red"><pre>    } else {
+</pre></td></tr><tr><td class="line-number">75</td><td class="code red"><pre>      $filename = $file;
+</pre></td></tr><tr><td class="line-number">76</td><td class="code red"><pre>    }
+</pre></td></tr><tr><td class="line-number">77</td><td class="code green"><pre>    
+</pre></td></tr><tr><td class="line-number">78</td><td class="code green"><pre>    $layout_file = "{$layouts_path}" . "/" ."{$filename}.{$ext}";
+</pre></td></tr><tr><td class="line-number">79</td><td class="code red"><pre>    
+</pre></td></tr><tr><td class="line-number">80</td><td class="code green"><pre>    if(file_exists($layout_file)) {
+</pre></td></tr><tr><td class="line-number">81</td><td class="code red"><pre>      $file = $this->layout;
+</pre></td></tr><tr><td class="line-number">82</td><td class="code red"><pre>    } else {
+</pre></td></tr><tr><td class="line-number">83</td><td class="code red"><pre>      $file = "missing";
+</pre></td></tr><tr><td class="line-number">84</td><td class="code red"><pre>    }
+</pre></td></tr><tr><td class="line-number">85</td><td class="code green"><pre>    return $file;
+</pre></td></tr><tr><td class="line-number">86</td><td class="code red"><pre>  }
+</pre></td></tr><tr><td class="line-number">87</td><td class="code green"><pre>  
+</pre></td></tr><tr><td class="line-number">88</td><td class="code green"><pre>  function render_layout($file=null, $content="", $view_vars=array()) {
+</pre></td></tr><tr><td class="line-number">89</td><td class="code green"><pre>    $ext = $this->ext;
+</pre></td></tr><tr><td class="line-number">90</td><td class="code red"><pre>    $filename = $this->layout_view($file);
+</pre></td></tr><tr><td class="line-number">91</td><td class="code red"><pre>    $layout_path = $this->layout_path();
+</pre></td></tr><tr><td class="line-number">92</td><td class="code red"><pre>    
+</pre></td></tr><tr><td class="line-number">93</td><td class="code green"><pre>    if ($this->pageTitle !== false) {
+</pre></td></tr><tr><td class="line-number">94</td><td class="code red"><pre>			$pageTitle = $this->pageTitle;
+</pre></td></tr><tr><td class="line-number">95</td><td class="code green"><pre>		} else {
+</pre></td></tr><tr><td class="line-number">96</td><td class="code green"><pre>			$pageTitle = Inflector::humanize($this->viewPath);
+</pre></td></tr><tr><td class="line-number">97</td><td class="code red"><pre>		}
+</pre></td></tr><tr><td class="line-number">98</td><td class="code green"><pre>		
+</pre></td></tr><tr><td class="line-number">99</td><td class="code green"><pre>		$render_file = "{$layout_path}" . "/" . "${filename}.{$ext}";
+</pre></td></tr><tr><td class="line-number">100</td><td class="code red"><pre>		
+</pre></td></tr><tr><td class="line-number">101</td><td class="code green"><pre>    $data_for_layout = array_merge($this->viewVars, array(
+</pre></td></tr><tr><td class="line-number">102</td><td class="code red"><pre>			'title_for_layout' => $pageTitle,
+</pre></td></tr><tr><td class="line-number">103</td><td class="code red"><pre>			'content_for_layout' => $content,
+</pre></td></tr><tr><td class="line-number">104</td><td class="code red"><pre>			'scripts_for_layout' => array()
+</pre></td></tr><tr><td class="line-number">105</td><td class="code red"><pre>		));
+</pre></td></tr><tr><td class="line-number">106</td><td class="code red"><pre>    extract($data_for_layout, EXTR_SKIP);
+</pre></td></tr><tr><td class="line-number">107</td><td class="code red"><pre>    
+</pre></td></tr><tr><td class="line-number">108</td><td class="code green"><pre>    ob_start();
+</pre></td></tr><tr><td class="line-number">109</td><td class="code red"><pre>    include $render_file;
+</pre></td></tr><tr><td class="line-number">110</td><td class="code red"><pre>    $output = ob_get_contents();
+</pre></td></tr><tr><td class="line-number">111</td><td class="code red"><pre>    ob_end_clean();
+</pre></td></tr><tr><td class="line-number">112</td><td class="code red"><pre>    
+</pre></td></tr><tr><td class="line-number">113</td><td class="code green"><pre>    return $output;
+</pre></td></tr><tr><td class="line-number">114</td><td class="code red"><pre>  }
+</pre></td></tr><tr><td class="line-number">115</td><td class="code green"><pre>}
+</pre></td></tr><tr><td class="line-number">116</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">117</td><td class="code green"><pre>?></pre></td></tr></table>

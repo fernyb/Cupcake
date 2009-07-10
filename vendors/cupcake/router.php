@@ -1,7 +1,6 @@
 <?php
-
 class Router {
-// An Array of Routes
+  
   var $routes = array();
 
 // List of action prefixes used in connected routes
@@ -26,7 +25,6 @@ class Router {
 		  static $instance = array();
 		  if (!$instance) {
 			  $instance[0] = new Router();
-			  //$instance[0]->__admin = Configure::read('Routing.admin');
 		  }
 		  return $instance[0];
 	  }
@@ -652,7 +650,7 @@ class Router {
 			}
 		}
 	}
-		
+	
 }
 
 

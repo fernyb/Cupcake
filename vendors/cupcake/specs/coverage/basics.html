@@ -1,0 +1,953 @@
+<link rel="stylesheet" href="/Users/fernyb/php/cupcake/vendors/cupcake/specs/coverage/coverage.css" type="text/css" media="screen" /><div><strong>/Users/fernyb/php/cupcake/vendors/cupcake/basics.php</strong></div><br /><table border="0" cellpadding="0" cellspacing="0"><tr><td class="line-number">0</td><td class="code green"><pre><?php
+</pre></td></tr><tr><td class="line-number">1</td><td class="code green"><pre>/* SVN FILE: $Id: basics.php 7945 2008-12-19 02:16:01Z gwoo $ */
+</pre></td></tr><tr><td class="line-number">2</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">3</td><td class="code green"><pre> * Basic Cake functionality.
+</pre></td></tr><tr><td class="line-number">4</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">5</td><td class="code green"><pre> * Core functions for including other source files, loading models and so forth.
+</pre></td></tr><tr><td class="line-number">6</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">7</td><td class="code green"><pre> * PHP versions 4 and 5
+</pre></td></tr><tr><td class="line-number">8</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">9</td><td class="code green"><pre> * CakePHP(tm) :  Rapid Development Framework (http://www.cakephp.org)
+</pre></td></tr><tr><td class="line-number">10</td><td class="code green"><pre> * Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
+</pre></td></tr><tr><td class="line-number">11</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">12</td><td class="code green"><pre> * Licensed under The MIT License
+</pre></td></tr><tr><td class="line-number">13</td><td class="code green"><pre> * Redistributions of files must retain the above copyright notice.
+</pre></td></tr><tr><td class="line-number">14</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">15</td><td class="code green"><pre> * @filesource
+</pre></td></tr><tr><td class="line-number">16</td><td class="code green"><pre> * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
+</pre></td></tr><tr><td class="line-number">17</td><td class="code green"><pre> * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+</pre></td></tr><tr><td class="line-number">18</td><td class="code green"><pre> * @package       cake
+</pre></td></tr><tr><td class="line-number">19</td><td class="code green"><pre> * @subpackage    cake.cake
+</pre></td></tr><tr><td class="line-number">20</td><td class="code green"><pre> * @since         CakePHP(tm) v 0.2.9
+</pre></td></tr><tr><td class="line-number">21</td><td class="code green"><pre> * @version       $Revision: 7945 $
+</pre></td></tr><tr><td class="line-number">22</td><td class="code green"><pre> * @modifiedby    $LastChangedBy: gwoo $
+</pre></td></tr><tr><td class="line-number">23</td><td class="code green"><pre> * @lastmodified  $Date: 2008-12-18 18:16:01 -0800 (Thu, 18 Dec 2008) $
+</pre></td></tr><tr><td class="line-number">24</td><td class="code green"><pre> * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
+</pre></td></tr><tr><td class="line-number">25</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">26</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">27</td><td class="code green"><pre> * Basic defines for timing functions.
+</pre></td></tr><tr><td class="line-number">28</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">29</td><td class="code green"><pre>	define('SECOND', 1);
+</pre></td></tr><tr><td class="line-number">30</td><td class="code red"><pre>	define('MINUTE', 60 * SECOND);
+</pre></td></tr><tr><td class="line-number">31</td><td class="code red"><pre>	define('HOUR', 60 * MINUTE);
+</pre></td></tr><tr><td class="line-number">32</td><td class="code red"><pre>	define('DAY', 24 * HOUR);
+</pre></td></tr><tr><td class="line-number">33</td><td class="code red"><pre>	define('WEEK', 7 * DAY);
+</pre></td></tr><tr><td class="line-number">34</td><td class="code red"><pre>	define('MONTH', 30 * DAY);
+</pre></td></tr><tr><td class="line-number">35</td><td class="code red"><pre>	define('YEAR', 365 * DAY);
+</pre></td></tr><tr><td class="line-number">36</td><td class="code red"><pre>/**
+</pre></td></tr><tr><td class="line-number">37</td><td class="code green"><pre> * Patch for PHP < 5.0
+</pre></td></tr><tr><td class="line-number">38</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">39</td><td class="code green"><pre>if (!function_exists('clone')) {
+</pre></td></tr><tr><td class="line-number">40</td><td class="code red"><pre>	if (version_compare(PHP_VERSION, '5.0') < 0) {
+</pre></td></tr><tr><td class="line-number">41</td><td class="code red"><pre>		eval ('
+</pre></td></tr><tr><td class="line-number">42</td><td class="code green"><pre>		function clone($object)
+</pre></td></tr><tr><td class="line-number">43</td><td class="code green"><pre>		{
+</pre></td></tr><tr><td class="line-number">44</td><td class="code green"><pre>			return $object;
+</pre></td></tr><tr><td class="line-number">45</td><td class="code green"><pre>		}');
+</pre></td></tr><tr><td class="line-number">46</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">47</td><td class="code green"><pre>}
+</pre></td></tr><tr><td class="line-number">48</td><td class="code red"><pre>/**
+</pre></td></tr><tr><td class="line-number">49</td><td class="code green"><pre> * Loads configuration files. Receives a set of configuration files
+</pre></td></tr><tr><td class="line-number">50</td><td class="code green"><pre> * to load.
+</pre></td></tr><tr><td class="line-number">51</td><td class="code green"><pre> * Example:
+</pre></td></tr><tr><td class="line-number">52</td><td class="code green"><pre> * <code>
+</pre></td></tr><tr><td class="line-number">53</td><td class="code green"><pre> * config('config1', 'config2');
+</pre></td></tr><tr><td class="line-number">54</td><td class="code green"><pre> * </code>
+</pre></td></tr><tr><td class="line-number">55</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">56</td><td class="code green"><pre> * @return boolean Success
+</pre></td></tr><tr><td class="line-number">57</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">58</td><td class="code green"><pre>	function config() {
+</pre></td></tr><tr><td class="line-number">59</td><td class="code red"><pre>		$args = func_get_args();
+</pre></td></tr><tr><td class="line-number">60</td><td class="code green"><pre>		foreach ($args as $arg) {
+</pre></td></tr><tr><td class="line-number">61</td><td class="code green"><pre>			if ($arg === 'database' && file_exists(CONFIGS . 'database.php')) {
+</pre></td></tr><tr><td class="line-number">62</td><td class="code green"><pre>				include_once(CONFIGS . $arg . '.php');
+</pre></td></tr><tr><td class="line-number">63</td><td class="code green"><pre>			} elseif (file_exists(CONFIGS . $arg . '.php')) {
+</pre></td></tr><tr><td class="line-number">64</td><td class="code green"><pre>				include_once(CONFIGS . $arg . '.php');
+</pre></td></tr><tr><td class="line-number">65</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">66</td><td class="code green"><pre>				if (count($args) == 1) {
+</pre></td></tr><tr><td class="line-number">67</td><td class="code green"><pre>					return true;
+</pre></td></tr><tr><td class="line-number">68</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">69</td><td class="code green"><pre>			} else {
+</pre></td></tr><tr><td class="line-number">70</td><td class="code green"><pre>				if (count($args) == 1) {
+</pre></td></tr><tr><td class="line-number">71</td><td class="code green"><pre>					return false;
+</pre></td></tr><tr><td class="line-number">72</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">73</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">74</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">75</td><td class="code green"><pre>		return true;
+</pre></td></tr><tr><td class="line-number">76</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">77</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">78</td><td class="code green"><pre> * Loads component/components from LIBS. Takes optional number of parameters.
+</pre></td></tr><tr><td class="line-number">79</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">80</td><td class="code green"><pre> * Example:
+</pre></td></tr><tr><td class="line-number">81</td><td class="code green"><pre> * <code>
+</pre></td></tr><tr><td class="line-number">82</td><td class="code green"><pre> * uses('flay', 'time');
+</pre></td></tr><tr><td class="line-number">83</td><td class="code green"><pre> * </code>
+</pre></td></tr><tr><td class="line-number">84</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">85</td><td class="code green"><pre> * @param string $name Filename without the .php part
+</pre></td></tr><tr><td class="line-number">86</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">87</td><td class="code green"><pre>	function uses() {
+</pre></td></tr><tr><td class="line-number">88</td><td class="code red"><pre>		$args = func_get_args();
+</pre></td></tr><tr><td class="line-number">89</td><td class="code green"><pre>		foreach ($args as $file) {
+</pre></td></tr><tr><td class="line-number">90</td><td class="code green"><pre>			require_once(LIBS . strtolower($file) . '.php');
+</pre></td></tr><tr><td class="line-number">91</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">92</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">93</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">94</td><td class="code green"><pre> * Prints out debug information about given variable.
+</pre></td></tr><tr><td class="line-number">95</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">96</td><td class="code green"><pre> * Only runs if debug level is greater than zero.
+</pre></td></tr><tr><td class="line-number">97</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">98</td><td class="code green"><pre> * @param boolean $var Variable to show debug information for.
+</pre></td></tr><tr><td class="line-number">99</td><td class="code green"><pre> * @param boolean $showHtml If set to true, the method prints the debug data in a screen-friendly way.
+</pre></td></tr><tr><td class="line-number">100</td><td class="code green"><pre> * @param boolean $showFrom If set to true, the method prints from where the function was called.
+</pre></td></tr><tr><td class="line-number">101</td><td class="code green"><pre> * @link http://book.cakephp.org/view/458/Basic-Debugging
+</pre></td></tr><tr><td class="line-number">102</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">103</td><td class="code green"><pre>	function debug($var = false, $showHtml = false, $showFrom = true) {
+</pre></td></tr><tr><td class="line-number">104</td><td class="code red"><pre>		if (Configure::read() > 0) {
+</pre></td></tr><tr><td class="line-number">105</td><td class="code green"><pre>			if ($showFrom) {
+</pre></td></tr><tr><td class="line-number">106</td><td class="code green"><pre>				$calledFrom = debug_backtrace();
+</pre></td></tr><tr><td class="line-number">107</td><td class="code green"><pre>				echo '<strong>' . substr(str_replace(ROOT, '', $calledFrom[0]['file']), 1) . '</strong>';
+</pre></td></tr><tr><td class="line-number">108</td><td class="code green"><pre>				echo ' (line <strong>' . $calledFrom[0]['line'] . '</strong>)';
+</pre></td></tr><tr><td class="line-number">109</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">110</td><td class="code green"><pre>			echo "\n<pre class=\"cake-debug\">\n";
+</pre></td></tr><tr><td class="line-number">111</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">112</td><td class="code green"><pre>			$var = print_r($var, true);
+</pre></td></tr><tr><td class="line-number">113</td><td class="code green"><pre>			if ($showHtml) {
+</pre></td></tr><tr><td class="line-number">114</td><td class="code green"><pre>				$var = str_replace('<', '&lt;', str_replace('>', '&gt;', $var));
+</pre></td></tr><tr><td class="line-number">115</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">116</td><td class="code green"><pre>			echo $var . "\n</pre>\n";
+</pre></td></tr><tr><td class="line-number">117</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">118</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">119</td><td class="code green"><pre>if (!function_exists('getMicrotime')) {
+</pre></td></tr><tr><td class="line-number">120</td><td class="code red"><pre>/**
+</pre></td></tr><tr><td class="line-number">121</td><td class="code green"><pre> * Returns microtime for execution time checking
+</pre></td></tr><tr><td class="line-number">122</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">123</td><td class="code green"><pre> * @return float Microtime
+</pre></td></tr><tr><td class="line-number">124</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">125</td><td class="code green"><pre>	function getMicrotime() {
+</pre></td></tr><tr><td class="line-number">126</td><td class="code red"><pre>		list($usec, $sec) = explode(' ', microtime());
+</pre></td></tr><tr><td class="line-number">127</td><td class="code green"><pre>		return ((float)$usec + (float)$sec);
+</pre></td></tr><tr><td class="line-number">128</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">129</td><td class="code green"><pre>}
+</pre></td></tr><tr><td class="line-number">130</td><td class="code red"><pre>if (!function_exists('sortByKey')) {
+</pre></td></tr><tr><td class="line-number">131</td><td class="code red"><pre>/**
+</pre></td></tr><tr><td class="line-number">132</td><td class="code green"><pre> * Sorts given $array by key $sortby.
+</pre></td></tr><tr><td class="line-number">133</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">134</td><td class="code green"><pre> * @param array $array Array to sort
+</pre></td></tr><tr><td class="line-number">135</td><td class="code green"><pre> * @param string $sortby Sort by this key
+</pre></td></tr><tr><td class="line-number">136</td><td class="code green"><pre> * @param string $order  Sort order asc/desc (ascending or descending).
+</pre></td></tr><tr><td class="line-number">137</td><td class="code green"><pre> * @param integer $type Type of sorting to perform
+</pre></td></tr><tr><td class="line-number">138</td><td class="code green"><pre> * @return mixed Sorted array
+</pre></td></tr><tr><td class="line-number">139</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">140</td><td class="code green"><pre>	function sortByKey(&$array, $sortby, $order = 'asc', $type = SORT_NUMERIC) {
+</pre></td></tr><tr><td class="line-number">141</td><td class="code red"><pre>		if (!is_array($array)) {
+</pre></td></tr><tr><td class="line-number">142</td><td class="code green"><pre>			return null;
+</pre></td></tr><tr><td class="line-number">143</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">144</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">145</td><td class="code green"><pre>		foreach ($array as $key => $val) {
+</pre></td></tr><tr><td class="line-number">146</td><td class="code green"><pre>			$sa[$key] = $val[$sortby];
+</pre></td></tr><tr><td class="line-number">147</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">148</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">149</td><td class="code green"><pre>		if ($order == 'asc') {
+</pre></td></tr><tr><td class="line-number">150</td><td class="code green"><pre>			asort($sa, $type);
+</pre></td></tr><tr><td class="line-number">151</td><td class="code green"><pre>		} else {
+</pre></td></tr><tr><td class="line-number">152</td><td class="code green"><pre>			arsort($sa, $type);
+</pre></td></tr><tr><td class="line-number">153</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">154</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">155</td><td class="code green"><pre>		foreach ($sa as $key => $val) {
+</pre></td></tr><tr><td class="line-number">156</td><td class="code green"><pre>			$out[] = $array[$key];
+</pre></td></tr><tr><td class="line-number">157</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">158</td><td class="code green"><pre>		return $out;
+</pre></td></tr><tr><td class="line-number">159</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">160</td><td class="code green"><pre>}
+</pre></td></tr><tr><td class="line-number">161</td><td class="code red"><pre>if (!function_exists('array_combine')) {
+</pre></td></tr><tr><td class="line-number">162</td><td class="code red"><pre>/**
+</pre></td></tr><tr><td class="line-number">163</td><td class="code green"><pre> * Combines given identical arrays by using the first array's values as keys,
+</pre></td></tr><tr><td class="line-number">164</td><td class="code green"><pre> * and the second one's values as values. (Implemented for backwards compatibility with PHP4)
+</pre></td></tr><tr><td class="line-number">165</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">166</td><td class="code green"><pre> * @param array $a1 Array to use for keys
+</pre></td></tr><tr><td class="line-number">167</td><td class="code green"><pre> * @param array $a2 Array to use for values
+</pre></td></tr><tr><td class="line-number">168</td><td class="code green"><pre> * @return mixed Outputs either combined array or false.
+</pre></td></tr><tr><td class="line-number">169</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">170</td><td class="code green"><pre>	function array_combine($a1, $a2) {
+</pre></td></tr><tr><td class="line-number">171</td><td class="code green"><pre>		$a1 = array_values($a1);
+</pre></td></tr><tr><td class="line-number">172</td><td class="code green"><pre>		$a2 = array_values($a2);
+</pre></td></tr><tr><td class="line-number">173</td><td class="code green"><pre>		$c1 = count($a1);
+</pre></td></tr><tr><td class="line-number">174</td><td class="code green"><pre>		$c2 = count($a2);
+</pre></td></tr><tr><td class="line-number">175</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">176</td><td class="code green"><pre>		if ($c1 != $c2) {
+</pre></td></tr><tr><td class="line-number">177</td><td class="code green"><pre>			return false;
+</pre></td></tr><tr><td class="line-number">178</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">179</td><td class="code green"><pre>		if ($c1 <= 0) {
+</pre></td></tr><tr><td class="line-number">180</td><td class="code green"><pre>			return false;
+</pre></td></tr><tr><td class="line-number">181</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">182</td><td class="code green"><pre>		$output = array();
+</pre></td></tr><tr><td class="line-number">183</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">184</td><td class="code green"><pre>		for ($i = 0; $i < $c1; $i++) {
+</pre></td></tr><tr><td class="line-number">185</td><td class="code green"><pre>			$output[$a1[$i]] = $a2[$i];
+</pre></td></tr><tr><td class="line-number">186</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">187</td><td class="code green"><pre>		return $output;
+</pre></td></tr><tr><td class="line-number">188</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">189</td><td class="code green"><pre>}
+</pre></td></tr><tr><td class="line-number">190</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">191</td><td class="code green"><pre> * Convenience method for htmlspecialchars.
+</pre></td></tr><tr><td class="line-number">192</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">193</td><td class="code green"><pre> * @param string $text Text to wrap through htmlspecialchars
+</pre></td></tr><tr><td class="line-number">194</td><td class="code green"><pre> * @param string $charset Character set to use when escaping.  Defaults to config value in 'App.encoding' or 'UTF-8'
+</pre></td></tr><tr><td class="line-number">195</td><td class="code green"><pre> * @return string Wrapped text
+</pre></td></tr><tr><td class="line-number">196</td><td class="code green"><pre> * @link http://book.cakephp.org/view/703/h
+</pre></td></tr><tr><td class="line-number">197</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">198</td><td class="code green"><pre>	function h($text, $charset = null) {
+</pre></td></tr><tr><td class="line-number">199</td><td class="code red"><pre>		if (is_array($text)) {
+</pre></td></tr><tr><td class="line-number">200</td><td class="code green"><pre>			return array_map('h', $text);
+</pre></td></tr><tr><td class="line-number">201</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">202</td><td class="code green"><pre>		if (empty($charset)) {
+</pre></td></tr><tr><td class="line-number">203</td><td class="code green"><pre>			$charset = Configure::read('App.encoding');
+</pre></td></tr><tr><td class="line-number">204</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">205</td><td class="code green"><pre>		if (empty($charset)) {
+</pre></td></tr><tr><td class="line-number">206</td><td class="code green"><pre>			$charset = 'UTF-8';
+</pre></td></tr><tr><td class="line-number">207</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">208</td><td class="code green"><pre>		return htmlspecialchars($text, ENT_QUOTES, $charset);
+</pre></td></tr><tr><td class="line-number">209</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">210</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">211</td><td class="code green"><pre> * Returns an array of all the given parameters.
+</pre></td></tr><tr><td class="line-number">212</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">213</td><td class="code green"><pre> * Example:
+</pre></td></tr><tr><td class="line-number">214</td><td class="code green"><pre> * <code>
+</pre></td></tr><tr><td class="line-number">215</td><td class="code green"><pre> * a('a', 'b')
+</pre></td></tr><tr><td class="line-number">216</td><td class="code green"><pre> * </code>
+</pre></td></tr><tr><td class="line-number">217</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">218</td><td class="code green"><pre> * Would return:
+</pre></td></tr><tr><td class="line-number">219</td><td class="code green"><pre> * <code>
+</pre></td></tr><tr><td class="line-number">220</td><td class="code green"><pre> * array('a', 'b')
+</pre></td></tr><tr><td class="line-number">221</td><td class="code green"><pre> * </code>
+</pre></td></tr><tr><td class="line-number">222</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">223</td><td class="code green"><pre> * @return array Array of given parameters
+</pre></td></tr><tr><td class="line-number">224</td><td class="code green"><pre> * @link http://book.cakephp.org/view/694/a
+</pre></td></tr><tr><td class="line-number">225</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">226</td><td class="code green"><pre>	function a() {
+</pre></td></tr><tr><td class="line-number">227</td><td class="code red"><pre>		$args = func_get_args();
+</pre></td></tr><tr><td class="line-number">228</td><td class="code green"><pre>		return $args;
+</pre></td></tr><tr><td class="line-number">229</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">230</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">231</td><td class="code green"><pre> * Constructs associative array from pairs of arguments.
+</pre></td></tr><tr><td class="line-number">232</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">233</td><td class="code green"><pre> * Example:
+</pre></td></tr><tr><td class="line-number">234</td><td class="code green"><pre> * <code>
+</pre></td></tr><tr><td class="line-number">235</td><td class="code green"><pre> * aa('a','b')
+</pre></td></tr><tr><td class="line-number">236</td><td class="code green"><pre> * </code>
+</pre></td></tr><tr><td class="line-number">237</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">238</td><td class="code green"><pre> * Would return:
+</pre></td></tr><tr><td class="line-number">239</td><td class="code green"><pre> * <code>
+</pre></td></tr><tr><td class="line-number">240</td><td class="code green"><pre> * array('a'=>'b')
+</pre></td></tr><tr><td class="line-number">241</td><td class="code green"><pre> * </code>
+</pre></td></tr><tr><td class="line-number">242</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">243</td><td class="code green"><pre> * @return array Associative array
+</pre></td></tr><tr><td class="line-number">244</td><td class="code green"><pre> * @link http://book.cakephp.org/view/695/aa
+</pre></td></tr><tr><td class="line-number">245</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">246</td><td class="code green"><pre>	function aa() {
+</pre></td></tr><tr><td class="line-number">247</td><td class="code red"><pre>		$args = func_get_args();
+</pre></td></tr><tr><td class="line-number">248</td><td class="code green"><pre>		$argc = count($args);
+</pre></td></tr><tr><td class="line-number">249</td><td class="code green"><pre>		for ($i = 0; $i < $argc; $i++) {
+</pre></td></tr><tr><td class="line-number">250</td><td class="code green"><pre>			if ($i + 1 < $argc) {
+</pre></td></tr><tr><td class="line-number">251</td><td class="code green"><pre>				$a[$args[$i]] = $args[$i + 1];
+</pre></td></tr><tr><td class="line-number">252</td><td class="code green"><pre>			} else {
+</pre></td></tr><tr><td class="line-number">253</td><td class="code green"><pre>				$a[$args[$i]] = null;
+</pre></td></tr><tr><td class="line-number">254</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">255</td><td class="code green"><pre>			$i++;
+</pre></td></tr><tr><td class="line-number">256</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">257</td><td class="code green"><pre>		return $a;
+</pre></td></tr><tr><td class="line-number">258</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">259</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">260</td><td class="code green"><pre> * Convenience method for echo().
+</pre></td></tr><tr><td class="line-number">261</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">262</td><td class="code green"><pre> * @param string $text String to echo
+</pre></td></tr><tr><td class="line-number">263</td><td class="code green"><pre> * @link http://book.cakephp.org/view/700/e
+</pre></td></tr><tr><td class="line-number">264</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">265</td><td class="code green"><pre>	function e($text) {
+</pre></td></tr><tr><td class="line-number">266</td><td class="code red"><pre>		echo $text;
+</pre></td></tr><tr><td class="line-number">267</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">268</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">269</td><td class="code green"><pre> * Convenience method for strtolower().
+</pre></td></tr><tr><td class="line-number">270</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">271</td><td class="code green"><pre> * @param string $str String to lowercase
+</pre></td></tr><tr><td class="line-number">272</td><td class="code green"><pre> * @return string Lowercased string
+</pre></td></tr><tr><td class="line-number">273</td><td class="code green"><pre> * @link http://book.cakephp.org/view/705/low
+</pre></td></tr><tr><td class="line-number">274</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">275</td><td class="code green"><pre>	function low($str) {
+</pre></td></tr><tr><td class="line-number">276</td><td class="code red"><pre>		return strtolower($str);
+</pre></td></tr><tr><td class="line-number">277</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">278</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">279</td><td class="code green"><pre> * Convenience method for strtoupper().
+</pre></td></tr><tr><td class="line-number">280</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">281</td><td class="code green"><pre> * @param string $str String to uppercase
+</pre></td></tr><tr><td class="line-number">282</td><td class="code green"><pre> * @return string Uppercased string
+</pre></td></tr><tr><td class="line-number">283</td><td class="code green"><pre> * @link http://book.cakephp.org/view/710/up
+</pre></td></tr><tr><td class="line-number">284</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">285</td><td class="code green"><pre>	function up($str) {
+</pre></td></tr><tr><td class="line-number">286</td><td class="code red"><pre>		return strtoupper($str);
+</pre></td></tr><tr><td class="line-number">287</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">288</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">289</td><td class="code green"><pre> * Convenience method for str_replace().
+</pre></td></tr><tr><td class="line-number">290</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">291</td><td class="code green"><pre> * @param string $search String to be replaced
+</pre></td></tr><tr><td class="line-number">292</td><td class="code green"><pre> * @param string $replace String to insert
+</pre></td></tr><tr><td class="line-number">293</td><td class="code green"><pre> * @param string $subject String to search
+</pre></td></tr><tr><td class="line-number">294</td><td class="code green"><pre> * @return string Replaced string
+</pre></td></tr><tr><td class="line-number">295</td><td class="code green"><pre> * @link http://book.cakephp.org/view/708/r
+</pre></td></tr><tr><td class="line-number">296</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">297</td><td class="code green"><pre>	function r($search, $replace, $subject) {
+</pre></td></tr><tr><td class="line-number">298</td><td class="code red"><pre>		return str_replace($search, $replace, $subject);
+</pre></td></tr><tr><td class="line-number">299</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">300</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">301</td><td class="code green"><pre> * Print_r convenience function, which prints out <PRE> tags around
+</pre></td></tr><tr><td class="line-number">302</td><td class="code green"><pre> * the output of given array. Similar to debug().
+</pre></td></tr><tr><td class="line-number">303</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">304</td><td class="code green"><pre> * @see	debug()
+</pre></td></tr><tr><td class="line-number">305</td><td class="code green"><pre> * @param array $var Variable to print out
+</pre></td></tr><tr><td class="line-number">306</td><td class="code green"><pre> * @param boolean $showFrom If set to true, the method prints from where the function was called
+</pre></td></tr><tr><td class="line-number">307</td><td class="code green"><pre> * @link http://book.cakephp.org/view/707/pr
+</pre></td></tr><tr><td class="line-number">308</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">309</td><td class="code green"><pre>	function pr($var) {
+</pre></td></tr><tr><td class="line-number">310</td><td class="code red"><pre>		if (Configure::read() > 0) {
+</pre></td></tr><tr><td class="line-number">311</td><td class="code green"><pre>			echo '<pre>';
+</pre></td></tr><tr><td class="line-number">312</td><td class="code green"><pre>			print_r($var);
+</pre></td></tr><tr><td class="line-number">313</td><td class="code green"><pre>			echo '</pre>';
+</pre></td></tr><tr><td class="line-number">314</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">315</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">316</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">317</td><td class="code green"><pre> * Display parameters.
+</pre></td></tr><tr><td class="line-number">318</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">319</td><td class="code green"><pre> * @param mixed $p Parameter as string or array
+</pre></td></tr><tr><td class="line-number">320</td><td class="code green"><pre> * @return string
+</pre></td></tr><tr><td class="line-number">321</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">322</td><td class="code green"><pre>	function params($p) {
+</pre></td></tr><tr><td class="line-number">323</td><td class="code red"><pre>		if (!is_array($p) || count($p) == 0) {
+</pre></td></tr><tr><td class="line-number">324</td><td class="code green"><pre>			return null;
+</pre></td></tr><tr><td class="line-number">325</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">326</td><td class="code green"><pre>		if (is_array($p[0]) && count($p) == 1) {
+</pre></td></tr><tr><td class="line-number">327</td><td class="code green"><pre>			return $p[0];
+</pre></td></tr><tr><td class="line-number">328</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">329</td><td class="code green"><pre>		return $p;
+</pre></td></tr><tr><td class="line-number">330</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">331</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">332</td><td class="code green"><pre> * Merge a group of arrays
+</pre></td></tr><tr><td class="line-number">333</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">334</td><td class="code green"><pre> * @param array First array
+</pre></td></tr><tr><td class="line-number">335</td><td class="code green"><pre> * @param array Second array
+</pre></td></tr><tr><td class="line-number">336</td><td class="code green"><pre> * @param array Third array
+</pre></td></tr><tr><td class="line-number">337</td><td class="code green"><pre> * @param array Etc...
+</pre></td></tr><tr><td class="line-number">338</td><td class="code green"><pre> * @return array All array parameters merged into one
+</pre></td></tr><tr><td class="line-number">339</td><td class="code green"><pre> * @link http://book.cakephp.org/view/696/am
+</pre></td></tr><tr><td class="line-number">340</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">341</td><td class="code green"><pre>	function am() {
+</pre></td></tr><tr><td class="line-number">342</td><td class="code red"><pre>		$r = array();
+</pre></td></tr><tr><td class="line-number">343</td><td class="code green"><pre>		$args = func_get_args();
+</pre></td></tr><tr><td class="line-number">344</td><td class="code green"><pre>		foreach ($args as $a) {
+</pre></td></tr><tr><td class="line-number">345</td><td class="code green"><pre>			if (!is_array($a)) {
+</pre></td></tr><tr><td class="line-number">346</td><td class="code green"><pre>				$a = array($a);
+</pre></td></tr><tr><td class="line-number">347</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">348</td><td class="code green"><pre>			$r = array_merge($r, $a);
+</pre></td></tr><tr><td class="line-number">349</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">350</td><td class="code green"><pre>		return $r;
+</pre></td></tr><tr><td class="line-number">351</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">352</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">353</td><td class="code green"><pre> * Gets an environment variable from available sources, and provides emulation
+</pre></td></tr><tr><td class="line-number">354</td><td class="code green"><pre> * for unsupported or inconsistent environment variables (i.e. DOCUMENT_ROOT on
+</pre></td></tr><tr><td class="line-number">355</td><td class="code green"><pre> * IIS, or SCRIPT_NAME in CGI mode).  Also exposes some additional custom
+</pre></td></tr><tr><td class="line-number">356</td><td class="code green"><pre> * environment information.
+</pre></td></tr><tr><td class="line-number">357</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">358</td><td class="code green"><pre> * @param  string $key Environment variable name.
+</pre></td></tr><tr><td class="line-number">359</td><td class="code green"><pre> * @return string Environment variable setting.
+</pre></td></tr><tr><td class="line-number">360</td><td class="code green"><pre> * @link http://book.cakephp.org/view/701/env
+</pre></td></tr><tr><td class="line-number">361</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">362</td><td class="code green"><pre>	function env($key) {	  
+</pre></td></tr><tr><td class="line-number">363</td><td class="code red"><pre>		if ($key == 'HTTPS') {
+</pre></td></tr><tr><td class="line-number">364</td><td class="code red"><pre>			if (isset($_SERVER) && !empty($_SERVER)) {
+</pre></td></tr><tr><td class="line-number">365</td><td class="code green"><pre>				return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on');
+</pre></td></tr><tr><td class="line-number">366</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">367</td><td class="code green"><pre>			return (strpos(env('SCRIPT_URI'), 'https://') === 0);
+</pre></td></tr><tr><td class="line-number">368</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">369</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">370</td><td class="code green"><pre>		if ($key == 'SCRIPT_NAME') {
+</pre></td></tr><tr><td class="line-number">371</td><td class="code red"><pre>			if (env('CGI_MODE') && isset($_ENV['SCRIPT_URL'])) {
+</pre></td></tr><tr><td class="line-number">372</td><td class="code green"><pre>				$key = 'SCRIPT_URL';
+</pre></td></tr><tr><td class="line-number">373</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">374</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">375</td><td class="code green"><pre>	
+</pre></td></tr><tr><td class="line-number">376</td><td class="code green"><pre>		$val = null;
+</pre></td></tr><tr><td class="line-number">377</td><td class="code red"><pre>		if (isset($_SERVER[$key])) {
+</pre></td></tr><tr><td class="line-number">378</td><td class="code red"><pre>			$val = $_SERVER[$key];
+</pre></td></tr><tr><td class="line-number">379</td><td class="code red"><pre>		} elseif (isset($_ENV[$key])) {
+</pre></td></tr><tr><td class="line-number">380</td><td class="code red"><pre>			$val = $_ENV[$key];
+</pre></td></tr><tr><td class="line-number">381</td><td class="code green"><pre>		} elseif (getenv($key) !== false) {
+</pre></td></tr><tr><td class="line-number">382</td><td class="code red"><pre>			$val = getenv($key);
+</pre></td></tr><tr><td class="line-number">383</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">384</td><td class="code green"><pre>		
+</pre></td></tr><tr><td class="line-number">385</td><td class="code green"><pre>		if ($key === 'REMOTE_ADDR' && $val === env('SERVER_ADDR')) {
+</pre></td></tr><tr><td class="line-number">386</td><td class="code red"><pre>			$addr = env('HTTP_PC_REMOTE_ADDR');
+</pre></td></tr><tr><td class="line-number">387</td><td class="code green"><pre>			if ($addr !== null) {
+</pre></td></tr><tr><td class="line-number">388</td><td class="code green"><pre>				$val = $addr;
+</pre></td></tr><tr><td class="line-number">389</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">390</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">391</td><td class="code green"><pre>    
+</pre></td></tr><tr><td class="line-number">392</td><td class="code green"><pre>		if ($val !== null) {
+</pre></td></tr><tr><td class="line-number">393</td><td class="code red"><pre>			return $val;
+</pre></td></tr><tr><td class="line-number">394</td><td class="code red"><pre>		}
+</pre></td></tr><tr><td class="line-number">395</td><td class="code green"><pre>    
+</pre></td></tr><tr><td class="line-number">396</td><td class="code green"><pre>		switch ($key) {
+</pre></td></tr><tr><td class="line-number">397</td><td class="code green"><pre>			case 'SCRIPT_FILENAME':
+</pre></td></tr><tr><td class="line-number">398</td><td class="code red"><pre>				if (defined('SERVER_IIS') && SERVER_IIS === true) {
+</pre></td></tr><tr><td class="line-number">399</td><td class="code green"><pre>					return str_replace('\\\\', '\\', env('PATH_TRANSLATED'));
+</pre></td></tr><tr><td class="line-number">400</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">401</td><td class="code green"><pre>			break;
+</pre></td></tr><tr><td class="line-number">402</td><td class="code green"><pre>			case 'DOCUMENT_ROOT':
+</pre></td></tr><tr><td class="line-number">403</td><td class="code red"><pre>				$name = env('SCRIPT_NAME');
+</pre></td></tr><tr><td class="line-number">404</td><td class="code green"><pre>				$filename = env('SCRIPT_FILENAME');
+</pre></td></tr><tr><td class="line-number">405</td><td class="code green"><pre>				$offset = 0;
+</pre></td></tr><tr><td class="line-number">406</td><td class="code green"><pre>				if (!strpos($name, '.php')) {
+</pre></td></tr><tr><td class="line-number">407</td><td class="code green"><pre>					$offset = 4;
+</pre></td></tr><tr><td class="line-number">408</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">409</td><td class="code green"><pre>				return substr($filename, 0, strlen($filename) - (strlen($name) + $offset));
+</pre></td></tr><tr><td class="line-number">410</td><td class="code green"><pre>			break;
+</pre></td></tr><tr><td class="line-number">411</td><td class="code green"><pre>			case 'PHP_SELF':
+</pre></td></tr><tr><td class="line-number">412</td><td class="code red"><pre>				return str_replace(env('DOCUMENT_ROOT'), '', env('SCRIPT_FILENAME'));
+</pre></td></tr><tr><td class="line-number">413</td><td class="code green"><pre>			break;
+</pre></td></tr><tr><td class="line-number">414</td><td class="code green"><pre>			case 'CGI_MODE':
+</pre></td></tr><tr><td class="line-number">415</td><td class="code red"><pre>				return (PHP_SAPI === 'cgi');
+</pre></td></tr><tr><td class="line-number">416</td><td class="code green"><pre>			break;
+</pre></td></tr><tr><td class="line-number">417</td><td class="code green"><pre>			case 'HTTP_BASE':
+</pre></td></tr><tr><td class="line-number">418</td><td class="code red"><pre>				$host = env('HTTP_HOST');
+</pre></td></tr><tr><td class="line-number">419</td><td class="code green"><pre>				if (substr_count($host, '.') !== 1) {
+</pre></td></tr><tr><td class="line-number">420</td><td class="code green"><pre>					return preg_replace('/^([^.])*/i', null, env('HTTP_HOST'));
+</pre></td></tr><tr><td class="line-number">421</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">422</td><td class="code green"><pre>			return '.' . $host;
+</pre></td></tr><tr><td class="line-number">423</td><td class="code green"><pre>			break;
+</pre></td></tr><tr><td class="line-number">424</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">425</td><td class="code green"><pre>		return null;
+</pre></td></tr><tr><td class="line-number">426</td><td class="code red"><pre>	}
+</pre></td></tr><tr><td class="line-number">427</td><td class="code green"><pre>if (!function_exists('file_put_contents')) {
+</pre></td></tr><tr><td class="line-number">428</td><td class="code red"><pre>/**
+</pre></td></tr><tr><td class="line-number">429</td><td class="code green"><pre> * Writes data into file.
+</pre></td></tr><tr><td class="line-number">430</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">431</td><td class="code green"><pre> * If file exists, it will be overwritten. If data is an array, it will be join()ed with an empty string.
+</pre></td></tr><tr><td class="line-number">432</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">433</td><td class="code green"><pre> * @param string $fileName File name.
+</pre></td></tr><tr><td class="line-number">434</td><td class="code green"><pre> * @param mixed  $data String or array.
+</pre></td></tr><tr><td class="line-number">435</td><td class="code green"><pre> * @return boolean Success
+</pre></td></tr><tr><td class="line-number">436</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">437</td><td class="code green"><pre>	function file_put_contents($fileName, $data) {
+</pre></td></tr><tr><td class="line-number">438</td><td class="code green"><pre>		if (is_array($data)) {
+</pre></td></tr><tr><td class="line-number">439</td><td class="code green"><pre>			$data = join('', $data);
+</pre></td></tr><tr><td class="line-number">440</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">441</td><td class="code green"><pre>		$res = @fopen($fileName, 'w+b');
+</pre></td></tr><tr><td class="line-number">442</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">443</td><td class="code green"><pre>		if ($res) {
+</pre></td></tr><tr><td class="line-number">444</td><td class="code green"><pre>			$write = @fwrite($res, $data);
+</pre></td></tr><tr><td class="line-number">445</td><td class="code green"><pre>			if ($write === false) {
+</pre></td></tr><tr><td class="line-number">446</td><td class="code green"><pre>				return false;
+</pre></td></tr><tr><td class="line-number">447</td><td class="code green"><pre>			} else {
+</pre></td></tr><tr><td class="line-number">448</td><td class="code green"><pre>				@fclose($res);
+</pre></td></tr><tr><td class="line-number">449</td><td class="code green"><pre>				return $write;
+</pre></td></tr><tr><td class="line-number">450</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">451</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">452</td><td class="code green"><pre>		return false;
+</pre></td></tr><tr><td class="line-number">453</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">454</td><td class="code green"><pre>}
+</pre></td></tr><tr><td class="line-number">455</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">456</td><td class="code green"><pre> * Reads/writes temporary data to cache files or session.
+</pre></td></tr><tr><td class="line-number">457</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">458</td><td class="code green"><pre> * @param  string $path	File path within /tmp to save the file.
+</pre></td></tr><tr><td class="line-number">459</td><td class="code green"><pre> * @param  mixed  $data	The data to save to the temporary file.
+</pre></td></tr><tr><td class="line-number">460</td><td class="code green"><pre> * @param  mixed  $expires A valid strtotime string when the data expires.
+</pre></td></tr><tr><td class="line-number">461</td><td class="code green"><pre> * @param  string $target  The target of the cached data; either 'cache' or 'public'.
+</pre></td></tr><tr><td class="line-number">462</td><td class="code green"><pre> * @return mixed  The contents of the temporary file.
+</pre></td></tr><tr><td class="line-number">463</td><td class="code green"><pre> * @deprecated Please use Cache::write() instead
+</pre></td></tr><tr><td class="line-number">464</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">465</td><td class="code green"><pre>	function cache($path, $data = null, $expires = '+1 day', $target = 'cache') {
+</pre></td></tr><tr><td class="line-number">466</td><td class="code red"><pre>		if (Configure::read('Cache.disable')) {
+</pre></td></tr><tr><td class="line-number">467</td><td class="code green"><pre>			return null;
+</pre></td></tr><tr><td class="line-number">468</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">469</td><td class="code green"><pre>		$now = time();
+</pre></td></tr><tr><td class="line-number">470</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">471</td><td class="code green"><pre>		if (!is_numeric($expires)) {
+</pre></td></tr><tr><td class="line-number">472</td><td class="code green"><pre>			$expires = strtotime($expires, $now);
+</pre></td></tr><tr><td class="line-number">473</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">474</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">475</td><td class="code green"><pre>		switch (low($target)) {
+</pre></td></tr><tr><td class="line-number">476</td><td class="code green"><pre>			case 'cache':
+</pre></td></tr><tr><td class="line-number">477</td><td class="code green"><pre>				$filename = CACHE . $path;
+</pre></td></tr><tr><td class="line-number">478</td><td class="code green"><pre>			break;
+</pre></td></tr><tr><td class="line-number">479</td><td class="code green"><pre>			case 'public':
+</pre></td></tr><tr><td class="line-number">480</td><td class="code green"><pre>				$filename = WWW_ROOT . $path;
+</pre></td></tr><tr><td class="line-number">481</td><td class="code green"><pre>			break;
+</pre></td></tr><tr><td class="line-number">482</td><td class="code green"><pre>			case 'tmp':
+</pre></td></tr><tr><td class="line-number">483</td><td class="code green"><pre>				$filename = TMP . $path;
+</pre></td></tr><tr><td class="line-number">484</td><td class="code green"><pre>			break;
+</pre></td></tr><tr><td class="line-number">485</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">486</td><td class="code green"><pre>		$timediff = $expires - $now;
+</pre></td></tr><tr><td class="line-number">487</td><td class="code green"><pre>		$filetime = false;
+</pre></td></tr><tr><td class="line-number">488</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">489</td><td class="code green"><pre>		if (file_exists($filename)) {
+</pre></td></tr><tr><td class="line-number">490</td><td class="code green"><pre>			$filetime = @filemtime($filename);
+</pre></td></tr><tr><td class="line-number">491</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">492</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">493</td><td class="code green"><pre>		if ($data === null) {
+</pre></td></tr><tr><td class="line-number">494</td><td class="code green"><pre>			if (file_exists($filename) && $filetime !== false) {
+</pre></td></tr><tr><td class="line-number">495</td><td class="code green"><pre>				if ($filetime + $timediff < $now) {
+</pre></td></tr><tr><td class="line-number">496</td><td class="code green"><pre>					@unlink($filename);
+</pre></td></tr><tr><td class="line-number">497</td><td class="code green"><pre>				} else {
+</pre></td></tr><tr><td class="line-number">498</td><td class="code green"><pre>					$data = @file_get_contents($filename);
+</pre></td></tr><tr><td class="line-number">499</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">500</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">501</td><td class="code green"><pre>		} elseif (is_writable(dirname($filename))) {
+</pre></td></tr><tr><td class="line-number">502</td><td class="code green"><pre>			@file_put_contents($filename, $data);
+</pre></td></tr><tr><td class="line-number">503</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">504</td><td class="code green"><pre>		return $data;
+</pre></td></tr><tr><td class="line-number">505</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">506</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">507</td><td class="code green"><pre> * Used to delete files in the cache directories, or clear contents of cache directories
+</pre></td></tr><tr><td class="line-number">508</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">509</td><td class="code green"><pre> * @param mixed $params As String name to be searched for deletion, if name is a directory all files in directory will be deleted.
+</pre></td></tr><tr><td class="line-number">510</td><td class="code green"><pre> *              If array, names to be searched for deletion.
+</pre></td></tr><tr><td class="line-number">511</td><td class="code green"><pre> *              If clearCache() without params, all files in app/tmp/cache/views will be deleted
+</pre></td></tr><tr><td class="line-number">512</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">513</td><td class="code green"><pre> * @param string $type Directory in tmp/cache defaults to view directory
+</pre></td></tr><tr><td class="line-number">514</td><td class="code green"><pre> * @param string $ext The file extension you are deleting
+</pre></td></tr><tr><td class="line-number">515</td><td class="code green"><pre> * @return true if files found and deleted false otherwise
+</pre></td></tr><tr><td class="line-number">516</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">517</td><td class="code green"><pre>	function clearCache($params = null, $type = 'views', $ext = '.php') {
+</pre></td></tr><tr><td class="line-number">518</td><td class="code red"><pre>		if (is_string($params) || $params === null) {
+</pre></td></tr><tr><td class="line-number">519</td><td class="code green"><pre>			$params = preg_replace('/\/\//', '/', $params);
+</pre></td></tr><tr><td class="line-number">520</td><td class="code green"><pre>			$cache = CACHE . $type . DS . $params;
+</pre></td></tr><tr><td class="line-number">521</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">522</td><td class="code green"><pre>			if (is_file($cache . $ext)) {
+</pre></td></tr><tr><td class="line-number">523</td><td class="code green"><pre>				@unlink($cache . $ext);
+</pre></td></tr><tr><td class="line-number">524</td><td class="code green"><pre>				return true;
+</pre></td></tr><tr><td class="line-number">525</td><td class="code green"><pre>			} elseif (is_dir($cache)) {
+</pre></td></tr><tr><td class="line-number">526</td><td class="code green"><pre>				$files = glob($cache . '*');
+</pre></td></tr><tr><td class="line-number">527</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">528</td><td class="code green"><pre>				if ($files === false) {
+</pre></td></tr><tr><td class="line-number">529</td><td class="code green"><pre>					return false;
+</pre></td></tr><tr><td class="line-number">530</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">531</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">532</td><td class="code green"><pre>				foreach ($files as $file) {
+</pre></td></tr><tr><td class="line-number">533</td><td class="code green"><pre>					if (is_file($file)) {
+</pre></td></tr><tr><td class="line-number">534</td><td class="code green"><pre>						@unlink($file);
+</pre></td></tr><tr><td class="line-number">535</td><td class="code green"><pre>					}
+</pre></td></tr><tr><td class="line-number">536</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">537</td><td class="code green"><pre>				return true;
+</pre></td></tr><tr><td class="line-number">538</td><td class="code green"><pre>			} else {
+</pre></td></tr><tr><td class="line-number">539</td><td class="code green"><pre>				$cache = array(
+</pre></td></tr><tr><td class="line-number">540</td><td class="code green"><pre>					CACHE . $type . DS . '*' . $params . $ext,
+</pre></td></tr><tr><td class="line-number">541</td><td class="code green"><pre>					CACHE . $type . DS . '*' . $params . '_*' . $ext
+</pre></td></tr><tr><td class="line-number">542</td><td class="code green"><pre>				);
+</pre></td></tr><tr><td class="line-number">543</td><td class="code green"><pre>				$files = array();
+</pre></td></tr><tr><td class="line-number">544</td><td class="code green"><pre>				while ($search = array_shift($cache)) {
+</pre></td></tr><tr><td class="line-number">545</td><td class="code green"><pre>					$results = glob($search);
+</pre></td></tr><tr><td class="line-number">546</td><td class="code green"><pre>					if ($results !== false) {
+</pre></td></tr><tr><td class="line-number">547</td><td class="code green"><pre>						$files = array_merge($files, $results);
+</pre></td></tr><tr><td class="line-number">548</td><td class="code green"><pre>					}
+</pre></td></tr><tr><td class="line-number">549</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">550</td><td class="code green"><pre>				if (empty($files)) {
+</pre></td></tr><tr><td class="line-number">551</td><td class="code green"><pre>					return false;
+</pre></td></tr><tr><td class="line-number">552</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">553</td><td class="code green"><pre>				foreach ($files as $file) {
+</pre></td></tr><tr><td class="line-number">554</td><td class="code green"><pre>					if (is_file($file)) {
+</pre></td></tr><tr><td class="line-number">555</td><td class="code green"><pre>						@unlink($file);
+</pre></td></tr><tr><td class="line-number">556</td><td class="code green"><pre>					}
+</pre></td></tr><tr><td class="line-number">557</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">558</td><td class="code green"><pre>				return true;
+</pre></td></tr><tr><td class="line-number">559</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">560</td><td class="code green"><pre>		} elseif (is_array($params)) {
+</pre></td></tr><tr><td class="line-number">561</td><td class="code green"><pre>			foreach ($params as $file) {
+</pre></td></tr><tr><td class="line-number">562</td><td class="code green"><pre>				clearCache($file, $type, $ext);
+</pre></td></tr><tr><td class="line-number">563</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">564</td><td class="code green"><pre>			return true;
+</pre></td></tr><tr><td class="line-number">565</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">566</td><td class="code green"><pre>		return false;
+</pre></td></tr><tr><td class="line-number">567</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">568</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">569</td><td class="code green"><pre> * Recursively strips slashes from all values in an array
+</pre></td></tr><tr><td class="line-number">570</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">571</td><td class="code green"><pre> * @param array $values Array of values to strip slashes
+</pre></td></tr><tr><td class="line-number">572</td><td class="code green"><pre> * @return mixed What is returned from calling stripslashes
+</pre></td></tr><tr><td class="line-number">573</td><td class="code green"><pre> * @link http://book.cakephp.org/view/709/stripslashes_deep
+</pre></td></tr><tr><td class="line-number">574</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">575</td><td class="code green"><pre>	function stripslashes_deep($values) {
+</pre></td></tr><tr><td class="line-number">576</td><td class="code red"><pre>		if (is_array($values)) {
+</pre></td></tr><tr><td class="line-number">577</td><td class="code red"><pre>			foreach ($values as $key => $value) {
+</pre></td></tr><tr><td class="line-number">578</td><td class="code red"><pre>				$values[$key] = stripslashes_deep($value);
+</pre></td></tr><tr><td class="line-number">579</td><td class="code red"><pre>			}
+</pre></td></tr><tr><td class="line-number">580</td><td class="code red"><pre>		} else {
+</pre></td></tr><tr><td class="line-number">581</td><td class="code red"><pre>			$values = stripslashes($values);
+</pre></td></tr><tr><td class="line-number">582</td><td class="code red"><pre>		}
+</pre></td></tr><tr><td class="line-number">583</td><td class="code green"><pre>		return $values;
+</pre></td></tr><tr><td class="line-number">584</td><td class="code red"><pre>	}
+</pre></td></tr><tr><td class="line-number">585</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">586</td><td class="code green"><pre> * Returns a translated string if one is found; Otherwise, the submitted message.
+</pre></td></tr><tr><td class="line-number">587</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">588</td><td class="code green"><pre> * @param string $singular Text to translate
+</pre></td></tr><tr><td class="line-number">589</td><td class="code green"><pre> * @param boolean $return Set to true to return translated string, or false to echo
+</pre></td></tr><tr><td class="line-number">590</td><td class="code green"><pre> * @return mixed translated string if $return is false string will be echoed
+</pre></td></tr><tr><td class="line-number">591</td><td class="code green"><pre> * @link http://book.cakephp.org/view/693/__
+</pre></td></tr><tr><td class="line-number">592</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">593</td><td class="code green"><pre>	function __($singular, $return = false) {
+</pre></td></tr><tr><td class="line-number">594</td><td class="code red"><pre>	  if (!$singular) {
+</pre></td></tr><tr><td class="line-number">595</td><td class="code green"><pre>			return;
+</pre></td></tr><tr><td class="line-number">596</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">597</td><td class="code green"><pre>		if($return === false) {
+</pre></td></tr><tr><td class="line-number">598</td><td class="code green"><pre>	    echo $singular;
+</pre></td></tr><tr><td class="line-number">599</td><td class="code green"><pre>	  } else {
+</pre></td></tr><tr><td class="line-number">600</td><td class="code green"><pre>	    return $singular;
+</pre></td></tr><tr><td class="line-number">601</td><td class="code green"><pre>	  }
+</pre></td></tr><tr><td class="line-number">602</td><td class="code green"><pre>	  
+</pre></td></tr><tr><td class="line-number">603</td><td class="code green"><pre>	  
+</pre></td></tr><tr><td class="line-number">604</td><td class="code green"><pre>		if (!class_exists('I18n')) {
+</pre></td></tr><tr><td class="line-number">605</td><td class="code green"><pre>			//App::import('Core', 'i18n');
+</pre></td></tr><tr><td class="line-number">606</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">607</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">608</td><td class="code green"><pre>		if ($return === false) {
+</pre></td></tr><tr><td class="line-number">609</td><td class="code green"><pre>			echo I18n::translate($singular);
+</pre></td></tr><tr><td class="line-number">610</td><td class="code green"><pre>		} else {
+</pre></td></tr><tr><td class="line-number">611</td><td class="code green"><pre>			return I18n::translate($singular);
+</pre></td></tr><tr><td class="line-number">612</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">613</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">614</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">615</td><td class="code green"><pre> * Returns correct plural form of message identified by $singular and $plural for count $count.
+</pre></td></tr><tr><td class="line-number">616</td><td class="code green"><pre> * Some languages have more than one form for plural messages dependent on the count.
+</pre></td></tr><tr><td class="line-number">617</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">618</td><td class="code green"><pre> * @param string $singular Singular text to translate
+</pre></td></tr><tr><td class="line-number">619</td><td class="code green"><pre> * @param string $plural Plural text
+</pre></td></tr><tr><td class="line-number">620</td><td class="code green"><pre> * @param integer $count Count
+</pre></td></tr><tr><td class="line-number">621</td><td class="code green"><pre> * @param boolean $return true to return, false to echo
+</pre></td></tr><tr><td class="line-number">622</td><td class="code green"><pre> * @return mixed plural form of translated string if $return is false string will be echoed
+</pre></td></tr><tr><td class="line-number">623</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">624</td><td class="code green"><pre>	function __n($singular, $plural, $count, $return = false) {
+</pre></td></tr><tr><td class="line-number">625</td><td class="code red"><pre>		if (!$singular) {
+</pre></td></tr><tr><td class="line-number">626</td><td class="code green"><pre>			return;
+</pre></td></tr><tr><td class="line-number">627</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">628</td><td class="code green"><pre>		if (!class_exists('I18n')) {
+</pre></td></tr><tr><td class="line-number">629</td><td class="code green"><pre>			App::import('Core', 'i18n');
+</pre></td></tr><tr><td class="line-number">630</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">631</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">632</td><td class="code green"><pre>		if ($return === false) {
+</pre></td></tr><tr><td class="line-number">633</td><td class="code green"><pre>			echo I18n::translate($singular, $plural, null, 5, $count);
+</pre></td></tr><tr><td class="line-number">634</td><td class="code green"><pre>		} else {
+</pre></td></tr><tr><td class="line-number">635</td><td class="code green"><pre>			return I18n::translate($singular, $plural, null, 5, $count);
+</pre></td></tr><tr><td class="line-number">636</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">637</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">638</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">639</td><td class="code green"><pre> * Allows you to override the current domain for a single message lookup.
+</pre></td></tr><tr><td class="line-number">640</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">641</td><td class="code green"><pre> * @param string $domain Domain
+</pre></td></tr><tr><td class="line-number">642</td><td class="code green"><pre> * @param string $msg String to translate
+</pre></td></tr><tr><td class="line-number">643</td><td class="code green"><pre> * @param string $return true to return, false to echo
+</pre></td></tr><tr><td class="line-number">644</td><td class="code green"><pre> * @return translated string if $return is false string will be echoed
+</pre></td></tr><tr><td class="line-number">645</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">646</td><td class="code green"><pre>	function __d($domain, $msg, $return = false) {
+</pre></td></tr><tr><td class="line-number">647</td><td class="code red"><pre>		if (!$msg) {
+</pre></td></tr><tr><td class="line-number">648</td><td class="code green"><pre>			return;
+</pre></td></tr><tr><td class="line-number">649</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">650</td><td class="code green"><pre>		if (!class_exists('I18n')) {
+</pre></td></tr><tr><td class="line-number">651</td><td class="code green"><pre>			App::import('Core', 'i18n');
+</pre></td></tr><tr><td class="line-number">652</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">653</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">654</td><td class="code green"><pre>		if ($return === false) {
+</pre></td></tr><tr><td class="line-number">655</td><td class="code green"><pre>			echo I18n::translate($msg, null, $domain);
+</pre></td></tr><tr><td class="line-number">656</td><td class="code green"><pre>		} else {
+</pre></td></tr><tr><td class="line-number">657</td><td class="code green"><pre>			return I18n::translate($msg, null, $domain);
+</pre></td></tr><tr><td class="line-number">658</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">659</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">660</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">661</td><td class="code green"><pre> * Allows you to override the current domain for a single plural message lookup.
+</pre></td></tr><tr><td class="line-number">662</td><td class="code green"><pre> * Returns correct plural form of message identified by $singular and $plural for count $count
+</pre></td></tr><tr><td class="line-number">663</td><td class="code green"><pre> * from domain $domain.
+</pre></td></tr><tr><td class="line-number">664</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">665</td><td class="code green"><pre> * @param string $domain Domain
+</pre></td></tr><tr><td class="line-number">666</td><td class="code green"><pre> * @param string $singular Singular string to translate
+</pre></td></tr><tr><td class="line-number">667</td><td class="code green"><pre> * @param string $plural Plural
+</pre></td></tr><tr><td class="line-number">668</td><td class="code green"><pre> * @param integer $count Count
+</pre></td></tr><tr><td class="line-number">669</td><td class="code green"><pre> * @param boolean $return true to return, false to echo
+</pre></td></tr><tr><td class="line-number">670</td><td class="code green"><pre> * @return plural form of translated string if $return is false string will be echoed
+</pre></td></tr><tr><td class="line-number">671</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">672</td><td class="code green"><pre>	function __dn($domain, $singular, $plural, $count, $return = false) {
+</pre></td></tr><tr><td class="line-number">673</td><td class="code red"><pre>		if (!$singular) {
+</pre></td></tr><tr><td class="line-number">674</td><td class="code green"><pre>			return;
+</pre></td></tr><tr><td class="line-number">675</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">676</td><td class="code green"><pre>		if (!class_exists('I18n')) {
+</pre></td></tr><tr><td class="line-number">677</td><td class="code green"><pre>			App::import('Core', 'i18n');
+</pre></td></tr><tr><td class="line-number">678</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">679</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">680</td><td class="code green"><pre>		if ($return === false) {
+</pre></td></tr><tr><td class="line-number">681</td><td class="code green"><pre>			echo I18n::translate($singular, $plural, $domain, 5, $count);
+</pre></td></tr><tr><td class="line-number">682</td><td class="code green"><pre>		} else {
+</pre></td></tr><tr><td class="line-number">683</td><td class="code green"><pre>			return I18n::translate($singular, $plural, $domain, 5, $count);
+</pre></td></tr><tr><td class="line-number">684</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">685</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">686</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">687</td><td class="code green"><pre> * Allows you to override the current domain for a single message lookup.
+</pre></td></tr><tr><td class="line-number">688</td><td class="code green"><pre> * It also allows you to specify a category.
+</pre></td></tr><tr><td class="line-number">689</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">690</td><td class="code green"><pre> * The category argument allows a specific category of the locale settings to be used for fetching a message.
+</pre></td></tr><tr><td class="line-number">691</td><td class="code green"><pre> * Valid categories are: LC_CTYPE, LC_NUMERIC, LC_TIME, LC_COLLATE, LC_MONETARY, LC_MESSAGES and LC_ALL.
+</pre></td></tr><tr><td class="line-number">692</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">693</td><td class="code green"><pre> * Note that the category must be specified with a numeric value, instead of the constant name.  The values are:
+</pre></td></tr><tr><td class="line-number">694</td><td class="code green"><pre> * LC_CTYPE     0
+</pre></td></tr><tr><td class="line-number">695</td><td class="code green"><pre> * LC_NUMERIC   1
+</pre></td></tr><tr><td class="line-number">696</td><td class="code green"><pre> * LC_TIME      2
+</pre></td></tr><tr><td class="line-number">697</td><td class="code green"><pre> * LC_COLLATE   3
+</pre></td></tr><tr><td class="line-number">698</td><td class="code green"><pre> * LC_MONETARY  4
+</pre></td></tr><tr><td class="line-number">699</td><td class="code green"><pre> * LC_MESSAGES  5
+</pre></td></tr><tr><td class="line-number">700</td><td class="code green"><pre> * LC_ALL       6
+</pre></td></tr><tr><td class="line-number">701</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">702</td><td class="code green"><pre> * @param string $domain Domain
+</pre></td></tr><tr><td class="line-number">703</td><td class="code green"><pre> * @param string $msg Message to translate
+</pre></td></tr><tr><td class="line-number">704</td><td class="code green"><pre> * @param integer $category Category
+</pre></td></tr><tr><td class="line-number">705</td><td class="code green"><pre> * @param boolean $return true to return, false to echo
+</pre></td></tr><tr><td class="line-number">706</td><td class="code green"><pre> * @return translated string if $return is false string will be echoed
+</pre></td></tr><tr><td class="line-number">707</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">708</td><td class="code green"><pre>	function __dc($domain, $msg, $category, $return = false) {
+</pre></td></tr><tr><td class="line-number">709</td><td class="code red"><pre>		if (!$msg) {
+</pre></td></tr><tr><td class="line-number">710</td><td class="code green"><pre>			return;
+</pre></td></tr><tr><td class="line-number">711</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">712</td><td class="code green"><pre>		if (!class_exists('I18n')) {
+</pre></td></tr><tr><td class="line-number">713</td><td class="code green"><pre>			App::import('Core', 'i18n');
+</pre></td></tr><tr><td class="line-number">714</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">715</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">716</td><td class="code green"><pre>		if ($return === false) {
+</pre></td></tr><tr><td class="line-number">717</td><td class="code green"><pre>			echo I18n::translate($msg, null, $domain, $category);
+</pre></td></tr><tr><td class="line-number">718</td><td class="code green"><pre>		} else {
+</pre></td></tr><tr><td class="line-number">719</td><td class="code green"><pre>			return I18n::translate($msg, null, $domain, $category);
+</pre></td></tr><tr><td class="line-number">720</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">721</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">722</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">723</td><td class="code green"><pre> * Allows you to override the current domain for a single plural message lookup.
+</pre></td></tr><tr><td class="line-number">724</td><td class="code green"><pre> * It also allows you to specify a category.
+</pre></td></tr><tr><td class="line-number">725</td><td class="code green"><pre> * Returns correct plural form of message identified by $singular and $plural for count $count
+</pre></td></tr><tr><td class="line-number">726</td><td class="code green"><pre> * from domain $domain.
+</pre></td></tr><tr><td class="line-number">727</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">728</td><td class="code green"><pre> * The category argument allows a specific category of the locale settings to be used for fetching a message.
+</pre></td></tr><tr><td class="line-number">729</td><td class="code green"><pre> * Valid categories are: LC_CTYPE, LC_NUMERIC, LC_TIME, LC_COLLATE, LC_MONETARY, LC_MESSAGES and LC_ALL.
+</pre></td></tr><tr><td class="line-number">730</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">731</td><td class="code green"><pre> * Note that the category must be specified with a numeric value, instead of the constant name.  The values are:
+</pre></td></tr><tr><td class="line-number">732</td><td class="code green"><pre> * LC_CTYPE     0
+</pre></td></tr><tr><td class="line-number">733</td><td class="code green"><pre> * LC_NUMERIC   1
+</pre></td></tr><tr><td class="line-number">734</td><td class="code green"><pre> * LC_TIME      2
+</pre></td></tr><tr><td class="line-number">735</td><td class="code green"><pre> * LC_COLLATE   3
+</pre></td></tr><tr><td class="line-number">736</td><td class="code green"><pre> * LC_MONETARY  4
+</pre></td></tr><tr><td class="line-number">737</td><td class="code green"><pre> * LC_MESSAGES  5
+</pre></td></tr><tr><td class="line-number">738</td><td class="code green"><pre> * LC_ALL       6
+</pre></td></tr><tr><td class="line-number">739</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">740</td><td class="code green"><pre> * @param string $domain Domain
+</pre></td></tr><tr><td class="line-number">741</td><td class="code green"><pre> * @param string $singular Singular string to translate
+</pre></td></tr><tr><td class="line-number">742</td><td class="code green"><pre> * @param string $plural Plural
+</pre></td></tr><tr><td class="line-number">743</td><td class="code green"><pre> * @param integer $count Count
+</pre></td></tr><tr><td class="line-number">744</td><td class="code green"><pre> * @param integer $category Category
+</pre></td></tr><tr><td class="line-number">745</td><td class="code green"><pre> * @param boolean $return true to return, false to echo
+</pre></td></tr><tr><td class="line-number">746</td><td class="code green"><pre> * @return plural form of translated string if $return is false string will be echoed
+</pre></td></tr><tr><td class="line-number">747</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">748</td><td class="code green"><pre>	function __dcn($domain, $singular, $plural, $count, $category, $return = false) {
+</pre></td></tr><tr><td class="line-number">749</td><td class="code red"><pre>		if (!$singular) {
+</pre></td></tr><tr><td class="line-number">750</td><td class="code green"><pre>			return;
+</pre></td></tr><tr><td class="line-number">751</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">752</td><td class="code green"><pre>		if (!class_exists('I18n')) {
+</pre></td></tr><tr><td class="line-number">753</td><td class="code green"><pre>			App::import('Core', 'i18n');
+</pre></td></tr><tr><td class="line-number">754</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">755</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">756</td><td class="code green"><pre>		if ($return === false) {
+</pre></td></tr><tr><td class="line-number">757</td><td class="code green"><pre>			echo I18n::translate($singular, $plural, $domain, $category, $count);
+</pre></td></tr><tr><td class="line-number">758</td><td class="code green"><pre>		} else {
+</pre></td></tr><tr><td class="line-number">759</td><td class="code green"><pre>			return I18n::translate($singular, $plural, $domain, $category, $count);
+</pre></td></tr><tr><td class="line-number">760</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">761</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">762</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">763</td><td class="code green"><pre> * The category argument allows a specific category of the locale settings to be used for fetching a message.
+</pre></td></tr><tr><td class="line-number">764</td><td class="code green"><pre> * Valid categories are: LC_CTYPE, LC_NUMERIC, LC_TIME, LC_COLLATE, LC_MONETARY, LC_MESSAGES and LC_ALL.
+</pre></td></tr><tr><td class="line-number">765</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">766</td><td class="code green"><pre> * Note that the category must be specified with a numeric value, instead of the constant name.  The values are:
+</pre></td></tr><tr><td class="line-number">767</td><td class="code green"><pre> * LC_CTYPE     0
+</pre></td></tr><tr><td class="line-number">768</td><td class="code green"><pre> * LC_NUMERIC   1
+</pre></td></tr><tr><td class="line-number">769</td><td class="code green"><pre> * LC_TIME      2
+</pre></td></tr><tr><td class="line-number">770</td><td class="code green"><pre> * LC_COLLATE   3
+</pre></td></tr><tr><td class="line-number">771</td><td class="code green"><pre> * LC_MONETARY  4
+</pre></td></tr><tr><td class="line-number">772</td><td class="code green"><pre> * LC_MESSAGES  5
+</pre></td></tr><tr><td class="line-number">773</td><td class="code green"><pre> * LC_ALL       6
+</pre></td></tr><tr><td class="line-number">774</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">775</td><td class="code green"><pre> * @param string $msg String to translate
+</pre></td></tr><tr><td class="line-number">776</td><td class="code green"><pre> * @param integer $category Category
+</pre></td></tr><tr><td class="line-number">777</td><td class="code green"><pre> * @param string $return true to return, false to echo
+</pre></td></tr><tr><td class="line-number">778</td><td class="code green"><pre> * @return translated string if $return is false string will be echoed
+</pre></td></tr><tr><td class="line-number">779</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">780</td><td class="code green"><pre>	function __c($msg, $category, $return = false) {
+</pre></td></tr><tr><td class="line-number">781</td><td class="code red"><pre>		if (!$msg) {
+</pre></td></tr><tr><td class="line-number">782</td><td class="code green"><pre>			return;
+</pre></td></tr><tr><td class="line-number">783</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">784</td><td class="code green"><pre>		if (!class_exists('I18n')) {
+</pre></td></tr><tr><td class="line-number">785</td><td class="code green"><pre>			App::import('Core', 'i18n');
+</pre></td></tr><tr><td class="line-number">786</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">787</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">788</td><td class="code green"><pre>		if ($return === false) {
+</pre></td></tr><tr><td class="line-number">789</td><td class="code green"><pre>			echo I18n::translate($msg, null, null, $category);
+</pre></td></tr><tr><td class="line-number">790</td><td class="code green"><pre>		} else {
+</pre></td></tr><tr><td class="line-number">791</td><td class="code green"><pre>			return I18n::translate($msg, null, null, $category);
+</pre></td></tr><tr><td class="line-number">792</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">793</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">794</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">795</td><td class="code green"><pre> * Computes the difference of arrays using keys for comparison.
+</pre></td></tr><tr><td class="line-number">796</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">797</td><td class="code green"><pre> * @param array First array
+</pre></td></tr><tr><td class="line-number">798</td><td class="code green"><pre> * @param array Second array
+</pre></td></tr><tr><td class="line-number">799</td><td class="code green"><pre> * @return array Array with different keys
+</pre></td></tr><tr><td class="line-number">800</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">801</td><td class="code green"><pre>	if (!function_exists('array_diff_key')) {
+</pre></td></tr><tr><td class="line-number">802</td><td class="code red"><pre>		function array_diff_key() {
+</pre></td></tr><tr><td class="line-number">803</td><td class="code green"><pre>			$valuesDiff = array();
+</pre></td></tr><tr><td class="line-number">804</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">805</td><td class="code green"><pre>			$argc = func_num_args();
+</pre></td></tr><tr><td class="line-number">806</td><td class="code green"><pre>			if ($argc < 2) {
+</pre></td></tr><tr><td class="line-number">807</td><td class="code green"><pre>				return false;
+</pre></td></tr><tr><td class="line-number">808</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">809</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">810</td><td class="code green"><pre>			$args = func_get_args();
+</pre></td></tr><tr><td class="line-number">811</td><td class="code green"><pre>			foreach ($args as $param) {
+</pre></td></tr><tr><td class="line-number">812</td><td class="code green"><pre>				if (!is_array($param)) {
+</pre></td></tr><tr><td class="line-number">813</td><td class="code green"><pre>					return false;
+</pre></td></tr><tr><td class="line-number">814</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">815</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">816</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">817</td><td class="code green"><pre>			foreach ($args[0] as $valueKey => $valueData) {
+</pre></td></tr><tr><td class="line-number">818</td><td class="code green"><pre>				for ($i = 1; $i < $argc; $i++) {
+</pre></td></tr><tr><td class="line-number">819</td><td class="code green"><pre>					if (isset($args[$i][$valueKey])) {
+</pre></td></tr><tr><td class="line-number">820</td><td class="code green"><pre>						continue 2;
+</pre></td></tr><tr><td class="line-number">821</td><td class="code green"><pre>					}
+</pre></td></tr><tr><td class="line-number">822</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">823</td><td class="code green"><pre>				$valuesDiff[$valueKey] = $valueData;
+</pre></td></tr><tr><td class="line-number">824</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">825</td><td class="code green"><pre>			return $valuesDiff;
+</pre></td></tr><tr><td class="line-number">826</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">827</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">828</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">829</td><td class="code green"><pre> * Computes the intersection of arrays using keys for comparison
+</pre></td></tr><tr><td class="line-number">830</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">831</td><td class="code green"><pre> * @param array First array
+</pre></td></tr><tr><td class="line-number">832</td><td class="code green"><pre> * @param array Second array
+</pre></td></tr><tr><td class="line-number">833</td><td class="code green"><pre> * @return array Array with interesected keys
+</pre></td></tr><tr><td class="line-number">834</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">835</td><td class="code green"><pre>	if (!function_exists('array_intersect_key')) {
+</pre></td></tr><tr><td class="line-number">836</td><td class="code red"><pre>		function array_intersect_key($arr1, $arr2) {
+</pre></td></tr><tr><td class="line-number">837</td><td class="code green"><pre>			$res = array();
+</pre></td></tr><tr><td class="line-number">838</td><td class="code green"><pre>			foreach ($arr1 as $key => $value) {
+</pre></td></tr><tr><td class="line-number">839</td><td class="code green"><pre>				if (isset($arr2[$key])) {
+</pre></td></tr><tr><td class="line-number">840</td><td class="code green"><pre>					$res[$key] = $arr1[$key];
+</pre></td></tr><tr><td class="line-number">841</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">842</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">843</td><td class="code green"><pre>			return $res;
+</pre></td></tr><tr><td class="line-number">844</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">845</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">846</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">847</td><td class="code green"><pre> * Shortcut to Log::write.
+</pre></td></tr><tr><td class="line-number">848</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">849</td><td class="code green"><pre> * @param string $message Message to write to log
+</pre></td></tr><tr><td class="line-number">850</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">851</td><td class="code green"><pre>	function LogError($message) {
+</pre></td></tr><tr><td class="line-number">852</td><td class="code red"><pre>		if (!class_exists('CakeLog')) {
+</pre></td></tr><tr><td class="line-number">853</td><td class="code green"><pre>			App::import('Core', 'CakeLog');
+</pre></td></tr><tr><td class="line-number">854</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">855</td><td class="code green"><pre>		$bad = array("\n", "\r", "\t");
+</pre></td></tr><tr><td class="line-number">856</td><td class="code green"><pre>		$good = ' ';
+</pre></td></tr><tr><td class="line-number">857</td><td class="code green"><pre>		CakeLog::write('error', str_replace($bad, $good, $message));
+</pre></td></tr><tr><td class="line-number">858</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">859</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">860</td><td class="code green"><pre> * Searches include path for files.
+</pre></td></tr><tr><td class="line-number">861</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">862</td><td class="code green"><pre> * @param string $file File to look for
+</pre></td></tr><tr><td class="line-number">863</td><td class="code green"><pre> * @return Full path to file if exists, otherwise false
+</pre></td></tr><tr><td class="line-number">864</td><td class="code green"><pre> * @link http://book.cakephp.org/view/702/fileExistsInPath
+</pre></td></tr><tr><td class="line-number">865</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">866</td><td class="code green"><pre>	function fileExistsInPath($file) {
+</pre></td></tr><tr><td class="line-number">867</td><td class="code red"><pre>		$paths = explode(PATH_SEPARATOR, ini_get('include_path'));
+</pre></td></tr><tr><td class="line-number">868</td><td class="code green"><pre>		foreach ($paths as $path) {
+</pre></td></tr><tr><td class="line-number">869</td><td class="code green"><pre>			$fullPath = $path . DS . $file;
+</pre></td></tr><tr><td class="line-number">870</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">871</td><td class="code green"><pre>			if (file_exists($fullPath)) {
+</pre></td></tr><tr><td class="line-number">872</td><td class="code green"><pre>				return $fullPath;
+</pre></td></tr><tr><td class="line-number">873</td><td class="code green"><pre>			} elseif (file_exists($file)) {
+</pre></td></tr><tr><td class="line-number">874</td><td class="code green"><pre>				return $file;
+</pre></td></tr><tr><td class="line-number">875</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">876</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">877</td><td class="code green"><pre>		return false;
+</pre></td></tr><tr><td class="line-number">878</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">879</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">880</td><td class="code green"><pre> * Convert forward slashes to underscores and removes first and last underscores in a string
+</pre></td></tr><tr><td class="line-number">881</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">882</td><td class="code green"><pre> * @param string String to convert
+</pre></td></tr><tr><td class="line-number">883</td><td class="code green"><pre> * @return string with underscore remove from start and end of string
+</pre></td></tr><tr><td class="line-number">884</td><td class="code green"><pre> * @link http://book.cakephp.org/view/697/convertSlash
+</pre></td></tr><tr><td class="line-number">885</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">886</td><td class="code green"><pre>	function convertSlash($string) {
+</pre></td></tr><tr><td class="line-number">887</td><td class="code red"><pre>		$string = trim($string, '/');
+</pre></td></tr><tr><td class="line-number">888</td><td class="code green"><pre>		$string = preg_replace('/\/\//', '/', $string);
+</pre></td></tr><tr><td class="line-number">889</td><td class="code green"><pre>		$string = str_replace('/', '_', $string);
+</pre></td></tr><tr><td class="line-number">890</td><td class="code green"><pre>		return $string;
+</pre></td></tr><tr><td class="line-number">891</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">892</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">893</td><td class="code green"><pre> * Implements http_build_query for PHP4.
+</pre></td></tr><tr><td class="line-number">894</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">895</td><td class="code green"><pre> * @param string $data Data to set in query string
+</pre></td></tr><tr><td class="line-number">896</td><td class="code green"><pre> * @param string $prefix If numeric indices, prepend this to index for elements in base array.
+</pre></td></tr><tr><td class="line-number">897</td><td class="code green"><pre> * @param string $argSep String used to separate arguments
+</pre></td></tr><tr><td class="line-number">898</td><td class="code green"><pre> * @param string $baseKey Base key
+</pre></td></tr><tr><td class="line-number">899</td><td class="code green"><pre> * @return string URL encoded query string
+</pre></td></tr><tr><td class="line-number">900</td><td class="code green"><pre> * @see http://php.net/http_build_query
+</pre></td></tr><tr><td class="line-number">901</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">902</td><td class="code green"><pre>	if (!function_exists('http_build_query')) {
+</pre></td></tr><tr><td class="line-number">903</td><td class="code red"><pre>		function http_build_query($data, $prefix = null, $argSep = null, $baseKey = null) {
+</pre></td></tr><tr><td class="line-number">904</td><td class="code green"><pre>			if (empty($argSep)) {
+</pre></td></tr><tr><td class="line-number">905</td><td class="code green"><pre>				$argSep = ini_get('arg_separator.output');
+</pre></td></tr><tr><td class="line-number">906</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">907</td><td class="code green"><pre>			if (is_object($data)) {
+</pre></td></tr><tr><td class="line-number">908</td><td class="code green"><pre>				$data = get_object_vars($data);
+</pre></td></tr><tr><td class="line-number">909</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">910</td><td class="code green"><pre>			$out = array();
+</pre></td></tr><tr><td class="line-number">911</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">912</td><td class="code green"><pre>			foreach ((array)$data as $key => $v) {
+</pre></td></tr><tr><td class="line-number">913</td><td class="code green"><pre>				if (is_numeric($key) && !empty($prefix)) {
+</pre></td></tr><tr><td class="line-number">914</td><td class="code green"><pre>					$key = $prefix . $key;
+</pre></td></tr><tr><td class="line-number">915</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">916</td><td class="code green"><pre>				$key = urlencode($key);
+</pre></td></tr><tr><td class="line-number">917</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">918</td><td class="code green"><pre>				if (!empty($baseKey)) {
+</pre></td></tr><tr><td class="line-number">919</td><td class="code green"><pre>					$key = $baseKey . '[' . $key . ']';
+</pre></td></tr><tr><td class="line-number">920</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">921</td><td class="code green"><pre>
+</pre></td></tr><tr><td class="line-number">922</td><td class="code green"><pre>				if (is_array($v) || is_object($v)) {
+</pre></td></tr><tr><td class="line-number">923</td><td class="code green"><pre>					$out[] = http_build_query($v, $prefix, $argSep, $key);
+</pre></td></tr><tr><td class="line-number">924</td><td class="code green"><pre>				} else {
+</pre></td></tr><tr><td class="line-number">925</td><td class="code green"><pre>					$out[] = $key . '=' . urlencode($v);
+</pre></td></tr><tr><td class="line-number">926</td><td class="code green"><pre>				}
+</pre></td></tr><tr><td class="line-number">927</td><td class="code green"><pre>			}
+</pre></td></tr><tr><td class="line-number">928</td><td class="code green"><pre>			return implode($argSep, $out);
+</pre></td></tr><tr><td class="line-number">929</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">930</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">931</td><td class="code green"><pre>/**
+</pre></td></tr><tr><td class="line-number">932</td><td class="code green"><pre> * Wraps ternary operations. If $condition is a non-empty value, $val1 is returned, otherwise $val2.
+</pre></td></tr><tr><td class="line-number">933</td><td class="code green"><pre> * Don't use for isset() conditions, or wrap your variable with @ operator:
+</pre></td></tr><tr><td class="line-number">934</td><td class="code green"><pre> * Example:
+</pre></td></tr><tr><td class="line-number">935</td><td class="code green"><pre> * <code>
+</pre></td></tr><tr><td class="line-number">936</td><td class="code green"><pre> * ife(isset($variable), @$variable, 'default');
+</pre></td></tr><tr><td class="line-number">937</td><td class="code green"><pre> * </code>
+</pre></td></tr><tr><td class="line-number">938</td><td class="code green"><pre> *
+</pre></td></tr><tr><td class="line-number">939</td><td class="code green"><pre> * @param mixed $condition Conditional expression
+</pre></td></tr><tr><td class="line-number">940</td><td class="code green"><pre> * @param mixed $val1 Value to return in case condition matches
+</pre></td></tr><tr><td class="line-number">941</td><td class="code green"><pre> * @param mixed $val2 Value to return if condition doesn't match
+</pre></td></tr><tr><td class="line-number">942</td><td class="code green"><pre> * @return mixed $val1 or $val2, depending on whether $condition evaluates to a non-empty expression.
+</pre></td></tr><tr><td class="line-number">943</td><td class="code green"><pre> * @link http://book.cakephp.org/view/704/ife
+</pre></td></tr><tr><td class="line-number">944</td><td class="code green"><pre> */
+</pre></td></tr><tr><td class="line-number">945</td><td class="code green"><pre>	function ife($condition, $val1 = null, $val2 = null) {
+</pre></td></tr><tr><td class="line-number">946</td><td class="code red"><pre>		if (!empty($condition)) {
+</pre></td></tr><tr><td class="line-number">947</td><td class="code green"><pre>			return $val1;
+</pre></td></tr><tr><td class="line-number">948</td><td class="code green"><pre>		}
+</pre></td></tr><tr><td class="line-number">949</td><td class="code green"><pre>		return $val2;
+</pre></td></tr><tr><td class="line-number">950</td><td class="code green"><pre>	}
+</pre></td></tr><tr><td class="line-number">951</td><td class="code green"><pre>	
+</pre></td></tr><tr><td class="line-number">952</td><td class="code green"><pre>?></pre></td></tr></table>

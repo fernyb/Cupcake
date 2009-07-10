@@ -44,7 +44,7 @@ describe("Router -> connect", function(){
     
     assert_equal($default["action"], "index");    
   });
-  
+
 });
 
 

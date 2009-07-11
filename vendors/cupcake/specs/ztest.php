@@ -14,8 +14,7 @@ $ztest_manifest = array(
     'ConsoleReporter',
     'test_invokers',
     'assertions',
-    'mocking',
-    'spec_coverage'
+    'mocking'
 );
 
 foreach ($ztest_manifest as $ztest_file) {

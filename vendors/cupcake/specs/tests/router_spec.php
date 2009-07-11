@@ -1,5 +1,13 @@
 <?php
 
+describe("Router -> getInstance", function(){
+  it("return an instance of Router", function(){
+	  $router = new Router();
+	  assert_equal(get_class($router), get_class($router->getInstance()));
+  });
+});
+
+
 describe("Router -> connect", function(){
   it("returns an array", function(){
     $routes = Router::connect("/", array("controller" => "main", "action" => "show"));
@@ -46,6 +54,16 @@ describe("Router -> connect", function(){
   });
 
 });
+
+
+describe("Router -> url", function(){
+  it("returns full translated url with base path", function() {
+    $router = new Router();
+    $response = $router->url("/products/item/1");
+    assert_equal($response, "/products/item/1");
+  });
+});
+
 
 
 ?>

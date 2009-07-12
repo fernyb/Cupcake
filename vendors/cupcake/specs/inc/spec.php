@@ -75,7 +75,8 @@ class Spec {
     $passed  = self::$total_results['pass'];
     $failure = self::$total_results['fail'];
     $total   = self::$total_results['total'];
-    self::write("\n\nPass: {$passed}, Failure: {$failure}, Test: {$total}\n", true);
+    
+    self::write("\n\nPass: {$passed}, Failure: ". Spec::$colors['red'] ."{$failure}". Spec::$colors['green'] .", Test: {$total}\n", true);
     self::$total_results['pass']    = 0;
     self::$total_results['failure'] = 0;
     self::$total_results['pass']    = 0;

@@ -51,6 +51,7 @@ class Dispatcher {
     
 		$this->here = $this->base . "/" . $url;
 	  
+	  $this->includeModels();
 	  $controller = $this->__getController();
 
 		Router::setRequestInfo(array(
@@ -198,9 +199,29 @@ class Dispatcher {
 	
 		return $controller;
 	}
+
+
+/**
+* Include All the Models from the app/models directory
+*/
+  function includeModels() {
+    $model_dir = APP_BASE_URL . DS . "models";
+    if(file_exists($model_dir)) {
+      foreach(glob("{$model_dir}/*.php") as $filename) {
+        @include_once $filename;
+      }
+    }
+  }
   
+/**
+* Loads the controller, it will also load the controller class and ApplicationController
+* if they do not exists.
+*/  
   function __loadControllerFile($className=null) {
     $app_dir = APP_BASE_URL . DS . "controllers" . DS;
+    if(!class_exists("Controller")) {
+      @include_once VENDOR_CUPCAKE_DIR . "/controller.php";
+    }
     if(!class_exists("ApplicationController")) {
       @include_once $app_dir . "application_controller.php";
     }

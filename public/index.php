@@ -11,13 +11,14 @@ define("APP_BASE_URL", dirname(__FILE__) . "/../app");
 define("DS", DIRECTORY_SEPARATOR);
 define("APP_DIR", "app");
 define("WEBROOT_DIR", "public");
+define("VENDOR_CUPCAKE_DIR", realpath(dirname(__FILE__) . "/../vendors/cupcake"));
 
 
-require_once dirname(__FILE__) . "/../vendors/cupcake/basics.php";    
-require_once dirname(__FILE__) . "/../vendors/cupcake/inflector.php";
-require_once dirname(__FILE__) . "/../vendors/cupcake/view.php";
-require_once dirname(__FILE__) . "/../vendors/cupcake/dispatcher.php";
-require_once dirname(__FILE__) . "/../vendors/cupcake/router.php";
+require_once VENDOR_CUPCAKE_DIR . "/basics.php";    
+require_once VENDOR_CUPCAKE_DIR . "/inflector.php";
+require_once VENDOR_CUPCAKE_DIR . "/view.php";
+require_once VENDOR_CUPCAKE_DIR . "/dispatcher.php";
+require_once VENDOR_CUPCAKE_DIR . "/router.php";
 
 
 $Dispatcher = new Dispatcher();

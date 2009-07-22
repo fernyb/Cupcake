@@ -80,6 +80,8 @@ class View {
     
     if(file_exists($layout_file)) {
       $file = $this->layout;
+    } else if(file_exists("{$layouts_path}" . "/" ."application.{$ext}")) {
+      $file = "application";
     } else {
       $file = "missing";
     }

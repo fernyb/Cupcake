@@ -115,6 +115,7 @@ class View {
     
     return $output;
   }
+  
 }
 
 ?>

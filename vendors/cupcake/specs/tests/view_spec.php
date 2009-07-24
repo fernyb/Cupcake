@@ -82,7 +82,7 @@ describe("View -> layout_view", function(){
     $controller->viewVars = array("action" => "no-page", "controller" => "main");
     $view = new View($controller);
     $filename = $view->layout_view("no-page");
-    assert_equal("missing", $filename);  
+    assert_equal("application", $filename);  
   });
   
   it("returns filename for missing layout using \$this->layout", function() {
@@ -91,7 +91,7 @@ describe("View -> layout_view", function(){
     $view = new View($controller);
     $view->layout = "my-layout";
     $filename = $view->layout_view();
-    assert_equal("missing", $filename);  
+    assert_equal("application", $filename);  
   });
 
   it("returns filename for layout based using \$this->layout", function() {

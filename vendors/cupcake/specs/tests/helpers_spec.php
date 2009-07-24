@@ -33,10 +33,20 @@ describe("Helpers -> stylesheet_link_tag", function(){
 describe("Helpers -> javascript_include_tag", function(){
   it("create html tag for javascript tag", function(){
     $tag = javascript_include_tag("master");
-    var_dump($tag);
     assert_equal($tag, '<script type="text/javascript" src="/javascripts/master.js"></script>');
   });
 });
 
+describe("Helpers -> image_tag", function(){
+  it("returns html tag for image", function(){
+    $tag = image_tag("cupcake.png");
+    assert_equal($tag, '<img alt="cupcake" src="/images/cupcake.png" />');
+  });
+  
+  it("it has image attributes", function(){
+    $tag = image_tag("cupcake.png", array("class" => "main"));
+    assert_match("/class=\"main\"/", $tag);
+  });
+});
 
 ?>

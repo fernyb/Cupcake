@@ -68,6 +68,19 @@ describe("Router -> url", function(){
     $response = $router->url("/products/item/1?status=new");
     assert_equal($response, "/products/item/1?status=new");
   });
+  
+  it("returns a url string from controller action", function(){
+    Router::clearRoutes();
+    $url = Router::url(array("controller" => "public", "action" => "show"));
+    assert_equal($url, "/public/show/");
+  });
+  
+  it("returns a url string from route", function(){
+    Router::clearRoutes();
+    Router::connect("/user/profile", array("controller" => "main", "action" => "show"));
+    $url = Router::url(array("controller" => "main", "action" => "show"));
+    assert_equal($url, "/user/profile");
+  });
 });
 
 describe("Router -> writeRoute", function(){
@@ -97,5 +110,6 @@ describe("Router -> writeRoute", function(){
     assert_equal($r[1], 5);
   });
 });
+
 
 ?>

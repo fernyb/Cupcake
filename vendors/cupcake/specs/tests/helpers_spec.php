@@ -51,12 +51,29 @@ describe("Helpers -> image_tag", function(){
 });
 
 
-describe("Helper -> truncate", function(){
+describe("Helpers -> truncate", function(){
   it("should default to appending ...", function(){
     $str = "This is a fairly long string to test with!";
     assert_equal(truncate($str, 5), "Th...");
   });
 });
+
+
+describe("Helpers -> generate_path", function(){
+  it("generates url path", function(){
+    Router::clearRoutes();
+    Router::connect("/products/feature", array("controller" => "abcproduct", "action" => "show"));
+    $path = generate_path(array("controller" => "abcproduct", "action" => "show"));
+    assert_equal($path, "/products/feature");
+  });
+  
+  it("generates url path from defaults controller action", function(){
+    Router::clearRoutes();
+    $path = generate_path(array("controller" => "main", "action" => "new"));
+    assert_equal($path, "/main/new/");    
+  });
+});
+
 
 
 ?>

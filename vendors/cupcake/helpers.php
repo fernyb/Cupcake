@@ -49,4 +49,16 @@ function truncate($string, $length=30, $truncate_string="...") {
   return substr($string, 0, $length) . $truncate_string;
 }
 
+function generate_path($route=array()) {
+  return Router::url($route);
+}
+
+function link_to($name, $link, $options=array()) {
+  if(is_array($link)) {
+    $link = generate_path($link);
+  }
+  $attributes = array_merge(array("href" => $link), $options);
+  return content_tag("a", $name, $attributes);
+}
+
 ?>

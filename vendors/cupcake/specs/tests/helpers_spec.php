@@ -1,9 +1,9 @@
 <?php
 require_once dirname(__FILE__) . "/../spec_helper.php";
 
-describe("Helpers -> __to_attributes", function(){
+describe("Helpers -> to_attributes", function(){
   it("returns array with attributes", function(){
-    $attr = __to_attributes(array("src" => "filename", "type" => "text/javascript"));
+    $attr = to_attributes(array("src" => "filename", "type" => "text/javascript"));
     assert_equal($attr, array('src="filename"', 'type="text/javascript"'));
   });
 });
@@ -37,6 +37,7 @@ describe("Helpers -> javascript_include_tag", function(){
   });
 });
 
+
 describe("Helpers -> image_tag", function(){
   it("returns html tag for image", function(){
     $tag = image_tag("cupcake.png");
@@ -48,5 +49,14 @@ describe("Helpers -> image_tag", function(){
     assert_match("/class=\"main\"/", $tag);
   });
 });
+
+
+describe("Helper -> truncate", function(){
+  it("should default to appending ...", function(){
+    $str = "This is a fairly long string to test with!";
+    assert_equal(truncate($str, 5), "Th...");
+  });
+});
+
 
 ?>

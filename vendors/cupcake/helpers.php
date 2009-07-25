@@ -1,6 +1,6 @@
 <?php
 
-function __to_attributes($attr=array()) {
+function to_attributes($attr=array()) {
   $attributes = array();  
   foreach($attr as $k => $v) {
     array_push($attributes, "{$k}=\"{$v}\"");
@@ -8,9 +8,8 @@ function __to_attributes($attr=array()) {
   return $attributes;
 }
 
-
 function content_tag($tag_name, $content=nil, $attr=array()) {
-  $attributes = __to_attributes($attr);
+  $attributes = to_attributes($attr);
   if($content == nil) {
     $html = "<{$tag_name} " . join(" ", $attributes) . " />";
   } else {
@@ -22,7 +21,6 @@ function content_tag($tag_name, $content=nil, $attr=array()) {
   }
   return $html;
 }
-
 
 function stylesheet_link_tag($stylesheet, $options=array()) {
   $default = array("href" => "", "media" => "screen", "rel" => "stylesheet", "type" => "text/css");
@@ -43,6 +41,12 @@ function image_tag($image_name, $options=array()) {
   $attributes = array("alt" => basename($image_name, ".{$suffix}"), "src" => "/images/" . $image_name);
   $attributes = array_merge($attributes, $options);
   return content_tag("img", nil, $attributes);
+}
+
+function truncate($string, $length=30, $truncate_string="...") {
+  if(strlen($string) < $length) return $string;
+  $length = $length - count(preg_split("//", $truncate_string, null, PREG_SPLIT_NO_EMPTY));
+  return substr($string, 0, $length) . $truncate_string;
 }
 
 ?>

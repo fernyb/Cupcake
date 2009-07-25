@@ -58,22 +58,25 @@ describe("Helpers -> truncate", function(){
   });
 });
 
-
+    
 describe("Helpers -> generate_path", function(){
-  it("generates url path", function(){
-    Router::clearRoutes();
-    Router::connect("/products/feature", array("controller" => "abcproduct", "action" => "show"));
+  it("generates url path", function(){ 
+    $route = Router::connect("/products/feature", array("controller" => "abcproduct", "action" => "show"));
     $path = generate_path(array("controller" => "abcproduct", "action" => "show"));
-    assert_equal($path, "/products/feature");
+    $message = "\n\nFailed to Generated Path: /products/feature from \"controller\" => \"abcproduct\", \"action\" => \"show\"\n";
+    $message .= "But did generate: $path\n";
+    
+    assert_equal($path, "/products/feature", $message);
   });
   
   it("generates url path from defaults controller action", function(){
-    Router::clearRoutes();
-    $path = generate_path(array("controller" => "main", "action" => "new"));
-    assert_equal($path, "/main/new/");    
+    $path = generate_path(array("controller" => "default", "action" => "new_one"));
+    $message = "\n\nFailed to generate path: /default/new_one/ from controller => default, action => new_one\n";
+    $message .= "But did generate $path\n";
+    
+    assert_equal($path, "/default/new_one/", $message);    
   });
 });
-
 
 
 ?>

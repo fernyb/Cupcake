@@ -19,3 +19,18 @@
  Exmaple: <strong>content_for("p", "Hello World")</strong> <br />
  # => <?= htmlentities(content_tag("p", "Hello World")) ?>
 </p>
+
+<p>
+  <strong>image_tag</strong><br />
+ Generates an img tag:<br />
+ Exmaple: <strong>image_tag("main.png")</strong> <br />
+ # => <?= htmlentities(image_tag("main.png")) ?>
+</p>
+
+<p>
+  <strong>truncate</strong><br />
+ Truncates a string to a limit length<br />
+ Exmaple: <strong>truncate("Hello World", 5)</strong> <br />
+ # => <?= htmlentities(truncate("Hello World", 5)) ?>
+</p>
+

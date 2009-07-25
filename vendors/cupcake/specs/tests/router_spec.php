@@ -76,7 +76,6 @@ describe("Router -> url", function(){
   });
   
   it("returns a url string from route", function(){
-    Router::clearRoutes();
     Router::connect("/user/profile", array("controller" => "main", "action" => "show"));
     $url = Router::url(array("controller" => "main", "action" => "show"));
     assert_equal($url, "/user/profile");
@@ -111,5 +110,11 @@ describe("Router -> writeRoute", function(){
   });
 });
 
+describe("Router -> named_route", function(){
+  it("returns url string for named route", function(){
+    #Router::clearRoutes();
+    
+  });
+});
 
 ?>

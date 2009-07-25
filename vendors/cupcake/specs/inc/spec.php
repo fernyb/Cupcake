@@ -55,11 +55,14 @@ class Spec {
     self::$results['pass'] += 1;
   }
   
-  public static function assert_fail() {
+  public static function assert_fail($msg="") {
     if(!self::$descriptive) {      
       self::write("F", true, "red");
     }
     self::$results['fail'] += 1;
+    if(isset($msg)) {
+      echo $msg;
+    }
   }
   
   public static function report_results() {
@@ -84,7 +87,7 @@ class Spec {
 }
 
 
-function describe($name, $fn) {
+function describe($name, $fn) {  
   Spec::setSpec($name, $fn);
 }
 

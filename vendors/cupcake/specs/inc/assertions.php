@@ -28,7 +28,7 @@ function ensure($v, $msg = "") {
 	}
 	*/
 	if(!$v) {
-	  Spec::assert_fail();
+	  Spec::assert_fail($msg);
 	} else {
 	  Spec::assert_pass();
 	}

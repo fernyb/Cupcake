@@ -61,7 +61,9 @@ class Spec {
     }
     self::$results['fail'] += 1;
     if(isset($msg)) {
-      echo $msg;
+      echo "\n" . $msg . "\n\n";
+      debug_print_backtrace();
+      echo "\n";
     }
   }
   

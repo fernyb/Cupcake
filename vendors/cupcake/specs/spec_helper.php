@@ -16,7 +16,7 @@ require_once dirname(__FILE__) . "/../helpers.php";
 require_once dirname(__FILE__) . "/../view.php";    
 require_once dirname(__FILE__) . "/../dispatcher.php";
 require_once dirname(__FILE__) . "/../router.php";
-
+require_once dirname(__FILE__) . "/../new_router.php";
 
 
 ?>

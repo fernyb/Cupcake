@@ -171,4 +171,66 @@ describe("NewRouter -> route_for", function(){
 });
 
 
+describe("NewRouter -> compiled_statement", function(){
+  it("compiles a statement for one route", function(){
+    NewRouter::prepare(function($r){
+      $r->match("/")->to(array("controller" => "public", "action" => "index"));
+    });
+    
+    $r = NewRouter::getInstance();
+    $code = $r->compiled_statement();
+ 
+    $match = htmlentities(trim('if ( preg_match("/^$/", $cached_path) ) { 
+    return array(0, array("controller" => "public","action" => "index"));
+ }'));
+ 
+    assert_equal($match, htmlentities(trim($code)), "It should generate code");
+    $r->reset();
+  });
+  
+    it("compiles statements for two route", function(){
+    NewRouter::prepare(function($r){
+      $r->match("/")->to(array("controller" => "public", "action" => "index"));
+      $r->match("/music/artist/:id(/:artist_name)")->to(array("controller" => "music", "action" => "artist"));
+    });
+    
+    $r = NewRouter::getInstance();
+    $code = $r->compiled_statement();
+ 
+    $pattern = htmlentities(trim('if ( preg_match("/^$/", $cached_path) ) { 
+    return array(0, array("controller" => "public","action" => "index"));
+ } 
+ else if ( preg_match("/^\/music\/artist\/([^\/.,;?]+)(?:\/([^\/.,;?]+))$/", $cached_path) ) { 
+    return array(1, array("controller" => "music","action" => "artist"));
+ }'));
+ 
+    assert_equal($pattern, htmlentities(trim($code)), "Failed to generate code for two routes");
+    $r->reset();
+  });
+  
+  it("compiles statements for three route", function(){
+    NewRouter::prepare(function($r){
+      $r->match("/")->to(array("controller" => "public", "action" => "index"));
+      $r->match("/music/artist/:id(/:artist_name)")->to(array("controller" => "music", "action" => "artist"));
+      $r->match("/profile")->to(array("controller" => "public", "action" => "index"));
+    });
+    
+    $r = NewRouter::getInstance();
+    $code = $r->compiled_statement();
+ 
+    $pattern = htmlentities(trim('if ( preg_match("/^$/", $cached_path) ) { 
+    return array(0, array("controller" => "public","action" => "index"));
+ } 
+ else if ( preg_match("/^\/music\/artist\/([^\/.,;?]+)(?:\/([^\/.,;?]+))$/", $cached_path) ) { 
+    return array(1, array("controller" => "music","action" => "artist"));
+ } 
+ else if ( preg_match("/^\/profile$/", $cached_path) ) { 
+    return array(2, array("controller" => "public","action" => "index"));
+ }'));
+ 
+    assert_equal($pattern, htmlentities(trim($code)), "Failed to generate code for two routes");
+    $r->reset();
+  });  
+});
+
 ?>

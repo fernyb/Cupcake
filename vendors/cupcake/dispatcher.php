@@ -43,9 +43,10 @@ class Dispatcher {
 			$url = $this->__extractParams($url, $additionalParams);
 		} else {
 			if ($url) {
-				$_GET['url'] = $url;
+				#$_GET['url'] = $url;
 			}
 			$url = $this->getUrl();
+	    
 			$this->params = array_merge($this->parseParams($url), $additionalParams);
 		}
     
@@ -115,9 +116,10 @@ class Dispatcher {
 			$url = null;
 			$tmpUri = preg_replace('/^(?:\?)?(?:\/)?/', '', $uri);
 			$baseDir = preg_replace('/^\//', '', dirname($base)) . '/';
-
+      
 			if ($tmpUri === '/' || $tmpUri == $baseDir || $tmpUri == $base) {
-				$url = $_GET['url'] = '/';
+				#$url = $_GET['url'] = '/';
+				$url = '/';
 			} else {
 				if ($base && strpos($uri, $base) !== false) {
 					$elements = explode($base, $uri);
@@ -128,10 +130,11 @@ class Dispatcher {
 				}
 
 				if (!empty($elements[1])) {
-					$_GET['url'] = $elements[1];
+					#$_GET['url'] = $elements[1];
 					$url = $elements[1];
 				} else {
-					$url = $_GET['url'] = '/';
+					#$url = $_GET['url'] = '/';
+					$url = '/';
 				}
 
 				if (strpos($url, '/') === 0 && $url != '/') {
@@ -139,11 +142,12 @@ class Dispatcher {
 				}
 			}
 		} else {
-			$url = $_GET['url'];
+			#$url = $_GET['url'];
 		}
 		if ($url{0} == '/') {
 			$url = substr($url, 1);
 		}
+		
 		return $url;
 	}
   
@@ -155,6 +159,7 @@ class Dispatcher {
   function parseParams($fromUrl) {
     $params = array();
     include CONFIGS . 'routes.php';
+  
 		$params = array_merge(Router::parse($fromUrl), $params);
 	
 		if (strlen($params['action']) === 0) {

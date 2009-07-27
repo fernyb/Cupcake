@@ -641,8 +641,9 @@ class Router {
 		if (strpos($url, '?') !== false) {
 			$url = substr($url, 0, strpos($url, '?'));
 		}
+		
 		extract($_this->__parseExtension($url));
-
+    
 		foreach ($_this->routes as $i => $route) {
 			if (count($route) === 3) {
 				$route = $_this->compile($i);
@@ -740,7 +741,7 @@ class Router {
  */
 	function __parseExtension($url) {
 		$ext = null;
-
+    
 		if ($this->__parseExtensions) {
 			if (preg_match('/\.[0-9a-zA-Z]*$/', $url, $match) === 1) {
 				$match = substr($match[0], 1);
@@ -760,6 +761,7 @@ class Router {
 				$ext = 'html';
 			}
 		}
+		
 		return compact('ext', 'url');
 	}
 
@@ -829,6 +831,7 @@ class Router {
 			$namedParam = strpos($element, ':') !== false;
 
 			if ($namedParam && preg_match('/^:([^:]+)$/', $element, $r)) {
+			 
 				if (isset($params[$r[1]])) {
 					if ($r[1] != 'plugin' && array_key_exists($r[1], $default)) {
 						$q = '?';
@@ -837,6 +840,7 @@ class Router {
 				} else {
 					$parsed[] = '(?:/([^\/]+))?';
 				}
+			  
 				$names[] = $r[1];
 			} elseif ($element === '*') {
 				$parsed[] = '(?:/(.*))?';
@@ -872,6 +876,7 @@ class Router {
 				$parsed[] = '/' . $element;
 			}
 		}
+		
 		return array('#^' . join('', $parsed) . '[\/]*$#', $names);
 	}
 	
@@ -885,7 +890,8 @@ class Router {
  */
 	function compile($i) {
 		$route = $this->routes[$i];
-
+    #var_dump($route);
+    
 		if (!list($pattern, $names) = $this->writeRoute($route[0], $route[1], $route[2])) {
 			unset($this->routes[$i]);
 			return array();

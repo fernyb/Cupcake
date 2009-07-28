@@ -179,8 +179,8 @@ describe("NewRouter -> compiled_statement", function(){
     
     $r = NewRouter::getInstance();
     $code = $r->compiled_statement();
- 
-    $match = htmlentities(trim('if ( preg_match("/^$/", $cached_path) ) { 
+   
+    $match = htmlentities(trim('if ( preg_match("/^\/$/", $cached_path) ) { 
     return array(0, array("controller" => "public","action" => "index"));
  }'));
  
@@ -196,8 +196,8 @@ describe("NewRouter -> compiled_statement", function(){
     
     $r = NewRouter::getInstance();
     $code = $r->compiled_statement();
- 
-    $pattern = htmlentities(trim('if ( preg_match("/^$/", $cached_path) ) { 
+    
+    $pattern = htmlentities(trim('if ( preg_match("/^\/$/", $cached_path) ) { 
     return array(0, array("controller" => "public","action" => "index"));
  } 
  else if ( preg_match("/^\/music\/artist\/([^\/.,;?]+)(?:\/([^\/.,;?]+))$/", $cached_path) ) { 
@@ -217,8 +217,8 @@ describe("NewRouter -> compiled_statement", function(){
     
     $r = NewRouter::getInstance();
     $code = $r->compiled_statement();
- 
-    $pattern = htmlentities(trim('if ( preg_match("/^$/", $cached_path) ) { 
+  
+    $pattern = htmlentities(trim('if ( preg_match("/^\/$/", $cached_path) ) { 
     return array(0, array("controller" => "public","action" => "index"));
  } 
  else if ( preg_match("/^\/music\/artist\/([^\/.,;?]+)(?:\/([^\/.,;?]+))$/", $cached_path) ) { 

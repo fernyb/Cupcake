@@ -34,6 +34,10 @@ function ensure($v, $msg = "") {
 	}
 }
 
+function assert_pending() {
+  Spec::assert_pending();
+}
+
 function assert_each($iterable, $test, $msg = "") {
     foreach ($iterable as $i) {
         ensure($test($i));

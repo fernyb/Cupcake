@@ -6,15 +6,7 @@ require_once dirname(__FILE__) . "/inc/spec_runner.php";
 
 // Dependencies
 $ztest_manifest = array(
-    'exceptions',
-    'TestCase',
-    'UnitTestCase',
-    'TestSuite',
-    'Reporter',
-    'ConsoleReporter',
-    'test_invokers',
     'assertions',
-    'mocking'
 );
 
 foreach ($ztest_manifest as $ztest_file) {

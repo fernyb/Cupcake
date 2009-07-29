@@ -37,8 +37,8 @@ require_once VENDOR_CUPCAKE_DIR . "/new_router.php";
 NewRouter::prepare(function($r){
   $r->match("/")->to(array("controller" => "application", "action" => "index"));
   
-  $r->match("/book")->to(array("controller" => "book", "action" => "main_show"));
-  $r->match("/book/:id")->to(array("controller" => "book", "action" => "details_show"));
+  #$r->match("/book")->to(array("controller" => "book", "action" => "main_show"));
+  $r->match("/book(/:id)")->to(array("controller" => "book", "action" => "details_show"));
   
   $r->match("/public/:action/:page/:name/:id")->to(array("controller" => "application", "action" => "show_action"));
   $r->match("/profile/:user/:feature/:id")->to(array("controller" => "user", "action" => "profile"));

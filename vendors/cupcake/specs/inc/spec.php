@@ -10,9 +10,9 @@ class Spec {
   );
   
   public static $describe_specs = array();
-  public static $results = array("pass" => 0, "fail" => 0);
+  public static $results = array("pass" => 0, "fail" => 0, "pending" => 0);
   public static $descriptive = true;
-  public static $total_results = array("pass" => 0, "fail" => 0, "total" => 0);
+  public static $total_results = array("pass" => 0, "fail" => 0, "pending" => 0, "total" => 0);
   
   public static function setDescribeOutput($bool=false) {
     self::$descriptive = ($bool ? true : false);
@@ -45,7 +45,7 @@ class Spec {
   
   public static function clear() {
     self::$describe_specs = array();
-    self::$results = array("pass" => 0, "fail" => 0);
+    self::$results = array("pass" => 0, "fail" => 0, "pending" => 0);
   }
   
   public static function assert_pass() {
@@ -63,28 +63,39 @@ class Spec {
     if(isset($msg)) {
       echo "\n" . $msg . "\n\n";
       debug_print_backtrace();
-      echo "\n";
+      echo "\n\n";
     }
+  }
+  
+  public static function assert_pending() {
+    if(!self::$descriptive) {      
+      self::write("P", true, "yellow");
+    }
+    self::$results['pending'] += 1;
   }
   
   public static function report_results() {
     $passed  = self::$results['pass'];
     $failure = self::$results['fail'];
+    $pending = self::$results['pending'];
     $total   = $passed + $failure;
     self::$total_results['pass'] += (int) $passed;
     self::$total_results['fail'] += (int) $failure;
     self::$total_results['total'] += (int) $total;
+    self::$total_results['pending'] += (int)$pending;
   }
   
   public static function results() {
     $passed  = self::$total_results['pass'];
     $failure = self::$total_results['fail'];
     $total   = self::$total_results['total'];
+    $pending = self::$total_results['pending'];
     
-    self::write("\n\nPass: {$passed}, Failure: ". Spec::$colors['red'] ."{$failure}". Spec::$colors['green'] .", Test: {$total}\n", true);
+    self::write("\n\nPass: {$passed}, Failure: ". Spec::$colors['red'] ."{$failure}". Spec::$colors['green'] .", Pending: {$pending}, Test: {$total}\n", true);
     self::$total_results['pass']    = 0;
     self::$total_results['failure'] = 0;
     self::$total_results['pass']    = 0;
+    self::$total_results['pending'] = 0;
   }
 }
 
@@ -95,7 +106,14 @@ function describe($name, $fn) {
 
 function it($name, $fn) {
   $failure_count = Spec::$results['fail'];
+  $passed_count = Spec::$results['pass'];
+  $pending_count = Spec::$results['pending'];
   $fn();
+  
+  if(Spec::$results['pending'] > $pending_count) {
+    Spec::write("\n Peding ". $name, false, "yellow");
+  }
+    
   if(Spec::$descriptive) {
     if($failure_count < Spec::$results['fail']) {
       Spec::write("\n  It " . $name, false, "red");

@@ -172,42 +172,6 @@ describe("NewRouter -> route_for", function(){
 
 
 describe("NewRouter -> compiled_statement", function(){
-  it("compiles a statement for one route", function(){
-    NewRouter::prepare(function($r){
-      $r->match("/")->to(array("controller" => "public", "action" => "index"));
-    });
-    
-    $r = NewRouter::getInstance();
-    $code = $r->compiled_statement();
-   
-    $match = htmlentities(trim('if ( preg_match("/^\/$/", $cached_path) ) { 
-    return array(0, array("controller" => "public","action" => "index"));
- }'));
- 
-    assert_equal($match, htmlentities(trim($code)), "It should generate code");
-    $r->reset();
-  });
-  
-    it("compiles statements for two route", function(){
-    NewRouter::prepare(function($r){
-      $r->match("/")->to(array("controller" => "public", "action" => "index"));
-      $r->match("/music/artist/:id(/:artist_name)")->to(array("controller" => "music", "action" => "artist"));
-    });
-    
-    $r = NewRouter::getInstance();
-    $code = $r->compiled_statement();
-    
-    $pattern = htmlentities(trim('if ( preg_match("/^\/$/", $cached_path) ) { 
-    return array(0, array("controller" => "public","action" => "index"));
- } 
- else if ( preg_match("/^\/music\/artist\/([^\/.,;?]+)(?:\/([^\/.,;?]+))$/", $cached_path) ) { 
-    return array(1, array("controller" => "music","action" => "artist"));
- }'));
- 
-    assert_equal($pattern, htmlentities(trim($code)), "Failed to generate code for two routes");
-    $r->reset();
-  });
-  
   it("compiles statements for three route", function(){
     NewRouter::prepare(function($r){
       $r->match("/")->to(array("controller" => "public", "action" => "index"));
@@ -217,20 +181,158 @@ describe("NewRouter -> compiled_statement", function(){
     
     $r = NewRouter::getInstance();
     $code = $r->compiled_statement();
-  
+
     $pattern = htmlentities(trim('if ( preg_match("/^\/$/", $cached_path) ) { 
     return array(0, array("controller" => "public","action" => "index"));
  } 
- else if ( preg_match("/^\/music\/artist\/([^\/.,;?]+)(?:\/([^\/.,;?]+))$/", $cached_path) ) { 
+ else if ( preg_match("/^\/music\/?artist\/([^\/.,;?]+)?(?:\/?([^\/.,;?]+)?)$/", $cached_path) ) { 
     return array(1, array("controller" => "music","action" => "artist"));
  } 
- else if ( preg_match("/^\/profile$/", $cached_path) ) { 
+ else if ( preg_match("/^\/profile\$/", $cached_path) ) { 
     return array(2, array("controller" => "public","action" => "index"));
  }'));
  
-    assert_equal($pattern, htmlentities(trim($code)), "Failed to generate code for two routes");
+    assert_equal($pattern, htmlentities(trim($code)), "Failed to generate code for three routes");
+
     $r->reset();
   });  
+});
+
+
+/*
+* Test All the possible paths to make sure they match
+*/
+describe("NewRouter -> arrays_to_regexps", function(){
+  it("returns a string", function(){
+    $r = NewRouter::getInstance();
+    $pattern = $r->arrays_to_regexps(array("path" => "/music/artist/:id(/:artist_name)"));
+    
+    ensure(is_string($pattern));
+    $r->reset();
+  });
+  
+  it("should match /music/artist/:id(/:artist_name) to /music/artist/5/coldplay", function(){
+    $r = NewRouter::getInstance();
+    $pattern = $r->arrays_to_regexps(array("path" => "/music/artist/:id(/:artist_name)"));
+    $match   = preg_match("/". $pattern ."/", "/music/artist/5/coldplay", $matches);
+    
+    ensure($match, "Failed to match route: /music/artist/5/coldplay using path: /music/artist/:id(/:artist_name) with pattern: $pattern");
+    assert_equal($matches[0], "/music/artist/5/coldplay", "Failed to match path");
+    assert_equal($matches[1], "5", "Failed to match :id");
+    assert_equal($matches[2], "coldplay", "Failed to match :artist_name");
+    $r->reset();
+  });
+
+  it("should match /music/artist/:id(/:artist_name) to /music/artist/5", function(){
+    $r = NewRouter::getInstance();
+    $pattern = $r->arrays_to_regexps(array("path" => "/music/artist/:id(/:artist_name)"));
+    $match   = preg_match("/". $pattern ."/", "/music/artist/5", $matches);
+    
+    ensure($match, "Failed to match route: /music/artist/5 using path: /music/artist/:id(/:artist_name) with pattern: $pattern");
+    assert_equal($matches[0], "/music/artist/5", "Failed to match path");
+    assert_equal($matches[1], "5", "Failed to match :id");
+    assert_equal($matches[2], "", "Failure, Tried to over match paths");
+    $r->reset();
+  });
+  
+  it("should match /book(/:id) to /book", function(){
+    $r = NewRouter::getInstance();
+    $pattern = $r->arrays_to_regexps(array("path" => "/book(/:id)"));
+    $match   = preg_match("/". $pattern ."/", "/book", $matches);
+    
+    ensure($match, "Failed to match route /book with path: /book(/:id) using pattern: $pattern");
+    $r->reset();
+  });
+  
+  it("should match /book(/:id) to /book/100", function(){
+    $r = NewRouter::getInstance();
+    $pattern = $r->arrays_to_regexps(array("path" => "/book(/:id)"));
+    $match   = preg_match("/". $pattern ."/", "/book/100", $matches);
+    
+    ensure($match, "Failed to match route /book/100 with path: /book(/:id) using pattern: $pattern");
+    $r->reset();
+  });    
+});
+
+
+describe("NewRouter -> param_keys_for_path", function(){
+  it("should extract :controller, :action, :id for /:controller/:action/:id", function(){
+    $r = NewRouter::getInstance();
+    $params = $r->param_keys_for_path("/:controller/:action/:id");
+    
+    assert_equal($params[0], ":controller", "Failed to match :controller");
+    assert_equal($params[1], ":action",     "Failed to match :action");
+    assert_equal($params[2], ":id",         "Failed to match :id");
+    assert_equal(count($params), 3,         "Failed to have 3 keys");
+    $r->reset();    
+  });  
+  
+  it("should extract :controller, :action for /:controller/:action", function(){
+    $r = NewRouter::getInstance();
+    $params = $r->param_keys_for_path("/:controller/:action");
+    
+    assert_equal($params[0], ":controller", "Failed to match :controller");
+    assert_equal($params[1], ":action",     "Failed to match :action");
+    assert_equal(count($params), 2,         "Failed to have 2 keys");
+    $r->reset();    
+  });  
+  
+  it("should extract :action for /controller/:action", function(){
+    $r = NewRouter::getInstance();
+    $params = $r->param_keys_for_path("/controller/:action");
+    
+    assert_equal($params[0], ":action", "Failed to match :action");
+    assert_equal(count($params), 1,     "Failed to have 1 keys");
+    $r->reset();    
+  }); 
+    
+  it("should extract :id for /book/:id", function(){
+    $r = NewRouter::getInstance();
+    $params = $r->param_keys_for_path("/book/:id");
+    
+    assert_equal($params[0], ":id", "Failed to match :id");
+    $r->reset();    
+  });
+  
+  it("should extract :id, :artist for /music/:id(/:artist)", function(){
+    $r = NewRouter::getInstance();
+    $params = $r->param_keys_for_path("/music/:id(/:artist)");
+    
+    assert_equal($params[0], ":id",     "Failed to match :id");
+    assert_equal($params[1], ":artist", "Failed to match :artist");
+    assert_equal(count($params), 2,     "Failed to have 2 keys");
+    $r->reset();    
+  }); 
+  
+  it("returns an empty array for /:action", function(){
+    $r = NewRouter::getInstance();
+    $params = $r->param_keys_for_path("/:action");
+    assert_equal($params[0], ":action", "Failed to match :action");
+    assert_equal(count($params), 1,     "Failed to have 1 key");
+    $r->reset();   
+  });
+  
+  it("returns an empty array for (/:action)", function(){
+    $r = NewRouter::getInstance();
+    $params = $r->param_keys_for_path("(/:action)");
+    assert_equal($params[0], ":action", "Failed to match :action");
+    assert_equal(count($params), 1,     "Failed to have 1 key");
+    $r->reset();   
+  });
+        
+  it("returns an empty array for /", function(){
+    $r = NewRouter::getInstance();
+    $params = $r->param_keys_for_path("/");
+    assert_equal(count($params), 0,     "Failed to have 0 keys");
+    $r->reset();   
+  });
+    
+  it("returns an empty array", function(){
+    $r = NewRouter::getInstance();
+    $params = $r->param_keys_for_path("");
+    assert_equal(count($params), 0,     "Failed to have 0 keys");
+    $r->reset();   
+  });
 });
 
 ?>

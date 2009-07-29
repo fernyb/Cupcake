@@ -133,30 +133,51 @@ class NewRouter {
     return array($statement);
   }
   
-  private function arrays_to_regexps($condition) {
+  public function param_keys_for_path($matcher_path) {
+    preg_match_all("/([^\/.,;?]+)/", $matcher_path, $matches);
+    $params = array();
+    if(count($matches) > 1) {
+      foreach($matches[1] as $k => $v) {
+        if(substr($v, -1) === "(" || substr($v, -1) === ")") {
+          $v = substr($v, 0, -1);
+        }
+        if(strpos($v, ":") === 0) {
+          $params[] = $v;
+        }            
+      }
+    }
+    return $params;
+  }
+  
+  public function arrays_to_regexps($condition) {
     if(!is_array($condition)) return $condition;
-    
+
     $delimiter = "/";
     $source = array();
+ 
     foreach($condition as $i => $value) {
-
       preg_match_all("/([^\/.,;?]+)/", $value, $matches);
       $rgs = array();
       $first_param = false;
-      
+
       foreach($matches[1] as $k => $v) {
-        if(strpos($v, ":") === 0) {
+        if(substr($v, -1) === "(" || substr($v, -1) === ")") {
+          $v = substr($v, 0, -1);
+        }
+        
+        if(strpos($v, ":") === 0) {          
           if($first_param === false) {
-            $rgs[] = "([^\/.,;?]+)";
+            $rgs[] = "([^\/.,;?]+)?";
             $first_param = true;
           } else {
-            $rgs[] = "(?:\/([^\/.,;?]+))";
+            $rgs[] = "(?:\/?([^\/.,;?]+)?)";
           }
         } else {
-          $rgs[] = $v ."\/";
+          $seperator = count($rgs) === 0 ? "\/?" : "\/";
+          $rgs[] = $v . $seperator;
         }
       }
-      
+
       if(count($rgs) === 1) {
         $rgs[0] = substr($rgs[0], 0, strlen($rgs[0]) - 2);
       }
@@ -165,7 +186,7 @@ class NewRouter {
       
       $source[] = "^\/" . $route_path ."$";
     }
-    
+
     $source = array_unique($source);
     return join("|", $source);
   }

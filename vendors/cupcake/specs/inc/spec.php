@@ -13,6 +13,7 @@ class Spec {
   public static $results = array("pass" => 0, "fail" => 0, "pending" => 0);
   public static $descriptive = true;
   public static $total_results = array("pass" => 0, "fail" => 0, "pending" => 0, "total" => 0);
+  public static $pending_messages = array();
   
   public static function setDescribeOutput($bool=false) {
     self::$descriptive = ($bool ? true : false);
@@ -36,7 +37,7 @@ class Spec {
   public static function run() {
     foreach(self::$describe_specs as $name => $fn) {
       self::write("\n* Describe: ". $name);
-      $fn();
+      $fn($name);
       self::write("\n");
     }
     self::report_results();
@@ -78,7 +79,7 @@ class Spec {
     $passed  = self::$results['pass'];
     $failure = self::$results['fail'];
     $pending = self::$results['pending'];
-    $total   = $passed + $failure;
+    $total   = $passed + $failure + $pending;
     self::$total_results['pass'] += (int) $passed;
     self::$total_results['fail'] += (int) $failure;
     self::$total_results['total'] += (int) $total;
@@ -91,11 +92,18 @@ class Spec {
     $total   = self::$total_results['total'];
     $pending = self::$total_results['pending'];
     
+    echo "\n";
+    foreach(self::$pending_messages as $k => $message) {
+      self::write("\n Peding: ". $message, true, "yellow");
+    }
+    
     self::write("\n\nPass: {$passed}, Failure: ". Spec::$colors['red'] ."{$failure}". Spec::$colors['green'] .", Pending: {$pending}, Test: {$total}\n", true);
+    
     self::$total_results['pass']    = 0;
     self::$total_results['failure'] = 0;
     self::$total_results['pass']    = 0;
     self::$total_results['pending'] = 0;
+    self::$pending_messages = array();    
   }
 }
 
@@ -110,15 +118,16 @@ function it($name, $fn) {
   $pending_count = Spec::$results['pending'];
   $fn();
   
-  if(Spec::$results['pending'] > $pending_count) {
-    Spec::write("\n Peding ". $name, false, "yellow");
+  if(Spec::$results['pending'] > $pending_count || ($failure_count === Spec::$results['fail'] && $passed_count === Spec::$results['pass'])) {
+    Spec::assert_pending();
+    array_push(Spec::$pending_messages, $name);
   }
-    
+  
   if(Spec::$descriptive) {
     if($failure_count < Spec::$results['fail']) {
-      Spec::write("\n  It " . $name, false, "red");
+      Spec::write("\n  " . $name, false, "red");
     } else {
-      Spec::write("\n  It " . $name, false, "green");
+      Spec::write("\n  " . $name, false, "green");
     }
   }
 }

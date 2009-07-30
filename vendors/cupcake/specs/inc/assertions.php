@@ -19,14 +19,6 @@ function fail($msg = "") {
  * @param $msg message to report on failure
  */
 function ensure($v, $msg = "") {
-  /*
-  if (!$v) {
-		ztest\TestCase::$reporter->assert_fail();
-		throw new ztest\AssertionFailed($msg);
-	} else {
-		ztest\TestCase::$reporter->assert_pass();
-	}
-	*/
 	if(!$v) {
 	  Spec::assert_fail($msg);
 	} else {

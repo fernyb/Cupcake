@@ -24,9 +24,6 @@ class NewDispatcher {
     
     if($route  = $this->router->find_route($path)) {
       var_dump($route);
-      
-      $params = array_merge($params, $route[1]);
-      var_dump($params);
     } else {
       throw new Exception("Dispatcher: Route Not Found");
     }

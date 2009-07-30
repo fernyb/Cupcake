@@ -149,6 +149,10 @@ class Router {
 
       array_shift($values);
       
+      if(count($keys) > count($values)) {
+        return $params;
+      }
+      
       $request_params = array();
       foreach(array_combine($keys, $values) as $k => $v) {
         $k = preg_replace("/(^:?)/", "", $k);

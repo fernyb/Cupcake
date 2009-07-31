@@ -28,6 +28,12 @@ class Router {
   
   static $instance = false;
   public $routes = array();
+  
+  /**
+  * The current path of the match. Only to be used within match and to methods.
+  * @var mixed 
+  * @access  public
+  */
   public $current_path = false;
   
   static function &getInstance() {
@@ -52,18 +58,21 @@ class Router {
   public function to($params=array()) {
     if($this->current_path === false) return false;
     
-    if(list($index, $new_params) = $this->current_path_params($params)) {
+    if(list($index, $new_params) = $this->current_path_params($this->current_path, $params)) {
       $this->params[] = $params;
       $old_params = $this->routes[$index][$this->current_path];
       $this->routes[$index][$this->current_path] = array_merge($old_params, $new_params);
       $this->conditions[] = array("path" => $this->current_path);
-      return $this->routes[$index][$this->current_path];
+      $route = $this->routes[$index][$this->current_path];
+      $this->current_path = false;
+      return $route;
     }
     return false;
   }
   
-  public function current_path_params($params=array()) {
-    if($path = $this->route_for($this->current_path)) {
+  public function current_path_params($request_path, $params=array()) {
+    $path = $this->route_for($request_path);
+    if($path !== false) {
       $route_path = array_keys($path[1]);
       $new_params = array_merge(array("params" => $params), $this->routes[$path[0]][$route_path[0]]);
       return array($path[0], $new_params);
@@ -71,9 +80,16 @@ class Router {
     return false;
   }
   
+  /**
+  * Returns an array with the index and parameters for the route
+  * @param string $path A URI string Ex: /book/500
+  * @return mixed Returns Array when route is found otherwise false
+  */
   public function route_for($path) {
     foreach($this->routes as $i => $r) {
-      if(array_key_exists($path, $this->routes[$i])) {
+      $route  = current(array_values($this->routes[$i]));
+      $regexp = $this->route_path_to_regexp($route['path']);
+      if(preg_match("/{$regexp}/", $path)) {
         return array($i, $this->routes[$i]);
       }
     }
@@ -112,7 +128,12 @@ class Router {
         $rgs[] = ($first_param === false ? "([^\/.,;?]+)?" : "(?:\/?([^\/.,;?]+)?)");
         $first_param = true;
       } else {
-        $seperator = count($rgs) === 0 ? "\/?" : "\/";
+        if($first_param) {
+          $seperator = (count($rgs) === 0 ? "\/?" : "\/");
+        } else {
+          $seperator = "\/?";
+        }
+        
         $rgs[] = $v . $seperator;
       }
     }
@@ -120,6 +141,11 @@ class Router {
       $rgs[0] = substr($rgs[0], 0, strlen($rgs[0]) - 2);
     }
     $route_path = join("", $rgs);
+    
+    if(preg_match("/\/$/", $route_path)) {
+      $route_path = substr($route_path, 0, -2);
+    }
+
     $regexp = "^\/" . $route_path ."$";
     
     return $regexp;
@@ -138,22 +164,21 @@ class Router {
   }
   
   public function map_route_to_params($request_path) {
-    if(list($index, $params) = $this->match_path($request_path)) {
-      $default_params = $this->current_path_params($params);
-    
+    if(list($index, $orig_params) = $this->match_path($request_path)) {
+      $default_params = $this->current_path_params($request_path, $orig_params);
+  
       $path    = $default_params[1]["path"];
-      $params  = array_merge($params, $default_params[1]["params"]);
+      $params  = array_merge($orig_params, $default_params[1]["params"]);
       $pattern = $this->arrays_to_regexps(array("path" => $path));
       $match   = preg_match("/". $pattern ."/", $request_path, $values);
       $keys    = $this->param_keys_for_path($path);
-
-      array_shift($values);
       
-      if(count($keys) > count($values)) {
+      array_shift($values);
+      if(count($keys) === 0 && count($values) === 0) {
         return $params;
       }
-      
-      $request_params = array();
+
+      $request_params = array();      
       foreach(array_combine($keys, $values) as $k => $v) {
         $k = preg_replace("/(^:?)/", "", $k);
         $request_params[$k] = $v;

@@ -33,9 +33,12 @@ describe("Router -> match", function(){
 
 describe("Router -> current_path_params", function(){
   it("returns an array", function(){
+    Router::prepare(function($r){
+      $r->match("/blog/postpage")->to(array("controller" => "article", "action" => "show"));
+    });
     $r = Router::getInstance();
-    $r->match("/blog/post");
-    $params = $r->current_path_params(array("controller" => "article", "action" => "show"));
+    $params = $r->current_path_params("/blog/postpage", array("controller" => "article", "action" => "show"));
+    
     ensure(is_array($params), "Failed to return an array");
     ensure((count($params) == 2), "Failed to return an array with count of 2");
     $r->reset();
@@ -44,7 +47,7 @@ describe("Router -> current_path_params", function(){
   it("return an array with merged params from current_path route", function(){
     $r = Router::getInstance();
     $r->match("/blog/post");
-    $params = $r->current_path_params(array("controller" => "article", "action" => "show"));
+    $params = $r->current_path_params("/blog/post", array("controller" => "article", "action" => "show"));
   
     assert_equal($params[0], 0, "Failed to set the index for current path params");
     assert_equal($params[1]['params']['controller'], "article");
@@ -56,7 +59,7 @@ describe("Router -> current_path_params", function(){
   it("has controller and action for params", function(){
     $r = Router::getInstance();
     $r->match("/blog/post");
-    $params = $r->current_path_params(array("controller" => "article", "action" => "show"));
+    $params = $r->current_path_params("/blog/post", array("controller" => "article", "action" => "show"));
     ensure($params[1]['params'], "Params should be an array");
     assert_equal($params[1]['params']['controller'], "article", "Controller params should be article");
     assert_equal($params[1]['params']['action'], "show", "Action should be show");
@@ -66,8 +69,7 @@ describe("Router -> current_path_params", function(){
   it("returns false when current_path not found in routes", function(){
     $r = Router::getInstance();
     $r->match("/blog/post");
-    $r->current_path = "/something/not_found";
-    $params = $r->current_path_params(array("controller" => "article", "action" => "show"));
+    $params = $r->current_path_params("/blog/post-not-found", array("controller" => "article", "action" => "show"));
     assert_equal($params, false, "Failed to return false when current_path is not found in routes");
     $r->reset();  
   });
@@ -211,6 +213,10 @@ describe("Router -> arrays_to_regexps", function(){
   });
   
   it("should match /book(/:id) to /book", function(){
+    Router::prepare(function($r){
+      $r->match("/book(/:id))")->to(array("controller" => "store", "action" => "books"));
+    });
+    
     $r = Router::getInstance();
     $pattern = $r->arrays_to_regexps(array("path" => "/book(/:id)"));
     $match   = preg_match("/". $pattern ."/", "/book", $matches);
@@ -318,11 +324,11 @@ describe("Router -> map_route_to_params", function(){
       $r->match("/book/:id")->to(array("controller" => "catalog", "action" => "show"));
     });
     $r = Router::getInstance();
-    $params = $r->map_route_to_params("/book/5");
+    $params = $r->map_route_to_params("/book/500");
     
     assert_equal($params["controller"], "catalog");
     assert_equal($params["action"], "show");
-    assert_equal($params["id"], "5");
+    assert_equal($params["id"], "500");
     $r->reset();
   });
 

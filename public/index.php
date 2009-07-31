@@ -5,17 +5,28 @@ define("STYLESHEETS_PATH",   realpath(dirname(__FILE__) . "/stylesheets"));
 define("TEMP_DIR_PATH",      realpath(dirname(__FILE__) . "/../tmp"));
 
 
-require_once VENDOR_CUPCAKE_DIR . "/new_dispatcher.php";
 require_once VENDOR_CUPCAKE_DIR . "/router.php";
 
 
 Router::prepare(function($r){
   $r->match("/")->to(array("controller" => "application", "action" => "index"));  
-  $r->match("/book(/:id)")->to(array("controller" => "book", "action" => "details_show"));
+  #$r->match("/book(/:id)")->to(array("controller" => "book", "action" => "details_show"));
 });
 
-$new_dispatcher = new NewDispatcher(Router::getInstance());
-$new_dispatcher->dispatch($_SERVER);
+function base_path($uri) {
+ if(strpos($uri, "?") > 0) {
+   return substr($uri, 0, strpos($uri, "?"));
+  }
+  return $uri;
+}
+
+$uri = $_SERVER['REQUEST_URI'];  
+
+$router = Router::getInstance();
+
+$params = $router->find_route($uri);
+
+var_dump($params);
 
 
 ?>

@@ -21,12 +21,9 @@ class NewDispatcher {
     $path   = $this->base_path($uri);
     $query  = $this->query_string($uri);
     $params = $this->params();
+    var_dump($path);
     
-    if($route  = $this->router->find_route($path)) {
-      var_dump($route);
-    } else {
-      throw new Exception("Dispatcher: Route Not Found");
-    }
+    $route  = $this->router->find_route($path);
   }// end function
   
   private function query_string($uri) {

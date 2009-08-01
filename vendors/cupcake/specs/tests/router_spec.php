@@ -15,14 +15,7 @@ describe("Router -> match", function(){
     ensure((count($r->routes) == 2), "Failed to build more than one route");
     $r->reset();    
   });
-  
-  it("sets the current path of the route to match", function(){
-    $r = Router::getInstance();
-    $r->match("/new/current_path");
-    assert_equal($r->current_path, "/new/current_path", "Failed to set current_path as the current route to match");
-    $r->reset();
-  });
-  
+
   it("returns an instance of Router", function(){
     $r = Router::getInstance();
     $resp = $r->match("/new/current_path");
@@ -46,50 +39,46 @@ describe("Router -> current_path_params", function(){
   
   it("return an array with merged params from current_path route", function(){
     $r = Router::getInstance();
-    $r->match("/blog/post");
+    $r->match("/blog/post")->to(array("controller" => "article", "action" => "show"));
     $params = $r->current_path_params("/blog/post", array("controller" => "article", "action" => "show"));
-  
+    
     assert_equal($params[0], 0, "Failed to set the index for current path params");
-    assert_equal($params[1]['params']['controller'], "article");
-    assert_equal($params[1]['params']['action'], "show");
-    assert_equal($params[1]["path"], "/blog/post");
+    assert_equal($params[1]['controller'], "article");
+    assert_equal($params[1]['action'], "show");
     $r->reset();
   });
   
   it("has controller and action for params", function(){
     $r = Router::getInstance();
-    $r->match("/blog/post");
+    $r->match("/blog/post")->to(array("controller" => "article", "action" => "show"));
     $params = $r->current_path_params("/blog/post", array("controller" => "article", "action" => "show"));
-    ensure($params[1]['params'], "Params should be an array");
-    assert_equal($params[1]['params']['controller'], "article", "Controller params should be article");
-    assert_equal($params[1]['params']['action'], "show", "Action should be show");
+   
+    ensure(is_array($params[1]), "Params should be an array");
+    assert_equal($params[1]['controller'], "article", "Controller params should be article");
+    assert_equal($params[1]['action'], "show", "Action should be show");
     $r->reset();    
   });
   
   it("returns false when current_path not found in routes", function(){
     $r = Router::getInstance();
-    $r->match("/blog/post");
+    $r->match("/blog/post")->to(array("controller" => "article", "action" => "show"));
     $params = $r->current_path_params("/blog/post-not-found", array("controller" => "article", "action" => "show"));
+    
     assert_equal($params, false, "Failed to return false when current_path is not found in routes");
     $r->reset();  
   });
 });
 
+
 describe("Router -> to", function(){
-  it("returns false when current_path is false", function(){
+  it("calling to without calling match throws an exception", function(){
     $r = Router::getInstance();
-    $r->current_path = false;
-    $resp = $r->to(array("controller" => "main", "action" => "show"));
-    assert_equal($resp, false);
-    $r->reset();
-  });
-  
-  it("return false when it cannot merge params", function(){
-    $r = Router::getInstance();
-    $r->match("/blog/post");
-    $r->current_path = "/page/not_found";
-    $resp = $r->to(array("controller" => "main", "action" => "show"));
-    assert_equal($resp, false, "Failed to return false when params cannot merge");    
+    try {
+      $resp = $r->to(array("controller" => "main", "action" => "show"));
+      ensure(false, "Failed throw an Exception");
+    } catch(RouterException $e) {
+      ensure(true);
+    }
     $r->reset();
   });
   
@@ -137,6 +126,20 @@ describe("Routerr -> prepare", function(){
     assert_equal(count($r->routes), 2, "It should have a count of 2 routes");
     $r->reset();
   });
+  
+  it("matches all paths", function(){
+    Router::prepare(function($r){
+      $r->match("/")->to(array("controller" => "application", "action" => "index"));  
+      $r->match("/book(/:id)")->to(array("controller" => "book", "action" => "details_show"));
+    });
+    $router = Router::getInstance();
+    $params = $router->find_route("/book/100");
+    
+    assert_equal($params["id"], "100");
+    assert_equal($params["controller"], "book");
+    assert_equal($params["action"], "details_show");
+    $router->reset();
+  });
 });
 
 
@@ -161,16 +164,15 @@ describe("Router -> route_for", function(){
       $r->match("/")->to(array("controller" => "public", "action" => "index"));
       $r->match("/blog/post")->to(array("controller" => "article", "action" => "show"));
     });
-    
     $r = Router::getInstance();
     $route = $r->route_for("/");
-    $params = array("/" => array("path" => "/", "params" => array("controller" => "public", "action" => "index")));
-    assert_equal($route[1], $params, "It should return an array with params");
+    
+    $params = array("path" => "/", "params" => array("controller" => "public", "action" => "index"));
+    assert_equal($route[1], $params, "It should return an array with params 1");
   
-    $route = $r->route_for("/blog/post");
-    $params = array("/blog/post" => array("path" => "/blog/post", "params" => array("controller" => "article", "action" => "show")));
-    assert_equal($route[1], $params, "It should return an array with params");
-  
+    $route = $r->route_for("/blog/post");  
+    $params = array("path" => "/blog/post", "params" => array("controller" => "article", "action" => "show"));
+    assert_equal($route[1], $params, "It should return an array with params 2");
     $r->reset();
   });  
 });
@@ -214,9 +216,8 @@ describe("Router -> arrays_to_regexps", function(){
   
   it("should match /book(/:id) to /book", function(){
     Router::prepare(function($r){
-      $r->match("/book(/:id))")->to(array("controller" => "store", "action" => "books"));
+      $r->match("/book(/:id)")->to(array("controller" => "store", "action" => "books"));
     });
-    
     $r = Router::getInstance();
     $pattern = $r->arrays_to_regexps(array("path" => "/book(/:id)"));
     $match   = preg_match("/". $pattern ."/", "/book", $matches);
@@ -234,7 +235,6 @@ describe("Router -> arrays_to_regexps", function(){
     $r->reset();
   });    
 });
-
 
 describe("Router -> param_keys_for_path", function(){
   it("should extract :controller, :action, :id for /:controller/:action/:id", function(){

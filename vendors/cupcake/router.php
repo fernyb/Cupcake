@@ -20,9 +20,11 @@
 * @version 1.0
 */
 
+class RouterException extends Exception { }
+
 class Router {
   
-  private $conditions = array();
+  public $conditions = array();
   private $params = array();
   private $segments;      
   
@@ -43,42 +45,62 @@ class Router {
     return self::$instance;
   }
   
-  static function &prepare($block) {
+  static function prepare($block) {
     $_this = self::getInstance();
     $block($_this);
+    $_this->compile_routes();
     return $_this;
   }
   
-  public function &match($path) {
-    $this->routes[][$path] = array("path" => $path);
-    $this->current_path = $path;
+  /**
+  * Adds a new match to the routes array. You should then call the to method.
+  *
+  * @param $path string A Route Path to match. Example: /user/profile/:id
+  * @return Object string Returns an instance of Router so it can be chained with to.
+  */
+  public function match($path) {
+    $this->routes[] = array("path" => $path);
     return $this;
   }
   
+  /**
+  * Adds parameters to the route path from the match method.
+  * These parameters become the defaults. 
+  * An Exception is thrown when there are no routes available.
+  * Must call match before calling to.
+  *
+  * @param $params Array An array of key value parameters
+  * @return Array array Returns an array with the route containing the parameters
+  */
   public function to($params=array()) {
-    if($this->current_path === false) return false;
-    
-    if(list($index, $new_params) = $this->current_path_params($this->current_path, $params)) {
-      $this->params[] = $params;
-      $old_params = $this->routes[$index][$this->current_path];
-      $this->routes[$index][$this->current_path] = array_merge($old_params, $new_params);
-      $this->conditions[] = array("path" => $this->current_path);
-      $route = $this->routes[$index][$this->current_path];
-      $this->current_path = false;
-      return $route;
+    if(count($this->routes) === 0) {
+      throw new RouterException("No Routes Available. Must call match before calling to.");
     }
-    return false;
+    $current_route_index = (count($this->routes) - 1);
+    $route_path = $this->routes[$current_route_index]["path"];
+    $this->routes[$current_route_index] = array("path" => $route_path, "params" => $params);
+     
+    return $this->routes[$current_route_index];
   }
   
+  public function compile_routes() {
+    //var_dump($this->routes);
+  }
+  
+  /**
+  * Returns an Array of paramters. 
+  * $params is merged into the route parameters
+  */
   public function current_path_params($request_path, $params=array()) {
     $path = $this->route_for($request_path);
     if($path !== false) {
-      $route_path = array_keys($path[1]);
-      $new_params = array_merge(array("params" => $params), $this->routes[$path[0]][$route_path[0]]);
+      $route_path = $path[1]['path'];
+      $new_params = array_merge($params, $path[1]['params']);
       return array($path[0], $new_params);
     }
     return false;
   }
+  
   
   /**
   * Returns an array with the index and parameters for the route
@@ -86,8 +108,7 @@ class Router {
   * @return mixed Returns Array when route is found otherwise false
   */
   public function route_for($path) {
-    foreach($this->routes as $i => $r) {
-      $route  = current(array_values($this->routes[$i]));
+    foreach($this->routes as $i => $route) {
       $regexp = $this->route_path_to_regexp($route['path']);
       if(preg_match("/{$regexp}/", $path)) {
         return array($i, $this->routes[$i]);
@@ -120,10 +141,12 @@ class Router {
   
   public function route_path_to_regexp($path) {
     preg_match_all("/([^\/.,;?]+)/", $path, $matches);
+  
     $rgs = array();
     $first_param = false;
     foreach($matches[1] as $k => $v) {
       $v = $this->remove_parenthesis($v);
+      
       if($this->is_param_key($v)) {
         $rgs[] = ($first_param === false ? "([^\/.,;?]+)?" : "(?:\/?([^\/.,;?]+)?)");
         $first_param = true;
@@ -163,19 +186,30 @@ class Router {
     return join("|", $source);
   }
   
-  public function map_route_to_params($request_path) {
+  public function map_route_to_params($request_path) {    
     if(list($index, $orig_params) = $this->match_path($request_path)) {
       $default_params = $this->current_path_params($request_path, $orig_params);
-  
-      $path    = $default_params[1]["path"];
-      $params  = array_merge($orig_params, $default_params[1]["params"]);
+      
+      $path = $this->routes[$index]['path'];
+      $params  = array_merge($orig_params, $default_params[1]);
       $pattern = $this->arrays_to_regexps(array("path" => $path));
       $match   = preg_match("/". $pattern ."/", $request_path, $values);
       $keys    = $this->param_keys_for_path($path);
       
       array_shift($values);
-      if(count($keys) === 0 && count($values) === 0) {
+      $keys_count   = count($keys);
+      $values_count = count($values);
+      
+      if($keys_count === 0 && $values_count === 0) {
         return $params;
+      }
+      
+      if($keys_count > $values_count) {
+        foreach($keys as $i => $k) {
+          if(empty($values[$i])) {
+            $values[$i] = "";
+          }
+        }
       }
 
       $request_params = array();      
@@ -202,10 +236,10 @@ class Router {
   }
   
   private function match_path($path) {
-    foreach($this->conditions as $k => $v) {
+    foreach($this->routes as $k => $v) {
       $regexp = $this->route_path_to_regexp($v["path"]);
       if(preg_match("/{$regexp}/", $path)) {
-        return array($k, $this->params[$k]);
+        return array($k, $v["params"]);
       }
     }
     return false;

@@ -117,5 +117,64 @@ describe("Dispatcher -> env", function(){
   });  
 });
 
+describe("Dispatcher -> params_for_request", function(){
+  it("returns an array", function(){
+    Router::getInstance()->reset();
+    Router::prepare(function($r){
+      $r->match("/:controller/:action")->to(array());
+    });
+    $d = Dispatcher::getInstance();
+    $params = $d->params_for_request("/application/method");
+    
+    assert_equal($params["controller"], "application");
+    assert_equal($params["action"], "method");
+  });
+
+  it("merges GET with router params", function(){
+    Router::getInstance()->reset();
+    $_GET["id"] = 25;
+    Router::prepare(function($r){
+      $r->match("/blog/:action")->to(array("controller" => "application"));
+    });
+    $d = Dispatcher::getInstance();
+    $params = $d->params_for_request("/blog/method");
+    
+    assert_equal($params["controller"], "application");
+    assert_equal($params["action"], "method");
+    assert_equal($params["id"], 25);
+    $_GET = array();
+  });
+  
+  it("does not merge params already defined by router", function(){
+    Router::getInstance()->reset();
+    $_GET["controller"] = "get_application";
+    $_GET["user_id"] = 100;
+    Router::prepare(function($r){
+      $r->match("/blog/:action")->to(array("controller" => "application"));
+    });
+    $d = Dispatcher::getInstance();
+    $params = $d->params_for_request("/blog/method");
+    
+    assert_not_equal($params["controller"], "get_application");
+    assert_equal($params["action"], "method");
+    assert_equal($params["user_id"], 100);
+    $_GET = array();
+  });
+
+  it("returns false when it cannot merge", function(){
+    Router::getInstance()->reset();
+    $_GET["user_id"] = 100;
+    Router::prepare(function($r){
+      $r->match("/blog/:action")->to(array("controller" => "application"));
+    });
+    $d = Dispatcher::getInstance();
+    $params = $d->params_for_request("/user/method");
+    
+    assert_not_equal($params["controller"], "application");
+    assert_not_equal($params["action"], "method");
+    assert_not_equal($params["user_id"], 100);
+    $_GET = array();
+  });      
+});
 
 ?>

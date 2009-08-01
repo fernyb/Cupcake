@@ -82,7 +82,10 @@ function assert_scalar($v, $msg = "") {
 }
 
 function assert_not_equal($l, $r, $msg = "") {
-    ensure($l != $r, $msg);
+  if(empty($msg)) {
+    $msg = "\nExpected $l to not be $r but was $r\n";
+  }   
+  ensure($l != $r, $msg);
 }
 
 function assert_equal($l, $r, $msg = "") {

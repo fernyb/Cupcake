@@ -15,27 +15,6 @@ Router::prepare(function($r){
   $r->match("/:controller/:action(/:id)")->to();
 });
 
-
-function base_path($uri) {
- if(strpos($uri, "?") > 0) {
-   return substr($uri, 0, strpos($uri, "?"));
-  }
-  return $uri;
-}
-
-$router = Router::getInstance();
-
-$uri = base_path($_SERVER['REQUEST_URI']);  
-
-$params = $router->find_route($uri);
-
-echo "<h3>Request URI:</h3>";
-echo $uri ."<br />";
-
-var_dump($params);
-
 Dispatcher::handle($_SERVER);
-
-
 
 ?>

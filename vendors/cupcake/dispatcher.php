@@ -32,17 +32,34 @@ class Dispatcher {
     return $this->router;
   }
   
+  # Handle the current request
   static function handle(&$request) {
     $d = self::getInstance();
     if(empty($d->request)) {
       $d->request = $request;
     }
     $request_uri = $d->env("REQUEST_URI");
-    $uri = $d->request_base_uri($request_uri);
-    $router_params = $d->find_route($uri);
-    var_dump($router_params);
+    $uri         = $d->request_base_uri($request_uri);
+    $params      = $d->params_for_request($uri);
+    
+    var_dump($params);
   }
   
+  # Returns an array of parameters. 
+  # Returns false when no route is found
+  # Merges the request parameters with the route parameters.
+  # route parameters cannot be overided.
+  public function params_for_request($uri) {
+    if($router_params  = $this->find_route($uri)) {
+      $params = $this->params();
+      $params = array_merge($params, $router_params);
+      return $params;  
+    }
+    return false;
+  }
+  
+  # Returns an array of route parameters when route is found.
+  # Otherwise returns false when no route is found.
   public function find_route($uri) {
     if(empty($this->router)) {
       $this->setRouter(Router::getInstance());
@@ -50,6 +67,8 @@ class Dispatcher {
     return $this->router->find_route($uri);
   }
   
+  
+  # Returns the base uri as a string.
   public function request_base_uri($uri) {
     if($pos = strpos($uri, "?")) {
       return substr($uri, 0, $pos);
@@ -57,6 +76,7 @@ class Dispatcher {
     return $uri;
   }
   
+  # Returns an array of parameters from GET and POST
   public function params() {
     $new_params = array_merge($_GET, $_POST);
     $params = array();
@@ -68,6 +88,7 @@ class Dispatcher {
     return $params;
   }
   
+  # Returns an environment variable.
   public function env($k) {
     return $_SERVER[$k];
   }

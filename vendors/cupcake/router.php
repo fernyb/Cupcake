@@ -18,9 +18,8 @@
 *
 * @author Fernando Barajas <fernyb@fernyb.net>
 * @version 1.0
+* @package cupcake-core
 */
-
-class RouterException extends Exception { }
 
 class Router {
   
@@ -48,7 +47,6 @@ class Router {
   static function prepare($block) {
     $_this = self::getInstance();
     $block($_this);
-    $_this->compile_routes();
     return $_this;
   }
   
@@ -83,9 +81,6 @@ class Router {
     return $this->routes[$current_route_index];
   }
   
-  public function compile_routes() {
-    //var_dump($this->routes);
-  }
   
   /**
   * Returns an Array of paramters. 
@@ -252,5 +247,7 @@ class Router {
     $this->params = array();
   }
 }
+
+class RouterException extends Exception { }
 
 ?>

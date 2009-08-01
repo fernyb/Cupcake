@@ -33,11 +33,15 @@ class SpecRunner {
   
   public function run() {
     Spec::write("\n", true);
+    //xdebug_start_code_coverage(XDEBUG_CC_UNUSED | XDEBUG_CC_DEAD_CODE);
     foreach($this->files as $file) {
       require $file;
+      
       Spec::setDescribeOutput($this->descriptiveOutput);
       Spec::run();
     }
+    //xdebug_get_code_coverage();
+      
     Spec::results();
   }
 }

@@ -40,6 +40,39 @@ function assert_object($v, $msg = "") {
 	ensure(is_object($v), $msg);	
 }
 
+function assert_array_has_keys($l, $r, $msg = "") {
+  foreach($r as $k => $v) {
+    if(empty($msg)) {
+      ob_start();
+      echo "\nExpected $v to be a key in array:\n";
+      var_dump($l);
+      $msg = ob_get_contents();
+      ob_clean();
+    }
+    ensure(array_key_exists($v, $l), $msg);
+  }
+}
+
+function assert_array_has_values($l, $r, $msg = "") {
+  foreach($r as $k => $v) {
+    if(empty($msg)) {
+      ob_start();
+      echo "\nExpected $v to be in array:\n";
+      var_dump(array_flip(array_values($l)));
+      $msg = ob_get_contents();
+      ob_clean();
+    }
+    if(preg_match("/^([0-9]+)$/", $v)) {
+      $v = (string) $v;
+    }
+   ensure( array_key_exists($v, array_flip(array_values($l))), $msg );
+  }
+}
+
+function assert_array_has_key($l, $r, $msg = "") {
+  ensure(array_key_exists($r, $l), $msg);
+}
+
 function assert_array($v, $msg = "") {
 	ensure(is_array($v), $msg);	
 }
@@ -53,7 +86,10 @@ function assert_not_equal($l, $r, $msg = "") {
 }
 
 function assert_equal($l, $r, $msg = "") {
-    ensure($l == $r, $msg);
+  if(empty($msg)) {
+    $msg = "\nExpected $l to be $r but was $r\n";
+  }  
+  ensure($l == $r, $msg);
 }
 
 function assert_identical($l, $r, $msg = "") {

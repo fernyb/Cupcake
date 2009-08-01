@@ -5,6 +5,7 @@ define("STYLESHEETS_PATH",   realpath(dirname(__FILE__) . "/stylesheets"));
 define("TEMP_DIR_PATH",      realpath(dirname(__FILE__) . "/../tmp"));
 
 
+require_once VENDOR_CUPCAKE_DIR . "/dispatcher.php";
 require_once VENDOR_CUPCAKE_DIR . "/router.php";
 
 
@@ -32,6 +33,8 @@ echo "<h3>Request URI:</h3>";
 echo $uri ."<br />";
 
 var_dump($params);
+
+Dispatcher::handle($_SERVER);
 
 
 

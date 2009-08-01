@@ -1,9 +1,10 @@
 <?php
+require_once "spec_helper.php";
 
 $dependencies = array(
     'spec',
     'spec_runner',
-    'assertions',
+    'assertions'
 );
 
 foreach ($dependencies as $dependency) {

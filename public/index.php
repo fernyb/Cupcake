@@ -11,6 +11,7 @@ define("VIEW_DIR",       APP_DIR   ."/views");
 define("HELPER_DIR",     APP_DIR   ."/helpers");
 
 
+require_once VENDOR_CUPCAKE_DIR . "/basics.php";
 require_once VENDOR_CUPCAKE_DIR . "/inflector.php";
 require_once VENDOR_CUPCAKE_DIR . "/import.php";
 require_once VENDOR_CUPCAKE_DIR . "/dispatcher.php";

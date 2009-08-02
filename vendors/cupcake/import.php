@@ -10,10 +10,10 @@ class Import {
     return false;
   }
   
-  static function view($__name, $__ext, $options=array()) {
+  static function view($__name, $__ext, $__options=array()) {
     $__file = VIEW_DIR ."/". $__name .".". $__ext;
     if(self::file_exists($__file)) {
-      extract($options, EXTR_SKIP);
+      extract($__options, EXTR_SKIP);
       include $__file;
       return true;
     }

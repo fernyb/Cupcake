@@ -12,7 +12,7 @@
 class Dispatcher {
   static $instance = false;
   private $router;
-  private $request;
+  private $controller;
   
   public function &getInstance() {
     if(self::$instance === false) {
@@ -41,10 +41,18 @@ class Dispatcher {
     $request_uri = $d->env("REQUEST_URI");
     $uri         = $d->request_base_uri($request_uri);
     $params      = $d->params_for_request($uri);
-    
-    var_dump($params);
+    $d->dispatch_to($uri, $params);
+  }
+
+  # Dispatches the request parameters to the appropriate controller
+  public function dispatch_to($uri, $params=array()) {
+    if(empty($this->controller)) {
+      $this->controller = new Controller($uri);
+    }
+    $this->controller->handle_request($params);
   }
   
+    
   # Returns an array of parameters. 
   # Returns false when no route is found
   # Merges the request parameters with the route parameters.

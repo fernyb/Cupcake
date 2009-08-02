@@ -1,121 +1,57 @@
 <?php
-class View {
-  var $ext = "html.php";
-  var $layout = "application";
-  var $output = "";
-  var $pageTitle = false;
-  var $viewVars = array();
-  var $viewPath = false;
-  var $controller = false;
-  
-  var $name = null;
-  var $action = null;
-  
-  function __construct(&$controller) {
-		if (is_object($controller)) {
-		  $this->controller = clone $controller;
-			$this->viewVars = $this->controller->viewVars;
-		}
-	}
-  
-  function render($action, $layout, $file) {
-    $this->viewPath = APP_BASE_URL . DS . "views". DS ."{$layout}";
 
-    $content = $this->render_view($layout, $action);
-    
-    $this->output .= $this->render_layout($layout, $content);
-    
-    return $this->output;
+class View {
+  public $request_uri;
+  public $controller;
+  public $params;
+  public $layout;
+  public $template;
+  public $ext = "html.php";
+  
+  public function __construct($request_uri, $params=array()) {
+    $this->request_uri = $request_uri;
+    $this->params      = $params;
+    $this->layout      = "application/application";
+    $this->template    = $params["controller"] ."/". $params["action"];
   }
   
-  function action_view($action) {
-    $ext = $this->ext;
-    $view_file = $this->viewPath . DS . "{$action}.{$ext}";
-    
-    if(file_exists($view_file)) {
-      $file = $view_file;
-    } else {
-      $file = $this->viewPath . DS . "missing.{$ext}";
-    }
-    return $file;  
+  public function render() {
+    $layout = $this->content_for_template();
+    $body   = $this->content_for_layout($layout);
+    echo $body;
   }
   
-  function data_for_layout($params=array()) {
-     $data = array_merge($params, array(
-      'title_for_layout' => $this->pageTitle,
-      'content_for_layout' => $this->content,
-      'scripts_for_layout' => array()
-    ));
-    return $data;
-  }
-  
-  function render_view($controller, $action) {
-    $file = $this->action_view($action);
-    $data_for_layout = $this->data_for_layout($this->viewVars);
-  
-    extract($data_for_layout, EXTR_SKIP);
+  public function content_for_template() {
+    $params = $this->view_params();
     ob_start();
-    include $file;
+    if(Import::view($this->template, $this->ext, $params) === false) {
+      Import::view("exceptions/not_found", $this->ext, $params);
+    }
     $output = ob_get_contents();
     ob_end_clean();
-  
     return $output;
   }
   
-  function layout_path() {
-    return realpath(APP_BASE_URL . "/" . "views/layouts");
-  }
-  
-  function layout_view($file=null) {
-    $ext = $this->ext;
-    $layouts_path = $this->layout_path();
-    
-    if($file == null) {
-      $filename = $this->layout;
-    } else {
-      $filename = $file;
-    }
-    
-    $layout_file = "{$layouts_path}" . "/" ."{$filename}.{$ext}";
-    
-    if(file_exists($layout_file)) {
-      $file = $this->layout;
-    } else if(file_exists("{$layouts_path}" . "/" ."application.{$ext}")) {
-      $file = "application";
-    } else {
-      $file = "missing";
-    }
-    return $file;
-  }
-  
-  function render_layout($file=null, $content="", $view_vars=array()) {
-    $ext = $this->ext;
-    $filename = $this->layout_view($file);
-    $layout_path = $this->layout_path();
-    
-    if ($this->pageTitle !== false) {
-			$pageTitle = $this->pageTitle;
-		} else {
-			$pageTitle = Inflector::humanize($this->viewPath);
-		}
-		
-		$render_file = "{$layout_path}" . "/" . "${filename}.{$ext}";
-		
-    $data_for_layout = array_merge($this->viewVars, array(
-			'title_for_layout' => $pageTitle,
-			'content_for_layout' => $content,
-			'scripts_for_layout' => array()
-		));
-    extract($data_for_layout, EXTR_SKIP);
-    
+  public function content_for_layout($content="") {
+    $params = $this->view_params();
+    $params = array_merge($params, array("content_for_layout" => $content));    
     ob_start();
-    include $render_file;
+    if(!Import::view($this->layout, $this->ext, $params)) {
+      echo $content;
+    }
     $output = ob_get_contents();
     ob_end_clean();
-    
     return $output;
   }
   
+  public function view_params() {
+    $params = array("params"      => $this->params, 
+                    "layout"      => $this->layout,
+                    "template"    => $this->template,
+                    "request_uri" => $this->request_uri,
+                    );
+    return $params;
+  }
 }
 
 ?>

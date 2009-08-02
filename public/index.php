@@ -14,6 +14,7 @@ define("HELPER_DIR",     APP_DIR   ."/helpers");
 require_once VENDOR_CUPCAKE_DIR . "/inflector.php";
 require_once VENDOR_CUPCAKE_DIR . "/import.php";
 require_once VENDOR_CUPCAKE_DIR . "/dispatcher.php";
+require_once VENDOR_CUPCAKE_DIR . "/helpers.php";
 require_once VENDOR_CUPCAKE_DIR . "/controller.php";
 require_once VENDOR_CUPCAKE_DIR . "/controller_exception.php";
 require_once VENDOR_CUPCAKE_DIR . "/view.php";

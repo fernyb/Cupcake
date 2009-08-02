@@ -11,7 +11,7 @@ class View {
   public function __construct($request_uri, $params=array()) {
     $this->request_uri = $request_uri;
     $this->params      = $params;
-    $this->layout      = "application/application";
+    $this->layout      = "layouts/application";
     $this->template    = $params["controller"] ."/". $params["action"];
   }
   

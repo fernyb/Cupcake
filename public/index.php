@@ -7,6 +7,7 @@ Router::prepare(function($r){
   $r->match("/:controller/:action(/:id)")->to();
 });
 
-Dispatcher::handle($_SERVER);
+
+Dispatcher::handle();
 
 ?>

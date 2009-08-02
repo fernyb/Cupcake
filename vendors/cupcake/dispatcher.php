@@ -33,11 +33,8 @@ class Dispatcher {
   }
   
   # Handle the current request
-  static function handle(&$request) {
+  static function handle() {
     $d = self::getInstance();
-    if(empty($d->request)) {
-      $d->request = $request;
-    }
     $request_uri = $d->env("REQUEST_URI");
     $uri         = $d->request_base_uri($request_uri);
     $params      = $d->params_for_request($uri);
@@ -98,7 +95,7 @@ class Dispatcher {
   
   # Returns an environment variable.
   public function env($k) {
-    return $_SERVER[$k];
+    return env($k);
   }
 }
 

@@ -34,3 +34,10 @@
  # => <?= htmlentities(truncate("Hello World", 5)) ?>
 </p>
 
+<br />
+<strong>Environment &nbsp; => &nbsp; <?= CUPCAKE_ENV ?></strong>
+<br />
+
+<p>
+Debug: <?= Config::get("debug") ? "true" : "false" ?>
+</p>

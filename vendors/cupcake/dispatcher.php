@@ -32,6 +32,11 @@ class Dispatcher {
     return $this->router;
   }
   
+  static function run() {
+    Config::load_environment();
+    self::handle();
+  }
+  
   # Handle the current request
   static function handle() {
     $d = self::getInstance();

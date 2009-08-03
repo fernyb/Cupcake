@@ -8,6 +8,6 @@ Router::prepare(function($r){
 });
 
 
-Dispatcher::handle();
+Dispatcher::run();
 
 ?>

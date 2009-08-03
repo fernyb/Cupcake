@@ -1,22 +1,29 @@
 <?php
 
 class Config {
-  private static $instance;
-  private $values = array();
+  public static $instance = false;
+  public $values = array();
   
   public static function &getInstance() {
-    if(!self::$instance) {
+    if(self::$instance === false) {
       self::$instance = new self();
     }
     return self::$instance;
   }
   
   public static function set($k, $v) {
-    self::$values[$k] = $v;
+    $c = self::getInstance();
+    $c->values[$k] = $v;
   }
   
   public static function get($k) {
-    return self::$values[$k];
+    $c = self::getInstance();
+    return $c->values[$k];
+  }
+  
+  public static function load_environment() {
+    include_once CONFIG_DIR ."/environment.php";
+    include_once CONFIG_DIR ."/environments/". CUPCAKE_ENV .".php";
   }
 }
 

@@ -6,3 +6,11 @@
 Processing Book#details_show (for 127.0.0.1 at 2009-08-02 20:29:21) [GET]
 Rendering template within exceptions/not_found
 Rendering layouts/application
+
+[info: Sun, 02 Aug 2009 20:32:35 -0700] *** Compiling Routes
+[info: Sun, 02 Aug 2009 20:32:35 -0700] *** Cupcake using environment: development
+[info: Sun, 02 Aug 2009 20:32:35 -0700] Dispatcher run!
+[info: Sun, 02 Aug 2009 20:32:35 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-02 20:32:35) [GET]
+Rendering template within application/show
+Rendering layouts/application

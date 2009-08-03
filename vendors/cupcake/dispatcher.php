@@ -34,6 +34,7 @@ class Dispatcher {
   
   static function run() {
     Config::load_environment();
+    Logger::info("Dispatcher run!");
     self::handle();
   }
   
@@ -48,6 +49,7 @@ class Dispatcher {
 
   # Dispatches the request parameters to the appropriate controller
   public function dispatch_to($uri, $params=array()) {
+    Logger::info("Dispatcher, dispatch_to: $uri");
     if(empty($this->controller)) {
       $this->controller = new Controller($uri);
     }

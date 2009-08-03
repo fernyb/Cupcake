@@ -26,6 +26,9 @@ class View {
     ob_start();
     if(Import::view($this->template, $this->ext, $params) === false) {
       Import::view("exceptions/not_found", $this->ext, $params);
+      Logger::render("Rendering template within exceptions/not_found\n");
+    } else {
+      Logger::render("Rendering template within {$this->template}\n");
     }
     $output = ob_get_contents();
     ob_end_clean();
@@ -33,6 +36,7 @@ class View {
   }
   
   public function content_for_layout($content="") {
+    Logger::render("Rendering {$this->layout}\n");    
     $params = $this->view_params();
     $params = array_merge($params, array("content_for_layout" => $content));    
     ob_start();

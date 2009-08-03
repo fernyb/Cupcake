@@ -9,6 +9,7 @@ define("VIEW_DIR",           APP_DIR     ."/views");
 define("HELPER_DIR",         APP_DIR     ."/helpers");
 define("PUBLIC_DIR",         ROOT_PATH   ."/public");
 define("CONFIG_DIR",         ROOT_PATH   ."/config");
+define("LOG_DIR",         ROOT_PATH   ."/log");
 define("STYLESHEETS_DIR",    PUBLIC_DIR  ."/stylesheets");
 define("JAVASCRIPTS_DIR",    PUBLIC_DIR  ."/javascripts");
 define("VENDORS_DIR",        ROOT_PATH   ."/vendors");

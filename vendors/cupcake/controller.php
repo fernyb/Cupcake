@@ -18,6 +18,8 @@ class Controller {
   public function handle_request($params) {
     $this->params = $params;
     $controller_name  = Inflector::titleize($params["controller"], "first");
+    Logger::process_controller($controller_name, $params["action"], env("REQUEST_METHOD"), $params);
+    
     if(Import::controller($params["controller"])) {
       $this->controller = new $controller_name($this->request_uri, $params);
       $action = $params["action"];

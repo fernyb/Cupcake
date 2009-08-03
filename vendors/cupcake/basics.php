@@ -34,7 +34,11 @@
 	define('WEEK', 7 * DAY);
 	define('MONTH', 30 * DAY);
 	define('YEAR', 365 * DAY);
-	
+
+
+function microseconds() {
+  return microtime(true);
+} 	
 
 /**
  * Convenience method for htmlspecialchars.

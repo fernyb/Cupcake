@@ -22,13 +22,14 @@ class View {
   }
   
   public function content_for_template() {
+    $start = microseconds();
     $params = $this->view_params();
     ob_start();
     if(Import::view($this->template, $this->ext, $params) === false) {
       Import::view("exceptions/not_found", $this->ext, $params);
-      Logger::render("Rendering template within exceptions/not_found\n");
+      Logger::render("Rendering template within exceptions/not_found (". (microseconds() - $start) ." ms)\n");
     } else {
-      Logger::render("Rendering template within {$this->template}\n");
+      Logger::render("Rendering template within {$this->template} (". (microseconds() - $start) ." ms)\n");
     }
     $output = ob_get_contents();
     ob_end_clean();
@@ -36,7 +37,7 @@ class View {
   }
   
   public function content_for_layout($content="") {
-    Logger::render("Rendering {$this->layout}\n");    
+    $start = microseconds();  
     $params = $this->view_params();
     $params = array_merge($params, array("content_for_layout" => $content));    
     ob_start();
@@ -45,6 +46,28 @@ class View {
     }
     $output = ob_get_contents();
     ob_end_clean();
+    Logger::render("Rendering {$this->layout} (". (microseconds() - $start) ." ms)\n");      
+    return $output;
+  }
+  
+  public function render_partial($partial_name) {
+    $start   = microseconds();
+    $params  = $this->view_params();
+    # When partial_name has a slash assume they 
+    # know what template they are looking for.
+    # Otherwise look for the partial name in the default location.
+    if(strpos($partial_name, "/") > 0) {
+      $segments = explode("/", $partial_name);
+      $segments[count($segments) - 1] = "_" . end($segments); 
+      $partial = join("/", $segments);
+    } else {
+      $partial = $params["params"]["controller"] ."/". "_{$partial_name}";
+    }
+    ob_start();
+    Import::view($partial, $this->ext, $params);
+    $output = ob_get_contents();
+    ob_end_clean();
+    Logger::render("Rendering {$partial} (". (microseconds() - $start) ." ms)\n");      
     return $output;
   }
   
@@ -53,7 +76,8 @@ class View {
                     "layout"      => $this->layout,
                     "template"    => $this->template,
                     "request_uri" => $this->request_uri,
-                    );
+                    "view"        => $this
+                    );              
     return $params;
   }
 }

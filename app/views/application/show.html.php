@@ -41,3 +41,8 @@
 <p>
 Debug: <?= Config::get("debug") ? "true" : "false" ?>
 </p>
+
+<?= $view->render_partial("recent") ?>
+<hr />
+<?= $view->render_partial("common/users") ?>
+

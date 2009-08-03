@@ -46,3 +46,9 @@ Debug: <?= Config::get("debug") ? "true" : "false" ?>
 <hr />
 <?= $view->render_partial("common/users") ?>
 
+<? 
+# An Example of how-to render a parial with local variables
+?>
+<?= $view->render_partial("common/users", array("locals" => array(
+    "name" => "john", "age" => 24
+  ))) ?>

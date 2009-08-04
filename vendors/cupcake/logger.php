@@ -18,10 +18,6 @@ class Logger {
     return self::$instance;
   }
   
-  public static function debug() {
-    
-  }
-  
   public static function info($message, $color="default") {
     $time = date("r", time());
     $new_message = sprintf("[%s: %s] %s\n", "info", $time, $message);
@@ -45,18 +41,6 @@ class Logger {
   public static function render($message) {
     $l = self::getInstance();
     $l->write($message);
-  }
-  
-  public static function warn() {
-    
-  }
-  
-  public static function error() {
-    
-  }
-  
-  public static function fatal() {
-    
   }
   
   public function new_line() {

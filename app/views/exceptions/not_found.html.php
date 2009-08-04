@@ -1,5 +1,5 @@
 <div>
-  <h2>Route Not Found</h2>
+  <h2>Template Not Found: <?= $view->template ?></h2>
 </div>
 
 <p>
@@ -7,4 +7,5 @@
 <?= $template ?><br />
 <?= $layout ?><br />
 <?= var_dump($this) ?>
+<?= var_dump($view) ?>
 </p>

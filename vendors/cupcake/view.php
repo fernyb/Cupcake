@@ -3,14 +3,16 @@
 class View {
   public $request_uri;
   public $controller;
-  public $params;
+  public $params = array();
+  public $view_params = array();
   public $layout;
   public $template;
   public $ext = "html.php";
   
-  public function __construct($request_uri, $params=array()) {
+  public function __construct($request_uri, $params=array(), $view_params=array()) {
     $this->request_uri = $request_uri;
     $this->params      = $params;
+    $this->view_params = $view_params;
     $this->layout      = "layouts/application";
     $this->template    = $params["controller"] ."/". $params["action"];
   }
@@ -80,7 +82,8 @@ class View {
                     "template"    => $this->template,
                     "request_uri" => $this->request_uri,
                     "view"        => $this
-                    );              
+                    );
+    $params = array_merge($this->view_params, $params);       
     return $params;
   }
 }

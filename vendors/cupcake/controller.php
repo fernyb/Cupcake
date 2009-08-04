@@ -5,6 +5,7 @@ class Controller {
   public $request_uri;
   public $action;
   public $params = array();
+  public $view_params = array();
   public $view;
   protected $render_called = false;
   
@@ -41,10 +42,12 @@ class Controller {
   
   public function render($options=array()) {
     if($this->render_called === false) {
-      $this->view = new View($this->request_uri, $this->params);
+      $this->view = new View($this->request_uri, $this->params, $this->view_params);
       $this->view->controller = $this->controller;
-      if(!empty($options["action"])) {
+      if(!empty($options["action"]) && strpos("/", $options["action"])) {
         $this->view->template = $options["action"];
+      } else if(!empty($options["action"])) {
+        $this->view->template = $this->params["controller"] ."/". $options["action"];
       }
       $this->render_called = true;
       $this->view->render();
@@ -54,7 +57,9 @@ class Controller {
   public function not_found() { }
   
   public function set($key, $value) {
-    $this->params[$key] = $value;
+    if($key !== "controller" && $key !== "action") {
+      $this->view_params[$key] = $value;
+    }
   }
 }
 

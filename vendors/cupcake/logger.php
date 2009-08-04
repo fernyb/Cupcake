@@ -46,21 +46,21 @@ class Logger {
   public function new_line() {
     $l = self::getInstance();    
     $message = "\n";
-    $file = LOG_DIR ."/". $l->filename;
-    if($fp = fopen($file, "a+")) {
-      fwrite($fp, $message);
-      fclose($fp);
-    }    
+    $l->write_to_log($message);    
   }
   
   public function write($message) {
     if(!empty($message) && strlen(trim($message)) > 0) {
-      $file = LOG_DIR ."/". $this->filename;
-      if($fp = fopen($file, "a+")) {
-        fwrite($fp, $message);
-        fclose($fp);
-      }
+      $this->write_to_log($message);
     }
+  }
+  
+  public function write_to_log($message) {
+    $file = LOG_DIR ."/". $this->filename;
+    if($fp = fopen($file, "a+")) {
+      fwrite($fp, $message);
+      fclose($fp);
+    }  
   }
   
   public function color_message($message, $color) {

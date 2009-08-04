@@ -1,0 +1,621 @@
+
+[info: Tue, 04 Aug 2009 06:05:13 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:05:13 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:05:13 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:05:13 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:05:13) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.0160660743713 ms)
+Rendering common/_users (0.0208179950714 ms)
+Rendering common/_locals (0.000665903091431 ms)
+Rendering template within application/show (0.0456650257111 ms)
+Rendering layouts/application (0.000565052032471 ms)
+
+[info: Tue, 04 Aug 2009 06:05:23 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:05:23 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:05:23 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:05:23 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:05:23) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000166893005371 ms)
+Rendering common/_users (0.000180959701538 ms)
+Rendering common/_locals (0.00018310546875 ms)
+Rendering template within application/show (0.00163292884827 ms)
+Rendering layouts/application (0.000149011611938 ms)
+
+[info: Tue, 04 Aug 2009 06:05:24 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:05:24 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:05:24 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:05:24 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:05:24) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000172138214111 ms)
+Rendering common/_users (0.000155925750732 ms)
+Rendering common/_locals (0.000202894210815 ms)
+Rendering template within application/show (0.00172805786133 ms)
+Rendering layouts/application (0.000116109848022 ms)
+
+[info: Tue, 04 Aug 2009 06:05:24 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:05:24 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:05:24 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:05:24 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:05:24) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000160932540894 ms)
+Rendering common/_users (0.000151872634888 ms)
+Rendering common/_locals (0.000200033187866 ms)
+Rendering template within application/show (0.00165700912476 ms)
+Rendering layouts/application (0.000115871429443 ms)
+
+[info: Tue, 04 Aug 2009 06:07:36 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:07:36 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:07:36 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:07:36 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:07:36) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000169038772583 ms)
+Rendering common/_users (0.000178098678589 ms)
+Rendering common/_locals (0.000180006027222 ms)
+Rendering template within application/show (0.00167679786682 ms)
+Rendering layouts/application (0.000146150588989 ms)
+
+[info: Tue, 04 Aug 2009 06:08:46 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:08:46 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:08:46 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:08:46 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:08:46) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000168085098267 ms)
+Rendering common/_users (0.000211954116821 ms)
+Rendering common/_locals (0.000223159790039 ms)
+Rendering template within application/show (0.00167107582092 ms)
+Rendering layouts/application (0.000161170959473 ms)
+
+[info: Tue, 04 Aug 2009 06:08:48 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:08:48 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:08:48 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:08:48 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:08:48) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000164985656738 ms)
+Rendering common/_users (0.000188827514648 ms)
+Rendering common/_locals (0.000204086303711 ms)
+Rendering template within application/show (0.00136399269104 ms)
+Rendering layouts/application (0.000143766403198 ms)
+
+[info: Tue, 04 Aug 2009 06:10:54 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:10:54 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:10:54 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:10:54 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:10:54) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000179052352905 ms)
+Rendering common/_users (0.000221967697144 ms)
+Rendering common/_locals (0.000221967697144 ms)
+Rendering template within application/show (0.00175404548645 ms)
+Rendering layouts/application (0.000178098678589 ms)
+
+[info: Tue, 04 Aug 2009 06:11:02 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:11:02 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:11:02 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:11:02 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:11:02) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.0699479579926 ms)
+Rendering layouts/application (0.000251054763794 ms)
+
+[info: Tue, 04 Aug 2009 06:11:36 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:11:36 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:11:36 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:11:36 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:11:36) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.000513076782227 ms)
+Rendering layouts/application (0.000143051147461 ms)
+
+[info: Tue, 04 Aug 2009 06:11:37 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:11:37 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:11:37 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:11:37 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:11:37) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.000185966491699 ms)
+Rendering layouts/application (0.00012993812561 ms)
+
+[info: Tue, 04 Aug 2009 06:11:38 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:11:38 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:11:38 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:11:38 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:11:38) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.000223159790039 ms)
+Rendering layouts/application (0.000155925750732 ms)
+
+[info: Tue, 04 Aug 2009 06:11:38 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:11:38 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:11:38 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:11:38 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:11:38) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.000190019607544 ms)
+Rendering layouts/application (0.000163078308105 ms)
+
+[info: Tue, 04 Aug 2009 06:12:39 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:12:39 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:12:39 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:12:39 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:12:39) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.000497102737427 ms)
+Rendering layouts/application (0.000165939331055 ms)
+
+[info: Tue, 04 Aug 2009 06:13:05 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:13:05 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:13:05 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:13:05 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:13:05) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.00049901008606 ms)
+Rendering layouts/application (0.000198841094971 ms)
+
+[info: Tue, 04 Aug 2009 06:13:05 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:13:05 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:13:05 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:13:05 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:13:05) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.00025200843811 ms)
+Rendering layouts/application (0.000162124633789 ms)
+
+[info: Tue, 04 Aug 2009 06:13:05 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:13:05 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:13:05 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:13:05 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:13:05) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.000245809555054 ms)
+Rendering layouts/application (0.000123977661133 ms)
+
+[info: Tue, 04 Aug 2009 06:13:06 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:13:06 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:13:06 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:13:06 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:13:06) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.000257015228271 ms)
+Rendering layouts/application (0.000123977661133 ms)
+
+[info: Tue, 04 Aug 2009 06:14:58 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:14:58 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:14:58 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:14:58 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:14:58) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.00052809715271 ms)
+Rendering layouts/application (0.000185012817383 ms)
+
+[info: Tue, 04 Aug 2009 06:15:19 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:15:19 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:15:19 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:15:19 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:15:19) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.000502109527588 ms)
+Rendering layouts/application (0.000191926956177 ms)
+
+[info: Tue, 04 Aug 2009 06:16:18 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:16:18 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:16:18 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:16:18 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:16:18) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.000375032424927 ms)
+Rendering layouts/application (0.0002121925354 ms)
+
+[info: Tue, 04 Aug 2009 06:17:16 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:17:16 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:17:16 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:17:16 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:17:16) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.000455856323242 ms)
+Rendering layouts/application (0.000189065933228 ms)
+
+[info: Tue, 04 Aug 2009 06:17:19 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:17:19 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:17:19 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:17:19 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:17:19) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.000247001647949 ms)
+Rendering layouts/application (0.000168085098267 ms)
+
+[info: Tue, 04 Aug 2009 06:19:12 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:19:12 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:19:12 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:19:12 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:19:12) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.000298976898193 ms)
+Rendering layouts/application (0.000164031982422 ms)
+
+[info: Tue, 04 Aug 2009 06:19:57 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:19:57 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:19:57 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:19:57 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:19:57) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within exceptions/not_found (0.000306129455566 ms)
+Rendering layouts/application (0.000188112258911 ms)
+
+[info: Tue, 04 Aug 2009 06:20:32 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:20:32 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:20:32 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:20:32 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:20:32) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000137090682983 ms)
+Rendering layouts/application (0.000186920166016 ms)
+
+[info: Tue, 04 Aug 2009 06:21:43 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:21:43 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:21:43 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:21:43 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:21:43) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000220775604248 ms)
+Rendering layouts/application (0.000221014022827 ms)
+
+[info: Tue, 04 Aug 2009 06:21:45 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:21:45 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:21:45 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:21:45 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:21:45) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000399827957153 ms)
+Rendering common/_users (0.000278949737549 ms)
+Rendering common/_locals (0.000213861465454 ms)
+Rendering template within application/show (0.00288605690002 ms)
+Rendering layouts/application (0.000127077102661 ms)
+
+[info: Tue, 04 Aug 2009 06:21:48 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:21:48 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:21:48 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:21:48 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:21:48) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000187873840332 ms)
+Rendering layouts/application (0.000170946121216 ms)
+
+[info: Tue, 04 Aug 2009 06:21:51 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:21:51 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:21:51 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:21:51 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:21:51) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000164031982422 ms)
+Rendering common/_users (0.000154972076416 ms)
+Rendering common/_locals (0.000173091888428 ms)
+Rendering template within application/show (0.00129389762878 ms)
+Rendering layouts/application (0.000118017196655 ms)
+
+[info: Tue, 04 Aug 2009 06:22:21 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:22:21 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:22:21 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:22:21 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:22:21) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000179052352905 ms)
+Rendering common/_users (0.000210046768188 ms)
+Rendering common/_locals (0.000216960906982 ms)
+Rendering template within application/show (0.00149202346802 ms)
+Rendering layouts/application (0.00016188621521 ms)
+
+[info: Tue, 04 Aug 2009 06:22:22 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:22:22 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:22:22 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:22:22 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:22:22) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000164985656738 ms)
+Rendering common/_users (0.000164985656738 ms)
+Rendering common/_locals (0.000360012054443 ms)
+Rendering template within application/show (0.00155591964722 ms)
+Rendering layouts/application (0.000118970870972 ms)
+
+[info: Tue, 04 Aug 2009 06:22:23 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:22:23 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:22:23 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:22:23 -0700] Dispatcher, dispatch_to: /artist/coldplay
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:22:23) [GET]
+Params: ( [year] => 2009 [artist] => coldplay [controller] => application [action] => show)
+Rendering application/_recent (0.000170946121216 ms)
+Rendering common/_users (0.0001540184021 ms)
+Rendering common/_locals (0.000180006027222 ms)
+Rendering template within application/show (0.00139808654785 ms)
+Rendering layouts/application (0.00012993812561 ms)
+
+[info: Tue, 04 Aug 2009 06:22:24 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:22:24 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:22:24 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:22:24 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:22:24) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000193119049072 ms)
+Rendering layouts/application (0.000164985656738 ms)
+
+[info: Tue, 04 Aug 2009 06:22:26 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:22:26 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:22:26 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:22:26 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:22:26) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000165939331055 ms)
+Rendering common/_users (0.000186204910278 ms)
+Rendering common/_locals (0.000211000442505 ms)
+Rendering template within application/show (0.00142192840576 ms)
+Rendering layouts/application (0.000138998031616 ms)
+
+[info: Tue, 04 Aug 2009 06:22:30 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:22:30 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:22:30 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:22:30 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:22:30) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.00018310546875 ms)
+Rendering layouts/application (0.000169992446899 ms)
+
+[info: Tue, 04 Aug 2009 06:22:54 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:22:54 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:22:54 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:22:54 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:22:54) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000170230865479 ms)
+Rendering common/_users (0.000202894210815 ms)
+Rendering common/_locals (0.000211000442505 ms)
+Rendering template within application/show (0.00142002105713 ms)
+Rendering layouts/application (0.000159025192261 ms)
+
+[info: Tue, 04 Aug 2009 06:26:00 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:26:00 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:26:00 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:26:00 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:26:00) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000221967697144 ms)
+Rendering common/_users (0.000179052352905 ms)
+Rendering common/_locals (0.000181913375854 ms)
+Rendering template within application/show (0.00170803070068 ms)
+Rendering layouts/application (0.000133037567139 ms)
+
+[info: Tue, 04 Aug 2009 06:26:01 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:26:01 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:26:01 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:26:01 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:26:01) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000514984130859 ms)
+Rendering layouts/application (0.000153064727783 ms)
+
+[info: Tue, 04 Aug 2009 06:28:42 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:28:42 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:28:42 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:28:42 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:28:42) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.00034499168396 ms)
+Rendering layouts/application (0.000162124633789 ms)
+
+[info: Tue, 04 Aug 2009 06:28:43 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:28:43 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:28:43 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:28:43 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:28:43) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000226020812988 ms)
+Rendering layouts/application (0.000119924545288 ms)
+
+[info: Tue, 04 Aug 2009 06:28:43 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:28:43 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:28:43 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:28:43 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:28:43) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000226974487305 ms)
+Rendering layouts/application (0.000140905380249 ms)
+
+[info: Tue, 04 Aug 2009 06:28:43 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:28:43 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:28:43 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:28:43 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:28:43) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000205039978027 ms)
+Rendering layouts/application (0.0001540184021 ms)
+
+[info: Tue, 04 Aug 2009 06:28:44 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:28:44 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:28:44 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:28:44 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:28:44) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000205039978027 ms)
+Rendering layouts/application (0.000123977661133 ms)
+
+[info: Tue, 04 Aug 2009 06:28:44 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:28:44 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:28:44 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:28:44 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:28:44) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000257968902588 ms)
+Rendering layouts/application (0.000121116638184 ms)
+
+[info: Tue, 04 Aug 2009 06:28:44 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:28:44 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:28:44 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:28:44 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:28:44) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000319957733154 ms)
+Rendering layouts/application (0.000123023986816 ms)
+
+[info: Tue, 04 Aug 2009 06:28:57 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:28:57 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:28:57 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:28:57 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:28:57) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000280141830444 ms)
+Rendering layouts/application (0.000137090682983 ms)
+
+[info: Tue, 04 Aug 2009 06:29:11 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:29:11 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:29:11 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:29:11 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:29:11) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000234127044678 ms)
+Rendering layouts/application (0.000171184539795 ms)
+
+[info: Tue, 04 Aug 2009 06:29:55 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:29:55 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:29:55 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:29:55 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:29:55) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000285863876343 ms)
+Rendering layouts/application (0.000174045562744 ms)
+
+[info: Tue, 04 Aug 2009 06:30:22 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:30:22 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:30:22 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:30:22 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:30:22) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000277996063232 ms)
+Rendering layouts/application (0.000208139419556 ms)
+
+[info: Tue, 04 Aug 2009 06:32:14 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:32:14 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:32:14 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:32:14 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:32:14) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000257968902588 ms)
+Rendering layouts/application (0.000173091888428 ms)
+
+[info: Tue, 04 Aug 2009 06:32:15 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:32:15 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:32:15 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:32:15 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:32:15) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000208854675293 ms)
+Rendering layouts/application (0.000154972076416 ms)
+
+[info: Tue, 04 Aug 2009 06:32:16 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:32:16 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:32:16 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:32:16 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:32:16) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000213146209717 ms)
+Rendering layouts/application (0.000163078308105 ms)
+
+[info: Tue, 04 Aug 2009 06:32:25 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:32:25 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:32:25 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:32:25 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:32:25) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000356912612915 ms)
+Rendering layouts/application (0.000298023223877 ms)
+
+[info: Tue, 04 Aug 2009 06:33:24 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:33:24 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:33:24 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:33:24 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:33:24) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000250101089478 ms)
+Rendering layouts/application (0.000189065933228 ms)
+
+[info: Tue, 04 Aug 2009 06:33:33 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:33:33 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:33:33 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:33:33 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:33:33) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000239849090576 ms)
+Rendering layouts/application (0.00014591217041 ms)
+
+[info: Tue, 04 Aug 2009 06:33:34 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:33:34 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:33:34 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:33:34 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:33:34) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000229120254517 ms)
+Rendering layouts/application (0.000135898590088 ms)
+
+[info: Tue, 04 Aug 2009 06:33:35 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:33:35 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:33:35 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:33:35 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:33:35) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000207901000977 ms)
+Rendering layouts/application (0.0001540184021 ms)
+
+[info: Tue, 04 Aug 2009 06:33:37 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:33:37 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:33:37 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:33:37 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:33:37) [GET]
+Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000230073928833 ms)
+Rendering common/_users (0.000219106674194 ms)
+Rendering common/_locals (0.000223159790039 ms)
+Rendering template within application/show (0.00155186653137 ms)
+Rendering layouts/application (0.000155210494995 ms)
+
+[info: Tue, 04 Aug 2009 06:33:40 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:33:40 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:33:40 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:33:40 -0700] Dispatcher, dispatch_to: /artist/coldplay
+Processing Application#show (for 127.0.0.1 at 2009-08-04 6:33:40) [GET]
+Params: ( [year] => 2009 [artist] => coldplay [controller] => application [action] => show)
+Rendering application/_recent (0.000168085098267 ms)
+Rendering common/_users (0.000192880630493 ms)
+Rendering common/_locals (0.000208139419556 ms)
+Rendering template within application/show (0.00138306617737 ms)
+Rendering layouts/application (0.000160932540894 ms)
+
+[info: Tue, 04 Aug 2009 06:33:42 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:33:42 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:33:42 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:33:42 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:33:42) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000220060348511 ms)
+Rendering layouts/application (0.000157833099365 ms)
+
+[info: Tue, 04 Aug 2009 06:34:00 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:34:00 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:34:00 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:34:00 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:34:00) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000251054763794 ms)
+Rendering layouts/application (0.000164985656738 ms)
+
+[info: Tue, 04 Aug 2009 06:34:00 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 06:34:00 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 06:34:00 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 06:34:00 -0700] Dispatcher, dispatch_to: /user/profile
+Processing Application#profile (for 127.0.0.1 at 2009-08-04 6:34:00) [GET]
+Params: ( [controller] => application [action] => profile)
+Rendering template within application/user_profile (0.000223875045776 ms)
+Rendering layouts/application (0.000140905380249 ms)

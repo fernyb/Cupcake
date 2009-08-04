@@ -36,7 +36,11 @@
 
 <?= link_to("Artist - Coldplay", url("artist", array("artist" => "coldplay", "year" => 2009))) ?>
 <br />
+<br />
 
+<?= link_to("User Profile", url("user_profile")) ?>
+
+<br />
 <br />
 <strong>Environment &nbsp; => &nbsp; <?= CUPCAKE_ENV ?></strong>
 <br />

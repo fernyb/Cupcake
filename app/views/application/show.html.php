@@ -34,6 +34,9 @@
  # => <?= htmlentities(truncate("Hello World", 5)) ?>
 </p>
 
+<?= link_to("Artist - Coldplay", url("artist", array("artist" => "coldplay", "year" => 2009))) ?>
+<br />
+
 <br />
 <strong>Environment &nbsp; => &nbsp; <?= CUPCAKE_ENV ?></strong>
 <br />
@@ -43,12 +46,12 @@ Debug: <?= Config::get("debug") ? "true" : "false" ?>
 </p>
 
 <?= $view->render_partial("recent") ?>
-<hr />
+
 <?= $view->render_partial("common/users") ?>
 
 <? 
 # An Example of how-to render a parial with local variables
 ?>
-<?= $view->render_partial("common/users", array("locals" => array(
+<?= $view->render_partial("common/locals", array("locals" => array(
     "name" => "john", "age" => 24
   ))) ?>

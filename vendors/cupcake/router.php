@@ -117,7 +117,7 @@ class Router {
        break;
       }
     }
-    if($path === null) {    
+    if($path !== null) {    
       if(count($options) > 0) {
         $route_params = array();
         $keys = $r->param_keys_for_path($path);
@@ -129,8 +129,10 @@ class Router {
           }
         }
         $options = array_diff($options, $route_params);
-        $params = http_build_query($options);
-        return "{$path}?{$params}";
+        if(count($options) > 0) {
+          $params = http_build_query($options);
+          return "{$path}?{$params}";
+        }
       }
       return $path;
     }

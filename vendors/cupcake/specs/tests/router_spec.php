@@ -82,29 +82,42 @@ describe("Router -> to", function(){
     $r->reset();
   });
   
-  it("returns an array", function(){
+  it("returns an instance of Router", function(){
     $r = Router::getInstance();
     $r->match("/blog/post");
     $resp = $r->to(array("controller" => "main", "action" => "show"));
-    assert_equal(is_array($resp), true, "Failed to return an array");    
+    assert_equal(get_class($resp), "Router", "Should have returned an instance of router");    
     $r->reset();    
   });
   
   it("return array with path", function(){
     $r = Router::getInstance();
     $r->match("/blog/post");
-    $resp = $r->to(array("controller" => "main", "action" => "show"));
+    $r->to(array("controller" => "main", "action" => "show"));
+    $resp = end($r->routes);
     assert_equal($resp['path'], "/blog/post", "Failed to have path /blog/post");
     $r->reset();     
   });
   
-  
   it("return array with params merged", function(){
     $r = Router::getInstance();
     $r->match("/blog/post");
-    $resp = $r->to(array("controller" => "main", "action" => "show"));
+    $r->to(array("controller" => "main", "action" => "show"));
+    $resp = end($r->routes);
     assert_equal($resp['params'], array("controller" => "main", "action" => "show"), "Failed to merge params");
     $r->reset();     
+  });
+});
+
+
+describe("Router -> name", function(){
+  it("sets name key in the routes array", function(){
+    Router::prepare(function($r){
+      $r->match("/books/recent")->to(array("controller" => "books", "action" => "recent"))->name("recent_books");
+    });
+    $r = Router::getInstance();
+    $route = end($r->routes);
+    assert_equal($route["name"], "recent_books", "Failed to return name of route");
   });
 });
 

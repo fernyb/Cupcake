@@ -79,10 +79,24 @@ class Router {
     $current_route_index = (count($this->routes) - 1);
     $route_path = $this->routes[$current_route_index]["path"];
     $this->routes[$current_route_index] = array("path" => $route_path, "params" => $params);
-     
-    return $this->routes[$current_route_index];
+    return $this;
   }
   
+  /**
+  * Sets the name of the route. It should be called called calling the to method.
+  */
+  public function name($name) {
+    if(count($this->routes) === 0) {
+      return false;  
+    }
+    if(!empty($name)) {
+     $route_index = (count($this->routes) - 1);
+     $route = $this->routes[$route_index];
+     $route["name"] = $name;
+     $this->routes[$route_index] = $route;
+    }
+    return $this->routes[$current_route_index];
+  }
   
   /**
   * Returns an Array of paramters. 

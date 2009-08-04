@@ -30,8 +30,14 @@ class Logger {
   }
   
   public static function process_controller($controller, $action, $http_method, $params=array()) {
+    $params_message = print_r($params, true);
+    $params_message = preg_replace("/\n/", "", $params_message);
+    $params_message = preg_replace("/\s+/", " ", $params_message);
+    $params_message = preg_replace("/^Array/", "Params: ", $params_message);
+    
     $time = date("Y-m-d G:i:s", time());
     $new_message = "Processing {$controller}#{$action} (for ". env("REMOTE_ADDR") ." at ". $time .") [{$http_method}]\n";
+    $new_message .= $params_message . "\n";
     $l = self::getInstance();
     $l->write($new_message);
   }

@@ -118,7 +118,47 @@ describe("Router -> name", function(){
     $r = Router::getInstance();
     $route = end($r->routes);
     assert_equal($route["name"], "recent_books", "Failed to return name of route");
+    $r->reset();
   });
+  
+  it("returns false when routes is zero", function(){
+    Router::prepare(function($r){
+      $r->match("/books/recent")->to(array("controller" => "books", "action" => "recent"))->name("recent_books");
+    });
+    $r = Router::getInstance();
+    $r->routes = array();
+    assert_equal($r->name("recent_books"), false, "Named route should be false when there ni no routes");
+    $r->reset();
+  });
+});
+
+describe("Router -> url", function(){
+  it("returns a route path string", function() {
+    Router::prepare(function($r){
+      $r->match("/books/recent")->to(array("controller" => "books", "action" => "recent"))->name("recent_books");
+    });
+    $params = Router::url("recent_books");
+    assert_equal($params, "/books/recent");
+    Router::getInstance()->reset();
+  });
+
+  it("returns a route path string with query parameters", function() {
+    Router::prepare(function($r){
+      $r->match("/books/recent")->to(array("controller" => "books", "action" => "recent"))->name("recent_books");
+    });
+    $params = Router::url("recent_books", array("username" => "fernyb"));
+    assert_equal($params, "/books/recent?username=fernyb");
+    Router::getInstance()->reset();
+  });
+  
+  it("returns a route with params in route path", function(){
+    Router::prepare(function($r){
+      $r->match("/book/show/:id")->to(array("controller" => "books", "action" => "show"))->name("show_book");
+    });
+    $params = Router::url("show_book", array("id" => "100", "sort" => "recent", "author" => "fernyb"));
+    assert_equal($params, "/book/show/100?sort=recent&author=fernyb");
+    Router::getInstance()->reset();
+  });  
 });
 
 

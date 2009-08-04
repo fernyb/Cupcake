@@ -99,6 +99,46 @@ class Router {
   }
   
   /**
+  * Returns a string replaces variables in path with the ones from the $options array.
+  * Example: 
+  * /user/profile/:id becomes /user/profile/100 when $options is array("id" => "100")
+  * /book/show/:id becomes /book/show/100?author=fernyb when $options is array("id" => "100", "author" => "fernyb")
+  *
+  * @param string $name The name of the route
+  * @param array $options The parameters the route will use
+  * @return string Returns a path
+  */
+  static function url($name, $options=array()) {
+    $r = self::getInstance();
+    $path = null;
+    foreach($r->routes as $route) {
+      if($route["name"] === $name) {
+       $path = $route["path"];
+       break;
+      }
+    }
+    if($path === null) {    
+      if(count($options) > 0) {
+        $route_params = array();
+        $keys = $r->param_keys_for_path($path);
+        foreach($keys as $key) {
+          $k = substr($key, 1, strlen($key));     
+          if(array_key_exists($k, $options)) {
+            $path = preg_replace("/{$key}/", $options[$k], $path);
+            $route_params[$k] = $options[$k];
+          }
+        }
+        $options = array_diff($options, $route_params);
+        $params = http_build_query($options);
+        return "{$path}?{$params}";
+      }
+      return $path;
+    }
+    return "";
+  }
+  
+  
+  /**
   * Returns an Array of paramters. 
   * $params is merged into the route parameters
   */

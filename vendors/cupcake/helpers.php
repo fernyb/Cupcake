@@ -10,7 +10,7 @@ function to_attributes($attr=array()) {
 
 function content_tag($tag_name, $content=nil, $attr=array()) {
   $attributes = to_attributes($attr);
-  if($content == nil) {
+  if($content == nil || $content == null) {
     $html = "<{$tag_name} " . join(" ", $attributes) . " />";
   } else {
     $tag_options = " " . join(" ", $attributes);
@@ -57,5 +57,6 @@ function link_to($name, $link, $options=array()) {
   $attributes = array_merge(array("href" => $link), $options);
   return content_tag("a", $name, $attributes);
 }
+
 
 ?>

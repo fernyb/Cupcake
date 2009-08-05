@@ -23,6 +23,7 @@ $dependencies = array(
   "import",
   "dispatcher",
   "helpers",
+  "helper/form",
   "controller",
   "controller_exception",
   "view",

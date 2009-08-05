@@ -2,6 +2,10 @@
 <hr />
 
 
+<?= submit_tag("Submit") ?>
+
+
+<br />
 <p>
 <?= link_to("Home", url("root")) ?>
 </p>

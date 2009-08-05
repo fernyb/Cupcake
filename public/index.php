@@ -8,6 +8,8 @@ Router::prepare(function($r){
   
   $r->match("/artist/my_layout")->to(array("controller" => "application", "action" => "my_layout"))->name("my_layout");
   
+  $r->match("/artist/html_form")->to(array("controller" => "application", "action" => "html_form"))->name("html_form");
+  
   $r->match("/artist/:artist")->to(array("controller" => "application", "action" => "show"))->name("artist");
   
   $r->match("/book(/:id)")->to(array("controller" => "application", "action" => "show"))->name("show_book");

@@ -46,6 +46,10 @@
 
 <br />
 <br />
+<?= link_to("HTML Forms", url("html_form")) ?>
+
+<br />
+<br />
 
 <strong>Environment &nbsp; => &nbsp; <?= CUPCAKE_ENV ?></strong>
 <br />

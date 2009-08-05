@@ -1,0 +1,105 @@
+
+[info: Tue, 04 Aug 2009 21:35:41 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 21:35:41 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 21:35:41 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 21:35:41 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 21:35:41) [GET]
+  Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000176906585693 ms)
+Rendering common/_users (0.00014591217041 ms)
+Rendering common/_locals (0.000158071517944 ms)
+Rendering template within application/show (0.00168800354004 ms)
+Rendering layouts/application (0.000175952911377 ms)
+
+[info: Tue, 04 Aug 2009 21:36:42 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 21:36:42 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 21:36:42 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 21:36:42 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 21:36:42) [GET]
+  Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000157833099365 ms)
+Rendering common/_users (0.0001540184021 ms)
+Rendering common/_locals (0.000174045562744 ms)
+Rendering template within application/show (0.0020899772644 ms)
+Rendering layouts/application (0.000200986862183 ms)
+
+[info: Tue, 04 Aug 2009 21:37:07 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 21:37:07 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 21:37:07 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 21:37:07 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 21:37:07) [GET]
+  Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000163078308105 ms)
+Rendering common/_users (0.000146865844727 ms)
+Rendering common/_locals (0.00016713142395 ms)
+Rendering template within application/show (0.00187182426453 ms)
+Rendering layouts/application (0.000208854675293 ms)
+
+[info: Tue, 04 Aug 2009 21:37:09 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 21:37:09 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 21:37:09 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 21:37:09 -0700] Dispatcher, dispatch_to: /artist/html_form
+Processing Application#html_form (for 127.0.0.1 at 2009-08-04 21:37:09) [GET]
+  Params: ( [controller] => application [action] => html_form)
+Rendering template within application/html_form (0.000158071517944 ms)
+Rendering layouts/application (0.0001380443573 ms)
+
+[info: Tue, 04 Aug 2009 21:37:17 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 21:37:17 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 21:37:17 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 21:37:17 -0700] Dispatcher, dispatch_to: /artist/html_form
+Processing Application#html_form (for 127.0.0.1 at 2009-08-04 21:37:17) [GET]
+  Params: ( [controller] => application [action] => html_form)
+Rendering template within application/html_form (0.000180006027222 ms)
+Rendering layouts/application (0.000157117843628 ms)
+
+[info: Tue, 04 Aug 2009 21:37:44 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 21:37:44 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 21:37:44 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 21:37:44 -0700] Dispatcher, dispatch_to: /artist/html_form
+Processing Application#html_form (for 127.0.0.1 at 2009-08-04 21:37:44) [GET]
+  Params: ( [controller] => application [action] => html_form)
+Rendering template within application/html_form (0.000225067138672 ms)
+Rendering layouts/application (0.000137090682983 ms)
+
+[info: Tue, 04 Aug 2009 21:37:44 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 21:37:44 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 21:37:44 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 21:37:44 -0700] Dispatcher, dispatch_to: /artist/html_form
+Processing Application#html_form (for 127.0.0.1 at 2009-08-04 21:37:44) [GET]
+  Params: ( [controller] => application [action] => html_form)
+Rendering template within application/html_form (0.000185012817383 ms)
+Rendering layouts/application (0.000123023986816 ms)
+
+[info: Tue, 04 Aug 2009 21:37:46 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 21:37:46 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 21:37:46 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 21:37:46 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 21:37:46) [GET]
+  Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000141143798828 ms)
+Rendering common/_users (0.000149965286255 ms)
+Rendering common/_locals (0.000178098678589 ms)
+Rendering template within application/show (0.00185799598694 ms)
+Rendering layouts/application (0.000209093093872 ms)
+
+[info: Tue, 04 Aug 2009 21:37:49 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 21:37:49 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 21:37:49 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 21:37:49 -0700] Dispatcher, dispatch_to: /artist/html_form
+Processing Application#html_form (for 127.0.0.1 at 2009-08-04 21:37:49) [GET]
+  Params: ( [controller] => application [action] => html_form)
+Rendering template within application/html_form (0.000241994857788 ms)
+Rendering layouts/application (0.000123977661133 ms)
+
+[info: Tue, 04 Aug 2009 21:37:51 -0700] *** Compiling Routes
+[info: Tue, 04 Aug 2009 21:37:51 -0700] *** Cupcake using environment: development
+[info: Tue, 04 Aug 2009 21:37:51 -0700] Dispatcher run!
+[info: Tue, 04 Aug 2009 21:37:51 -0700] Dispatcher, dispatch_to: /
+Processing Application#show (for 127.0.0.1 at 2009-08-04 21:37:51) [GET]
+  Params: ( [controller] => application [action] => show)
+Rendering application/_recent (0.000132083892822 ms)
+Rendering common/_users (0.000132083892822 ms)
+Rendering common/_locals (0.000188827514648 ms)
+Rendering template within application/show (0.00194215774536 ms)
+Rendering layouts/application (0.000198125839233 ms)

@@ -10,3 +10,7 @@
   <div>City:  <?= $city  ?></div>
   <div>State: <?= $state ?></div>
 </p>
+
+<p>
+<?= link_to("Redirect Test", url("redirect")) ?>
+</p>

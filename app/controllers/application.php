@@ -12,6 +12,10 @@ class Application extends Controller {
     $this->set("state", "California");
     $this->render(array("action" => "user_profile"));
   }
+  
+  function redirect() {
+    $this->redirect_to(url("root"));
+  }
 }
 
 ?>

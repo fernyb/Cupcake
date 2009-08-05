@@ -29,7 +29,7 @@ class Logger {
     $params_message = print_r($params, true);
     $params_message = preg_replace("/\n/", "", $params_message);
     $params_message = preg_replace("/\s+/", " ", $params_message);
-    $params_message = preg_replace("/^Array/", "Params: ", $params_message);
+    $params_message = preg_replace("/^Array/", "  Params: ", $params_message);
     
     $time = date("Y-m-d G:i:s", time());
     $new_message = "Processing {$controller}#{$action} (for ". env("REMOTE_ADDR") ." at ". $time .") [{$http_method}]\n";

@@ -5,7 +5,7 @@ class View {
   public $controller;
   public $params = array();
   public $view_params = array();
-  public $layout;
+  public $layout = "layouts/application";
   public $template;
   public $ext = "html.php";
   
@@ -13,7 +13,6 @@ class View {
     $this->request_uri = $request_uri;
     $this->params      = $params;
     $this->view_params = $view_params;
-    $this->layout      = "layouts/application";
     $this->template    = $params["controller"] ."/". $params["action"];
   }
   

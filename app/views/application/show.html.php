@@ -42,6 +42,11 @@
 
 <br />
 <br />
+<?= link_to("My Layout", url("my_layout")) ?>
+
+<br />
+<br />
+
 <strong>Environment &nbsp; => &nbsp; <?= CUPCAKE_ENV ?></strong>
 <br />
 

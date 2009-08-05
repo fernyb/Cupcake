@@ -16,6 +16,10 @@ class Application extends Controller {
   function redirect() {
     $this->redirect_to(url("root"));
   }
+  
+  function my_layout() {
+    $this->render(array("action" => "my_profile", "layout" => "my_layout"));
+  }
 }
 
 ?>

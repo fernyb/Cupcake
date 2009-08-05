@@ -6,6 +6,8 @@ Router::prepare(function($r){
   
   $r->match("/artist/redirect")->to(array("controller" => "application", "action" => "redirect"))->name("redirect");
   
+  $r->match("/artist/my_layout")->to(array("controller" => "application", "action" => "my_layout"))->name("my_layout");
+  
   $r->match("/artist/:artist")->to(array("controller" => "application", "action" => "show"))->name("artist");
   
   $r->match("/book(/:id)")->to(array("controller" => "application", "action" => "show"))->name("show_book");

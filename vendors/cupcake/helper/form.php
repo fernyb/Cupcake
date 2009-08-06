@@ -101,7 +101,17 @@ class HelperForm {
     return $html_tags;
   }
   
-  public function fields_for() {
+  public function fields_for($record_or_name_of_array, $options=array(), $block=null) {
+    if(is_closure($options)) {
+      $block = $options;
+      $options = array();
+    }
+    $h = new self();
+    foreach($options as $index => $object) {
+      $h->object      = $object;    
+      $h->object_name = $record_or_name_of_array;
+      $block($h, $object);
+    }
   }
   
   public function file_field($method, $options=array()) {

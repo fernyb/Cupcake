@@ -1,5 +1,9 @@
 <?php
 
+function is_closure($object) {
+  return (is_callable($object) && is_object($object));
+}
+
 function to_attributes($attr=array()) {
   $attributes = array();  
   foreach($attr as $k => $v) {
@@ -10,7 +14,7 @@ function to_attributes($attr=array()) {
 
 function content_tag($tag_name, $content=nil, $attr=array()) {
   $attributes = to_attributes($attr);
-  if($content == nil || $content == null) {
+  if($content === nil || $content === null) {
     $html = "<{$tag_name} " . join(" ", $attributes) . " />";
   } else {
     $tag_options = " " . join(" ", $attributes);

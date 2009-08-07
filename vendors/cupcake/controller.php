@@ -20,7 +20,7 @@ class Controller {
   
   public function handle_request($params) {
     $this->params = $params;
-    $controller_name  = Inflector::titleize($params["controller"], "first");
+    $controller_name  = Inflector::camelize($params["controller"], "first");
     Logger::process_controller($controller_name, $params["action"], env("REQUEST_METHOD"), $params);
     
     if(Import::controller($params["controller"])) {

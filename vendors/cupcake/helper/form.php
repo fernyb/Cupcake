@@ -159,6 +159,19 @@ function form_for($name, $object, $url, $block) {
   return $h->form_for($name, $object, $url, $block);
 }
 
+function fields_for($record_or_name_of_array, $options=array(), $block=null) {
+  if(is_closure($options)) {
+    $block = $options;
+    $options = array();
+  }
+  $h = new HelperForm();
+  foreach($options as $index => $object) {
+    $h->object      = $object;    
+    $h->object_name = $record_or_name_of_array;
+    $block($h, $object);
+  }
+}
+
 function submit_tag($name="", $options=array()) {
   $defaults = array("name" => "commit", "type" => "submit", "value" => $name);
   $attributes = array_merge($defaults, $options);

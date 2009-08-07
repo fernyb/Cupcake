@@ -36,28 +36,35 @@ class Controller {
   public function controller_exists($controller_name) {
     return file_exists(CONTROLLER_DIR . "/" . $controller_name .".php");
   }
-  
+
+  public function run_filter_methods($filters, $action, $methods) {
+    foreach($filters as $key => $value) {
+      $filter_method = $value[0];
+      if(array_search($filter_method, $methods)) {
+        if(isset($value["only"]) && $value["only"] === $action) {
+          $this->{$filter_method}(); 
+        } else {
+          $this->{$filter_method}();
+        }
+      }
+    }    
+  }
+    
   public function handle_action($action) {
     $methods = get_class_methods($this);
     // call before filter methods before calling action method
-    foreach($this->before_filter as $key => $value) {
-      $before_filter_method = $value[0];
-      if(array_search($before_filter_method, $methods)) {
-        if(isset($value["only"]) && $value["only"] === $action) {
-          $this->{$before_filter_method}(); 
-        } else {
-          $this->{$before_filter_method}();
-        }
-      }
-    }
+    $this->run_filter_methods($this->before_filter, $action, $methods);
     
     // Search for action Methods
     if(array_search($action, $methods)) {
       $this->{$action}();
     }
+    
+    // call after filter methods after calling action method
+    $this->run_filter_methods($this->after_filter, $action, $methods);
     $this->render();
   }
-  
+
   public function render($options=array()) {
     if($this->render_called === false) {
       $this->view = new View($this->request_uri, $this->params, $this->view_params);

@@ -41,6 +41,13 @@
 </div>
 <? endif; ?>
 
+<? if(!empty($set_after_filter)): ?>
+<div style="border:2px solid #ccc;padding:10px;">
+  <div><strong>After Filter Works!</strong></div>
+  <strong><?= $album_name ?></strong>
+</div>
+<? endif; ?>
+
 
 <br />
 <br />

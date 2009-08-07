@@ -6,6 +6,10 @@ class Application extends Controller {
       array("set_some_text_only", "only" => "html_form")
     );
   
+  public $after_filter = array(
+      array("set_after_filter_text")
+    );
+  
   function show() {
   }
   
@@ -35,6 +39,11 @@ class Application extends Controller {
   function set_some_text_only() {
     $this->set("set_some_text_only", "yes");
     $this->set("artist_name", "Coldplay");
+  }
+  
+  function set_after_filter_text() {
+    $this->set("set_after_filter", "yes");
+    $this->set("album_name", "X&Y");
   }
 }
 

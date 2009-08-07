@@ -18,7 +18,7 @@
   
   <div style="border:1px solid #ccc; padding:10px;">
     <strong>Fields For:</strong><br />
-    <?= $f->fields_for("customer[addresses][]", array(array("name" => "Michael Scott", "number" => "562-699-1234", "street" => "1234 Main St")), function($f, $customer){ ?>
+    <?= fields_for("customer[addresses][]", array(array("name" => "Michael Scott", "number" => "562-699-1234", "street" => "1234 Main St")), function($f, $customer){ ?>
       <?= $f->label("number", "Address For Person: <strong>". $customer["name"] ."</strong>") ?><br />
       <?= $f->text_field("number") ?><br />
       <?= $f->text_field("street") ?>

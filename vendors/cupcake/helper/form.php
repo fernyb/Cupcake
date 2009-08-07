@@ -1,34 +1,5 @@
 <?php
 
-function form_tag($url, $options=array()) {
-  if($options["multipart"] === true) {
-    if(empty($options["method"])) {
-      $options["method"] = "post";
-    }
-    $options["enctype"] = "multipart/form-data";
-  } else {
-    $options["method"] = "get";
-  }
-  $new_options = array();
-  foreach($options as $k => $v) {
-    if($k !== "multipart") {
-      $new_options[$k] = $v;
-    }
-  }
-  $options = $new_options;
-  unset($new_options);
-  $attributes = join(" ", to_attributes($options));
-  
-  $tag = "<form action=\"{$url}\"";
-  if(strlen($attributes) > 0) {
-    $tag .= " {$attributes}";
-  }
-  $tag .= ">";
-    
-  return $tag;
-}
-
-
 class HelperForm {
   public static $instance = false;
   public $content = "";
@@ -67,6 +38,9 @@ class HelperForm {
   private function object_method($method) {
     $method      = strtolower($method);
     $object_name = strtolower($this->object_name);
+    $object_name = preg_replace("/\[\]/", "", $object_name);
+    $object_name = preg_replace("/\[/", "_", $object_name);
+    $object_name = preg_replace("/\]/", "", $object_name);
     return array($object_name, $method);
   } 
   
@@ -99,19 +73,6 @@ class HelperForm {
     
     $html_tags = $tag ."\n". $hidden_tag;
     return $html_tags;
-  }
-  
-  public function fields_for($record_or_name_of_array, $options=array(), $block=null) {
-    if(is_closure($options)) {
-      $block = $options;
-      $options = array();
-    }
-    $h = new self();
-    foreach($options as $index => $object) {
-      $h->object      = $object;    
-      $h->object_name = $record_or_name_of_array;
-      $block($h, $object);
-    }
   }
   
   public function file_field($method, $options=array()) {
@@ -151,6 +112,35 @@ class HelperForm {
     $attributes = array_merge($defaults, $options);
     return content_tag("input", null, $attributes);
   }
+}
+
+
+function form_tag($url, $options=array()) {
+  if($options["multipart"] === true) {
+    if(empty($options["method"])) {
+      $options["method"] = "post";
+    }
+    $options["enctype"] = "multipart/form-data";
+  } else {
+    $options["method"] = "get";
+  }
+  $new_options = array();
+  foreach($options as $k => $v) {
+    if($k !== "multipart") {
+      $new_options[$k] = $v;
+    }
+  }
+  $options = $new_options;
+  unset($new_options);
+  $attributes = join(" ", to_attributes($options));
+  
+  $tag = "<form action=\"{$url}\"";
+  if(strlen($attributes) > 0) {
+    $tag .= " {$attributes}";
+  }
+  $tag .= ">";
+    
+  return $tag;
 }
 
 

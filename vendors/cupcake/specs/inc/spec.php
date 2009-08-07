@@ -112,11 +112,27 @@ function describe($name, $fn) {
   Spec::setSpec($name, $fn);
 }
 
+$before_closure = function(){
+};
+
+function before($closure) {
+  global $before_closure;
+  $before_closure = $closure;  
+}
+
 function it($name, $fn) {
+  global $before_closure;
+  
+  $before_objects = $before_closure();
+  if(empty($before_objects)) {
+    $before_objects = array();
+  }
+  
   $failure_count = Spec::$results['fail'];
   $passed_count = Spec::$results['pass'];
   $pending_count = Spec::$results['pending'];
-  $fn();
+  
+  $fn($before_objects);
   
   if(Spec::$results['pending'] > $pending_count || ($failure_count === Spec::$results['fail'] && $passed_count === Spec::$results['pass'])) {
     Spec::assert_pending();
@@ -130,6 +146,7 @@ function it($name, $fn) {
       Spec::write("\n  " . $name, false, "green");
     }
   }
+  $before_closure = function(){};
 }
 
 ?>

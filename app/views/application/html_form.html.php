@@ -1,7 +1,6 @@
 <h2>HTML Forms</h2>
 <hr />
 
-
 <?= form_for("user", $user, url("html_form"), function($f){ ?>
   <?= $f->hidden_field("secret") ?> <br />
   <?= $f->check_box("validated") ?> <br />
@@ -33,14 +32,17 @@
 <? }); ?>
 
 
-<?= form_tag("/posts", array("method" => "get", "id" => "hello")) ?>
-<br />
-<?= form_tag("/posts", array("method" => "post", "id" => "hello", "class" => "post_form")) ?>
-<br />
-<?= form_tag("/posts", array("multipart" => true, "id" => "hello")) ?>
-<br />
+<hr />
+<h2>Before Filters</h2>
+<? if(isset($set_some_text_only)): ?>
+<div style="border:2px solid #ccc;padding:10px;">
+  <div><strong>Before Filter Works!</strong></div>
+  <strong><?= $artist_name ?></strong>
+</div>
+<? endif; ?>
 
 
+<br />
 <br />
 <p>
 <?= link_to("Home", url("root")) ?>

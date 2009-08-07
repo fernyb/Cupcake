@@ -1,6 +1,10 @@
 <?php
 
 class Application extends Controller {
+  public $before_filter = array(
+      array("set_some_text"),
+      array("set_some_text_only", "only" => "html_form")
+    );
   
   function show() {
   }
@@ -19,6 +23,18 @@ class Application extends Controller {
   
   function my_layout() {
     $this->render(array("action" => "my_profile", "layout" => "my_layout"));
+  }
+  
+  function html_form() {
+  }
+  
+  function set_some_text() {
+    $this->set("set_some_text", "yes");
+  }
+  
+  function set_some_text_only() {
+    $this->set("set_some_text_only", "yes");
+    $this->set("artist_name", "Coldplay");
   }
 }
 

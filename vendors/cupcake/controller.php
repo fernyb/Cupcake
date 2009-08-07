@@ -7,6 +7,8 @@ class Controller {
   public $params = array();
   public $view_params = array();
   public $view;
+  public $before_filter = array();
+  public $after_filter = array();
   protected $render_called = false;
   
   public function __construct($uri, $params=array()) {
@@ -37,6 +39,19 @@ class Controller {
   
   public function handle_action($action) {
     $methods = get_class_methods($this);
+    // call before filter methods before calling action method
+    foreach($this->before_filter as $key => $value) {
+      $before_filter_method = $value[0];
+      if(array_search($before_filter_method, $methods)) {
+        if(isset($value["only"]) && $value["only"] === $action) {
+          $this->{$before_filter_method}(); 
+        } else {
+          $this->{$before_filter_method}();
+        }
+      }
+    }
+    
+    // Search for action Methods
     if(array_search($action, $methods)) {
       $this->{$action}();
     }

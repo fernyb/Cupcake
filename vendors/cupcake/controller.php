@@ -78,12 +78,14 @@ class Controller {
     if($this->render_called === false) {
       $this->view = new View($this->request_uri, $this->params, $this->view_params);
       $this->view->controller = $this->controller;
+      
       // Figure out the template to use:
       if(!empty($options["action"]) && strpos("/", $options["action"])) {
         $this->view->template = $options["action"];
       } else if(!empty($options["action"])) {
         $this->view->template = $this->params["controller"] ."/". $options["action"];
       }
+      
       // Figure out the layout to use:
       if(!empty($options["layout"])) {
         $this->view->layout = "layouts/". $options["layout"];

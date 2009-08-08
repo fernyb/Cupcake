@@ -25,6 +25,7 @@ class Config {
     include_once CONFIG_DIR ."/environment.php";
     include_once CONFIG_DIR ."/environments/". CUPCAKE_ENV .".php";
     Logger::info("*** Cupcake using environment: ". CUPCAKE_ENV);
+    include_once CONFIG_DIR ."/routes.php";
   }
 }
 

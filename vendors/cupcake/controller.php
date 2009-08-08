@@ -49,8 +49,17 @@ class Controller {
       }
     }    
   }
+  
+  public function handle_flash_messages() {
+    foreach($_COOKIE as $k => $v) {
+      if(preg_match("/^flash_/", $k)) {
+        setcookie($k, "", time() - (3600 * 8));
+      }
+    }
+  }
     
   public function handle_action($action) {
+    $this->handle_flash_messages();
     $methods = get_class_methods($this);
     // call before filter methods before calling action method
     $this->run_filter_methods($this->before_filter, $action, $methods);

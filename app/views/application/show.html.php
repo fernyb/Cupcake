@@ -50,6 +50,10 @@
 
 <br />
 <br />
+<?= link_to("Flash Message Example", url("flash_example")) ?>
+
+<br />
+<br />
 
 <strong>Environment &nbsp; => &nbsp; <?= CUPCAKE_ENV ?></strong>
 <br />

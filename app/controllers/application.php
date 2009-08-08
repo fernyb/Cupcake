@@ -21,6 +21,15 @@ class Application extends Controller {
     $this->render(array("action" => "user_profile"));
   }
   
+  function flash_example() {
+    flash("notice", "Hello World");
+  }
+  
+  function flash_show() {
+    // should display flash message on screen
+    // when page is refreshed it should not display the message
+  }
+  
   function redirect() {
     $this->redirect_to(url("root"));
   }

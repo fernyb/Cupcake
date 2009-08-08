@@ -24,6 +24,8 @@ $dependencies = array(
   "dispatcher",
   "helpers",
   "helper/form",
+  "helper/flash",
+  "session",
   "session/cookie_store",
   "controller",
   "controller_exception",

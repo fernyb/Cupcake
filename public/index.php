@@ -6,6 +6,10 @@ Router::prepare(function($r){
   
   $r->match("/artist/redirect")->to(array("controller" => "application", "action" => "redirect"))->name("redirect");
   
+  $r->match("/artist/flash_example")->to(array("controller" => "application", "action" => "flash_example"))->name("flash_example");
+  
+  $r->match("/artist/flash_show")->to(array("controller" => "application", "action" => "flash_show"))->name("flash_show");
+  
   $r->match("/artist/my_layout")->to(array("controller" => "application", "action" => "my_layout"))->name("my_layout");
   
   $r->match("/artist/html_form")->to(array("controller" => "application", "action" => "html_form"))->name("html_form");

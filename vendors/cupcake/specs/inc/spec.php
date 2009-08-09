@@ -146,7 +146,6 @@ function it($name, $fn) {
       Spec::write("\n  " . $name, false, "green");
     }
   }
-  $before_closure = function(){};
 }
 
 ?>

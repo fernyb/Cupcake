@@ -16,11 +16,16 @@ class CookieStore {
   public $key;
   public $session_data;
   
-  #public function __construct($options=array()) {
-  #  $this->initialize($options);
-  #}
+  private $did_initialize = false;
+  
+  public function __construct($options=array()) {
+    $this->initialize($options);
+  }
   
   public function initialize($options=array()) {
+    if(count($options) === 0) {
+      return;
+    }
     if(array_search("session_path", array_keys($options)) !== false) {
       $options["path"] = $options["session_path"];
       unset($options["session_path"]);
@@ -33,15 +38,15 @@ class CookieStore {
       $options["httponly"] = $options["session_http_only"];
       unset($options["session_http_only"]);
     }
-  
+
     # The session_key option is required.
     $this->ensure_option_key($options["key"]);
     $this->key = $options["key"];
- 
+
     # The secret option is required.
     $this->ensure_option_key($options["secret"]);
     $this->secret = $options["secret"];
-    
+  
     $this->default_options = array_merge($this->default_options, $options);
   }
   
@@ -105,22 +110,20 @@ class CookieStore {
     return $cookie;
   }
   
-  public function ensure_option_key($value=null) {
-    if(empty($value)) {
-      throw new Exception("Missing Key");
+  public function load_session($session_data="") {
+    try {
+      $data = $this->verify($session_data);
+      $this->params = $data;
+    } catch(InvalidSignature $e) {
+      Logger::info($e);
+      $this->params = array();
+      $data = "";
     }
-    return true;
-  }
-  
-  public function marshal($session=array()) {
-    $session_id = $this->persistent_session_id($session);
-    $value = $this->generate($session_id);
-    return $value;
+    return $data;
   }
   
   public function verify($signed_message="") {
     list($data, $digest) = explode("--", $signed_message, 2);
-  
     $new_digest = $this->generate_digest($data);
     if($digest !== $new_digest) {
       throw new InvalidSignature("Digest does not match: {$digest} != {$new_digest}");
@@ -130,7 +133,20 @@ class CookieStore {
     }
   }
   
-  public function generate($value) {
+  private function ensure_option_key($value=null) {
+    if(empty($value)) {
+      throw new Exception("Missing Key");
+    }
+    return true;
+  }
+  
+  private function marshal($session=array()) {
+    $session_id = $this->persistent_session_id($session);
+    $value = $this->generate($session_id);
+    return $value;
+  }
+  
+  private function generate($value) {
     $data = base64_encode(serialize($value));
     $value = "{$data}--". $this->generate_digest($data);
     return $value;
@@ -141,23 +157,23 @@ class CookieStore {
     return $data;
   }
   
-  public function generate_id() {
+  private function generate_id() {
     mt_srand(time() * rand());
     $id = substr(mt_rand() . mt_rand(), 0, 16);
     return $id;
   }
   
-  public function persistent_session_id($data=array()) {
+  private function persistent_session_id($data=array()) {
     $id = array_merge($data, $this->inject_persistent_session_id($data));
     return $id;
   }
   
-  public function inject_persistent_session_id($data=array()) {
+  private function inject_persistent_session_id($data=array()) {
     $session = $this->requires_session_id($data) ? array("session_id" => $this->generate_id()) : array();
     return $session;
   }
   
-  public function requires_session_id($data=array()) {
+  private function requires_session_id($data=array()) {
     $keys = array_keys($data);
     if(array_search("session_id", $keys)) {
       return false;
@@ -175,10 +191,6 @@ class CookieStore {
   
   public function clear() {
     $this->params = array();
-  }
-  
-  public function restore() {
-    
   }
 }
 

@@ -16,8 +16,6 @@ class CookieStore {
   public $key;
   public $session_data;
   
-  private $did_initialize = false;
-  
   public function __construct($options=array()) {
     $this->initialize($options);
   }

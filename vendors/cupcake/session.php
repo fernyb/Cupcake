@@ -1,29 +1,26 @@
 <?php
 
 class Session {
-  public static $instance = false;
   public $session_store;
-
-  public static function &getInstance() {
-    if(!self::$instance) {
-      self::$instance = new self();
-    }
-    return self::$instance;
+  
+  public function __construct(&$session_store) {
+    $this->session_store = $session_store;
   }
   
-  public static function set($key, $value=null) {
-    $s = self::getInstance();
-    $s->session_store->set($key, $value);
+  public function set($key, $value=null) {
+    $this->session_store->set($key, $value);
   }
   
-  public static function get($key) {
-    $s = self::getInstance();
-    return $s->session_store->get($key);
+  public function get($key) {
+    return $this->session_store->get($key);
   }
   
-  public static function clear() {
-    $s = self::getInstance();
-    $s->session_store->clear();
+  public function clear() {
+    $this->session_store->clear();
+  }
+  
+  public function save() {
+    return $this->session_store->save();
   }
 }
 

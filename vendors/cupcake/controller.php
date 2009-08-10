@@ -71,6 +71,7 @@ class Controller {
   # after doing so it will attempt to render the view
   #  
   public function handle_action($action) {
+    $start_timer = microseconds();
     $this->load_session();    
     $this->handle_flash_messages();
     $methods = get_class_methods($this);
@@ -85,7 +86,9 @@ class Controller {
     # call after filter methods after calling action method
     $this->run_filter_methods($this->after_filter, $action, $methods);
     $this->save_session();
+    
     $this->render();
+    Logger::info("Controller Action: ". (microseconds() - $start_timer) ." ms");
   }
 
   public function render($options=array()) {

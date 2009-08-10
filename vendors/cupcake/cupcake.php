@@ -26,6 +26,7 @@ $dependencies = array(
   "helper/form",
   "helper/flash",
   "helper/session",
+  "response/xml",
   "session",
   "session/cookie_store",
   "controller",

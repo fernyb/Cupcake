@@ -8,7 +8,7 @@
 <p>
 This is the layout specified in the action. <br />
 <pre>
-    $this->render(array("action" => "my_profile", "layout" => "my_layout"));
+    $this->render_action("my_profile", array("layout" => "my_layout"));
 </pre>
 </p>
 

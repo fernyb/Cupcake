@@ -113,6 +113,11 @@ class Controller {
     }
   }
   
+  public function render_action($action, $options=array()) {
+    $this->save_session();
+    $this->render(array_merge(array("action" => $action), $options));
+  }
+  
   public function render_text($text="") {
     $this->save_session();
     echo $text;

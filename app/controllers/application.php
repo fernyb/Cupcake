@@ -18,7 +18,7 @@ class Application extends Controller {
     $this->set("age",   "24");
     $this->set("city",  "Pico Rivera");
     $this->set("state", "California");
-    $this->render(array("action" => "user_profile"));
+    $this->render_action("user_profile");
   }
   
   function flash_example() {
@@ -42,13 +42,12 @@ class Application extends Controller {
     session_set("id", "250");
   }
   
-  
   function redirect() {
     $this->redirect_to(url("root"));
   }
   
   function my_layout() {
-    $this->render(array("action" => "my_profile", "layout" => "my_layout"));
+    $this->render_action("my_profile", array("layout" => "my_layout"));
   }
   
   function html_form() {

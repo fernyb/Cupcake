@@ -58,6 +58,10 @@
 
 <br />
 <br />
+<?= link_to("The Name", url("the_name")) ?>
+
+<br />
+<br />
 
 <strong>Environment &nbsp; => &nbsp; <?= CUPCAKE_ENV ?></strong>
 <br />

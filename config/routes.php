@@ -4,6 +4,8 @@
 Router::prepare(function($r){
   $r->match("/")->to(array("controller" => "application", "action" => "show"))->name("root");  
   
+  $r->match("/the_name")->to(array("controller" => "application", "action" => "the_name"))->name("the_name");
+  
   $r->match("/artist/session_set")->to(array("controller" => "application", "action" => "session_set"))->name("session_set");
   
   $r->match("/artist/session_values")->to(array("controller" => "application", "action" => "session_values"))->name("session_values");

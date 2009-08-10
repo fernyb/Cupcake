@@ -243,6 +243,10 @@ class Router {
     if(list($index, $orig_params) = $this->match_path($request_path)) {
       $default_params = $this->current_path_params($request_path, $orig_params);
       
+      if(empty($default_params)) {
+        $default_params = array($index, $orig_params);
+      }
+      
       $path = $this->routes[$index]['path'];
       $params  = array_merge($orig_params, $default_params[1]);
       $pattern = $this->arrays_to_regexps(array("path" => $path));
@@ -291,7 +295,7 @@ class Router {
   private function match_path($path) {
     foreach($this->routes as $k => $v) {
       $regexp = $this->route_path_to_regexp($v["path"]);
-      if(preg_match("/{$regexp}/", $path)) {
+      if(preg_match("/{$regexp}/", $path) || $v["path"] === $path) {
         return array($k, $v["params"]);
       }
     }

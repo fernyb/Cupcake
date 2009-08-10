@@ -32,9 +32,10 @@ class Dispatcher {
     return $this->router;
   }
   
-  static function run() {
-    Config::load_environment();
+  public static function run() {
+    self::load_environment();
     Logger::info("Dispatcher run!");
+    Session::initialize();
     self::handle();
   }
   
@@ -54,6 +55,14 @@ class Dispatcher {
       $this->controller = new Controller($uri);
     }
     $this->controller->handle_request($params);
+  }
+  
+  # Load the environment
+  public static function load_environment() {
+    include_once CONFIG_DIR ."/environment.php";
+    include_once CONFIG_DIR ."/environments/". CUPCAKE_ENV .".php";
+    Logger::info("*** Cupcake using environment: ". CUPCAKE_ENV);
+    include_once CONFIG_DIR ."/routes.php";
   }
   
     

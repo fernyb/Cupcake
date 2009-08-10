@@ -57,20 +57,34 @@ class Controller {
       }
     }
   }
-    
+  
+  public function load_session() {
+    Session::getInstance()->load();
+  }
+  
+  public function save_session() {
+    Session::getInstance()->save();
+  }
+  
+  #
+  # handle_action will call the before filter, action and after filter
+  # after doing so it will attempt to render the view
+  #  
   public function handle_action($action) {
+    $this->load_session();    
     $this->handle_flash_messages();
     $methods = get_class_methods($this);
-    // call before filter methods before calling action method
+    # call before filter methods before calling action method
     $this->run_filter_methods($this->before_filter, $action, $methods);
     
-    // Search for action Methods
+    # Search for action Methods
     if(array_search($action, $methods)) {
       $this->{$action}();
     }
     
-    // call after filter methods after calling action method
+    # call after filter methods after calling action method
     $this->run_filter_methods($this->after_filter, $action, $methods);
+    $this->save_session();
     $this->render();
   }
 

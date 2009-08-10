@@ -30,6 +30,12 @@ class Application extends Controller {
     // when page is refreshed it should not display the message
   }
   
+  function session_set() {
+    session_set("name", "fernyb");
+    session_set("id", "250");
+  }
+  
+  
   function redirect() {
     $this->redirect_to(url("root"));
   }

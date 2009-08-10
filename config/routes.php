@@ -4,6 +4,10 @@
 Router::prepare(function($r){
   $r->match("/")->to(array("controller" => "application", "action" => "show"))->name("root");  
   
+  $r->match("/artist/session_set")->to(array("controller" => "application", "action" => "session_set"))->name("session_set");
+  
+  $r->match("/artist/session_values")->to(array("controller" => "application", "action" => "session_values"))->name("session_values");
+    
   $r->match("/artist/redirect")->to(array("controller" => "application", "action" => "redirect"))->name("redirect");
   
   $r->match("/artist/flash_example")->to(array("controller" => "application", "action" => "flash_example"))->name("flash_example");

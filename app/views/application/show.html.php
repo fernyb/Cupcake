@@ -54,6 +54,10 @@
 
 <br />
 <br />
+<?= link_to("Sessions", url("session_set")) ?>
+
+<br />
+<br />
 
 <strong>Environment &nbsp; => &nbsp; <?= CUPCAKE_ENV ?></strong>
 <br />

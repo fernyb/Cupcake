@@ -53,9 +53,6 @@ function microseconds() {
 			return array_map('h', $text);
 		}
 		if (empty($charset)) {
-			$charset = Configure::read('App.encoding');
-		}
-		if (empty($charset)) {
 			$charset = 'UTF-8';
 		}
 		return htmlspecialchars($text, ENT_QUOTES, $charset);

@@ -30,6 +30,13 @@ class Application extends Controller {
     // when page is refreshed it should not display the message
   }
   
+  function api_recent() {
+    //
+    if($this->params["format"] == "xml") {
+      $this->render_text("Hello World");
+    }
+  }
+  
   function session_set() {
     session_set("name", "fernyb");
     session_set("id", "250");

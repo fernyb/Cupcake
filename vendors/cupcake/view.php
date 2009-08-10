@@ -20,6 +20,7 @@ class View {
     $layout = $this->content_for_template();
     $body   = $this->content_for_layout($layout);
     echo $body;
+    exit;
   }
   
   public function content_for_template() {

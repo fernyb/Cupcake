@@ -62,6 +62,14 @@
 
 <br />
 <br />
+<?= link_to("API Recent", url("api_recent", array("format" => "xml"))) ?>
+
+<br />
+<br />
+<?= link_to("API Recent with action", url("the_name_format", array("action" => "api_recent", "format" => "xml"))) ?>
+
+<br />
+<br />
 
 <strong>Environment &nbsp; => &nbsp; <?= CUPCAKE_ENV ?></strong>
 <br />

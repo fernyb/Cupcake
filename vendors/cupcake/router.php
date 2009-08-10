@@ -189,18 +189,34 @@ class Router {
   }
   
   public function is_param_key($value) {
+    preg_match_all("/(:[a-zA-Z_\-0-9.;,]+)/", $value, $matches);
+    array_shift($matches);
+    if(count($matches[0]) >= 2) {
+      return false;
+    }
     return preg_match("/^:/", $value);
   }
   
+  public function has_key($value) {
+    return preg_match("/:[a-zA-Z_\-0-9;,]+/", $value);
+  }
+  
   public function route_path_to_regexp($path) {
-    preg_match_all("/([^\/.,;?]+)/", $path, $matches);
+    preg_match_all("/([^\/,;?]+)/", $path, $matches);
   
     $rgs = array();
     $first_param = false;
     foreach($matches[1] as $k => $v) {
       $v = $this->remove_parenthesis($v);
       
-      if($this->is_param_key($v)) {
+      if($this->has_key($v) && $this->is_param_key($v) === false) {
+        $matchers = $this->param_keys_for_path($v);
+        $pattern = $v;
+        foreach($matchers as $i => $p) {
+          $pattern = str_replace("{$p}", "([a-zA-Z_\-0-9,;]+)?", $pattern);
+        }
+        $rgs[] = $pattern;
+      } else if($this->is_param_key($v)) {
         $rgs[] = ($first_param === false ? "([^\/.,;?]+)?" : "(?:\/?([^\/.,;?]+)?)");
         $first_param = true;
       } else {
@@ -209,13 +225,13 @@ class Router {
         } else {
           $seperator = "\/?";
         }
-        
         $rgs[] = $v . $seperator;
       }
     }
     if(count($rgs) === 1) {
       $rgs[0] = substr($rgs[0], 0, strlen($rgs[0]) - 2);
     }
+  
     $route_path = join("", $rgs);
     
     if(preg_match("/\/$/", $route_path)) {
@@ -223,7 +239,7 @@ class Router {
     }
 
     $regexp = "^\/" . $route_path ."$";
-    
+  
     return $regexp;
   }
   
@@ -295,6 +311,7 @@ class Router {
   private function match_path($path) {
     foreach($this->routes as $k => $v) {
       $regexp = $this->route_path_to_regexp($v["path"]);
+  
       if(preg_match("/{$regexp}/", $path) || $v["path"] === $path) {
         return array($k, $v["params"]);
       }

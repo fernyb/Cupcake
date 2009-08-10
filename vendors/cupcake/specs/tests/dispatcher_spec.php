@@ -41,6 +41,7 @@ describe("Dispatcher -> find_route", function(){
     });
     $d = Dispatcher::getInstance();
     $d->setRouter(Router::getInstance());
+    
     $params = $d->find_route("/application/method");
     
     assert_equal($params["controller"], "application");

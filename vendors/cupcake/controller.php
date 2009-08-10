@@ -85,13 +85,13 @@ class Controller {
     
     # call after filter methods after calling action method
     $this->run_filter_methods($this->after_filter, $action, $methods);
-    $this->save_session();
     
     $this->render();
     Logger::info("Controller Action: ". (microseconds() - $start_timer) ." ms");
   }
 
   public function render($options=array()) {
+    $this->save_session();
     if($this->render_called === false) {
       $this->view = new View($this->request_uri, $this->params, $this->view_params);
       $this->view->controller = $this->controller;
@@ -113,7 +113,15 @@ class Controller {
     }
   }
   
+  public function render_text($text="") {
+    $this->save_session();
+    echo $text;
+    exit;
+  }
+  
   public function redirect_to($url, $status=302) {
+    $this->save_session();
+    
     if (!empty($status)) {
 			$codes = array(
 				100 => 'Continue',

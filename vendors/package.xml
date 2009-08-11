@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.0">
+  <name>Cupcake</name>
+  <channel>pear.php.net</channel>
+  <summary>A MVC Framework</summary>
+  <description>A Slimmer MVC Framework with ideas from CakePHP but without the bloat.</description>
+  <lead>
+      <name>Fernando Barajas</name>
+      <user>fernyb</user>
+      <email>fernyb@fernyb.net</email>
+      <active>yes</active>
+  </lead>
+  <date>2009-08-10</date>
+  <version>
+      <release>0.8.0</release>
+      <api>0.8.0</api>
+  </version>
+  <stability>
+      <release>beta</release>
+      <api>beta</api>
+  </stability>
+  <license uri="http://www.opensource.org/licenses/mit-license.php">The MIT License</license>
+  <notes>
+  <![CDATA[
+    * Initial release
+  ]]>
+  </notes>
+  <contents>
+    <dir name="/">
+      <dir name="cupcake">
+        <file name="cupcake.php" role="php" />
+        <file name="config.php" role="php" />
+        <file name="controller.php" role="php" />
+        <file name="controller_exception.php" role="php" />
+        <file name="dispatcher.php" role="php" />
+        <file name="helpers.php" role="php" />
+        <file name="import.php" role="php" />
+        <file name="inflector.php" role="php" />
+        <file name="logger.php" role="php" />
+        <file name="router.php" role="php" />
+        <file name="session.php" role="php" />
+        <file name="view.php" role="php" />
+        <file name="basics.php" role="php" />
+        <dir name="helper">
+          <file name="flash.php" role="php" />
+          <file name="form.php" role="php" />
+          <file name="session.php" role="php" />
+        </dir>
+        <dir name="response">
+          <file name="json.php" role="php" />
+          <file name="xml.php" role="php" />
+        </dir>
+        <dir name="session">
+          <file name="cookie_store.php" role="php" />
+        </dir>
+        <dir name="specs">
+          <dir name="inc">
+            <file name="assertions.php" role="php" />
+            <file name="spec.php" role="php" />
+            <file name="spec_runner.php" role="php" />
+          </dir>
+          <file name="run_specs.php" role="php" />
+          <file name="spec_helper.php" role="php" />
+          <file name="spec_test.php" role="php" />
+          <dir name="tests">
+            <file name="basic_spec.php" role="test" />
+            <file name="controller_spec.php" role="test" />
+            <file name="dispatcher_spec.php" role="test" />
+            <file name="helpers_spec.php" role="test" />
+            <file name="router_spec.php" role="test" />
+            <file name="session_spec.php" role="test" />
+            <dir name="response">
+              <file name="json_spec.php" role="test" />
+              <file name="xml_spec.php" role="test" />
+            </dir>
+            <dir name="session">
+              <file name="cookie_store_spec.php" role="test" />
+            </dir>
+          </dir>
+        </dir>
+        
+      </dir>
+    </dir>
+  </contents> 
+  <dependencies>
+    <required>
+      <php>
+        <min>5.3.0</min>
+      </php>
+      <pearinstaller>
+        <min>1.8.1</min>
+      </pearinstaller>
+      <extension>
+        <name>json</name>
+      </extension>
+    </required>
+  </dependencies>
+  <phprelease />
+</package>

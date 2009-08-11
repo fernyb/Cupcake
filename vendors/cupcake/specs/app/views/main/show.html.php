@@ -1,1 +1,0 @@
-<h2>app/views/main/show.html.php</h2>

@@ -31,9 +31,15 @@ class Application extends Controller {
   }
   
   function api_recent() {
-    //
-    if($this->params["format"] == "xml") {
-      $this->render_text("Hello World");
+    switch($this->params["format"]) {
+      case "xml" :
+        $link = link_to("Try With JSON", url("the_name_format", array("action" => "api_recent", "format" => "json")));
+        $this->render_text("Response for XML Format: {$link}");
+      break;
+      case "json" :
+        $link = link_to("Try With XML", url("the_name_format", array("action" => "api_recent", "format" => "xml")));
+        $this->render_text("Response for JSON Response: {$link}");
+      break;
     }
   }
   

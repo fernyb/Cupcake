@@ -9,7 +9,7 @@ class XMLResponse {
     $this->xml = new XmlWriter();
   }
   
-  public function write($data) {
+  private function write($data) {
     foreach($data as $key => $value){
       if(is_array($value)){
         $this->xml->startElement($key);

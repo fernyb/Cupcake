@@ -9,9 +9,9 @@ describe("XML Response", function(){
   
   it("returns xml", function($xml){
     $response = $xml->to_xml();
-
+ 
     $data = '<?xml version="1.0" encoding="UTF-8"?>
-<root><name>fernyb</name><id>100</id><location>California</location></root>';
+<name>fernyb</name><id>100</id><location>California</location>';
     assert_equal($data, $response);
   });
 });

@@ -70,10 +70,9 @@ class CookieStore {
   }
   
   public function set_cookie($cookie) {
-    if(!empty($cookie)) {
-      $cookie = "Set-Cookie: {$cookie}";
+    if(!empty($cookie) && is_array($cookie)) {
       if(CUPCAKE_ENV !== "test") {
-        header($cookie);
+        setcookie($cookie["name"], $cookie["value"], (int)$cookie["expires"], $cookie["path"]);
       }
     }
     return $cookie;
@@ -81,41 +80,50 @@ class CookieStore {
   
   public function build_cookie($key, $value) {
     if(!empty($value["domain"])) {
-      $domain = "; domain=".$value["domain"];
+      $domain = $value["domain"];
     }
     if(!empty($value["path"])) {
-      $path = "; path=".$value["path"];
+      $path = $value["path"];
     }
     if(!empty($value["expires"])) {
-      $expires = "; expires=". gmdate("D, d-M-Y H:i:s", $value["expires"]) ." GMT";
+      $expires = (int)$value["expires"];
     }
     if(!empty($value["secure"])) {
-      $secure = "; secure";
+      $secure = true;
+    } else {
+      $secure = false;
     }
     if(!empty($value["httponly"])) {
-      $httponly = "; HttpOnly";
+      $httponly = true;
+    } else {
+      $httponly = false;
     }
+    
     $value = $value["value"];
+    
+    $cookie = array();
+    $cookie["name"]     = $key;
+    $cookie["value"]    = $value;
+    $cookie["domain"]   = $domain;
+    $cookie["path"]     = $path;
+    $cookie["expires"]  = $expires;
+    $cookie["secure"]   = $secure;
+    $cookie["httponly"] = $httponly;
   
-    if(!is_array($value)) {
-      $value = array($value);
-    }
-    
-    $cookie = rawurlencode($key) ."=". join("&", array_map(function($v){
-      return rawurlencode($v);
-    }, $value)) . "{$domain}{$path}{$expires}{$secure}{$httponly}";
-    
     return $cookie;
   }
   
   public function load_session($session_data="") {
-    try {
-      $data = $this->verify($session_data);
-      $this->params = $data;
-    } catch(InvalidSignature $e) {
-      Logger::info($e);
-      $this->params = array();
-      $data = "";
+    if(!empty($session_data)) {
+      try {
+        $data = $this->verify($session_data);
+        $this->params = $data;
+        Logger::session_params($data);
+      } catch(InvalidSignature $e) {
+        Logger::info($e);
+        $this->params = array();
+        $data = "";
+      }
     }
     return $data;
   }

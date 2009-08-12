@@ -38,6 +38,17 @@ class Logger {
     $l->write($new_message);
   }
   
+  public static function session_params($params=array()) {
+    $params_message = print_r($params, true);
+    $params_message = preg_replace("/\n/", "", $params_message);
+    $params_message = preg_replace("/\s+/", " ", $params_message);
+    $params_message = preg_replace("/^Array/", "  Session: ", $params_message);
+    $time = date("Y-m-d G:i:s", time());
+    $new_message = $params_message . "\n";
+    $l = self::getInstance();
+    $l->write($new_message);        
+  }
+  
   public static function render($message) {
     $l = self::getInstance();
     $l->write($message);

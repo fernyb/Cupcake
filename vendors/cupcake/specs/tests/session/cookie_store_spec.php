@@ -55,9 +55,24 @@ describe("Session, CookieStore", function(){
   
   it("sets cookie", function($args){
     $cookie = $args[0];
-    $krumb = $cookie->set_cookie("abc");
+    $time = time();
+    $krumb = $cookie->set_cookie(array(
+        "name"     => "cupcake_session",
+        "value"    => "abc",
+        "domain"   => ".cupcake-framework.com",
+        "path"     => "/",
+        "expires"  => $time,
+        "secure"   => true,
+        "httponly" => true
+      ));
     
-    assert_equal("Set-Cookie: abc", $krumb);
+    assert_equal("cupcake_session", $krumb["name"]);
+    assert_equal("abc", $krumb["value"]);
+    assert_equal(".cupcake-framework.com", $krumb["domain"]);
+    assert_equal("/",    $krumb["path"]);
+    assert_equal($time,  $krumb["expires"]);
+    assert_equal(true,   $krumb["secure"]);
+    assert_equal(true,   $krumb["httponly"]);
   });
   
   it("sets the secret key", function($args){

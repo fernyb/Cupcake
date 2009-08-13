@@ -31,7 +31,6 @@
         <file name="cupcake.php" role="php" />
         <file name="config.php" role="php" />
         <file name="controller.php" role="php" />
-        <file name="controller_exception.php" role="php" />
         <file name="dispatcher.php" role="php" />
         <file name="helpers.php" role="php" />
         <file name="import.php" role="php" />

@@ -40,6 +40,10 @@ class Controller {
   public function run_filter_methods($filters, $action, $methods) {
     foreach($filters as $key => $value) {
       $filter_method = $value[0];
+      if($action === $value["skip"]) {
+        continue;
+      }
+        
       if(array_search($filter_method, $methods)) {
         if(isset($value["only"]) && $value["only"] === $action) {
           $this->{$filter_method}(); 

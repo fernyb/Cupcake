@@ -78,6 +78,12 @@
 Debug: <?= Config::get("debug") ? "true" : "false" ?>
 </p>
 
+<?php if(!empty($set_some_text)) { ?>
+  <h2>Failed The Skip Before Filter</h2>
+  <?= var_dump($set_some_text) ?>
+<? } ?>
+
+
 <?= $view->render_partial("recent") ?>
 
 <?= $view->render_partial("common/users") ?>

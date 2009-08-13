@@ -2,8 +2,8 @@
 
 class Application extends Controller {
   public $before_filter = array(
-      array("set_some_text"),
-      array("set_some_text_only", "only" => "html_form")
+      array("set_some_text_only", "only" => "html_form"),
+      array("set_some_text",      "skip" => "show")
     );
   
   public $after_filter = array(

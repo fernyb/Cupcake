@@ -37,7 +37,10 @@ $dependencies = array(
 );
 
 foreach($dependencies as $file) {
-  require_once VENDOR_CUPCAKE_DIR ."/". $file .".php";
+  $file = VENDOR_CUPCAKE_DIR ."/". $file .".php";
+  if(file_exists($file)) {
+    require_once $file;
+  }
 }
 
 ?>

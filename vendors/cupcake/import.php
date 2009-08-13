@@ -19,6 +19,16 @@ class Import {
     return false;
   }
   
+  static function html($__name, $__options=array()) {
+    $__file = PUBLIC_DIR ."/". $__name .".html";
+    if(self::file_exists($__file)) {
+      extract($__options, EXTR_SKIP);
+      include $__file;
+      return true;
+    }
+    return false;
+  }
+    
   static function view($__name, $__ext, $__options=array()) {
     $__file = VIEW_DIR ."/". $__name .".". $__ext;
     if(self::file_exists($__file)) {

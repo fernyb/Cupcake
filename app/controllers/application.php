@@ -9,7 +9,7 @@ class Application extends Controller {
   public $after_filter = array(
       array("set_after_filter_text")
     );
-
+  
   function show() {
   }
   

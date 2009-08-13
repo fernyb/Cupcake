@@ -25,12 +25,14 @@ class Controller {
     
     if(Import::controller($params["controller"])) {
       $this->controller = new $controller_name($this->request_uri, $params);
-      $action = $params["action"];
+      $action = $params["action"];  
     } else {
-      $this->controller = new ControllerException($this->request_uri, $params);
+      $this->controller = new self($this->request_uri, $params);
       $action = "not_found";
+      $this->controller->{$action}();
     }
-    $this->controller->handle_action($action);
+    
+    $this->controller->handle_action($action);        
   }
 
   public function controller_exists($controller_name) {
@@ -128,11 +130,42 @@ class Controller {
     exit;
   }
   
+  public function render_html($file) {
+    $this->save_session();
+    Import::html($file, $this->view_params);
+    exit;
+  }
+  
   public function redirect_to($url, $status=302) {
     $this->save_session();
-    
+    $codes = $this->status_code;
     if (!empty($status)) {
-			$codes = array(
+			if(is_string($status)) {
+				$codes = array_combine(array_values($codes), array_keys($codes));
+			}
+			if(isset($codes[$status])) {
+				$code = $msg = $codes[$status];
+				if(is_numeric($status)) { $code = $status; }
+				if(is_string($status))  { $msg = $status;  }
+				$status = "HTTP/1.1 {$code} {$msg}";
+			} else {
+				$status = null;
+			}
+		}
+		
+    if(!empty($status)) {
+      header($status);
+		}
+		if($url !== null) {
+		  header("Location: {$url}");
+		}
+		if(!empty($status) && ($status >= 300 && $status < 400)) {
+			header($status);
+		}
+    exit;
+  }
+  
+  public $status_code = array(
 				100 => 'Continue',
 				101 => 'Switching Protocols',
 				200 => 'OK',
@@ -173,32 +206,15 @@ class Controller {
 				503 => 'Service Unavailable',
 				504 => 'Gateway Time-out'
 			);
-			if(is_string($status)) {
-				$codes = array_combine(array_values($codes), array_keys($codes));
-			}
-			if(isset($codes[$status])) {
-				$code = $msg = $codes[$status];
-				if(is_numeric($status)) { $code = $status; }
-				if(is_string($status))  { $msg = $status;  }
-				$status = "HTTP/1.1 {$code} {$msg}";
-			} else {
-				$status = null;
-			}
-		}
-		
-    if(!empty($status)) {
-      header($status);
-		}
-		if($url !== null) {
-		  header("Location: {$url}");
-		}
-		if(!empty($status) && ($status >= 300 && $status < 400)) {
-			header($status);
-		}
-    exit;
+  
+  
+  public function status_code($code) {
+    header("HTTP/1.1 ". $this->status_code[$code] ." ". $this->status_code[$code]);
   }
   
-  public function not_found() { }
+  public function not_found() { 
+    $this->render_html("404");
+  }
   
   public function set($key, $value) {
     if($key !== "controller" && $key !== "action") {

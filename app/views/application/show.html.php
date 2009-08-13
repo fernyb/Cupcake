@@ -83,6 +83,10 @@ Debug: <?= Config::get("debug") ? "true" : "false" ?>
   <?= var_dump($set_some_text) ?>
 <? } ?>
 
+<?= $helper->print_with_h2("Application Helper Method!") ?>
+
+
+<br /><br />
 
 <?= $view->render_partial("recent") ?>
 

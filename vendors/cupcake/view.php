@@ -8,12 +8,19 @@ class View {
   public $layout = "layouts/application";
   public $template;
   public $ext = "html.php";
+  public $helper = false;
   
   public function __construct($request_uri, $params=array(), $view_params=array()) {
     $this->request_uri = $request_uri;
     $this->params      = $params;
     $this->view_params = $view_params;
     $this->template    = $params["controller"] ."/". $params["action"];
+    
+    if(Import::helper($params["controller"])) {
+      $this->helper = $params['controller'] ."Helper";
+    } else {
+      $this->helper = false;
+    }
   }
   
   public function render() {
@@ -83,6 +90,11 @@ class View {
                     "request_uri" => $this->request_uri,
                     "view"        => $this
                     );
+  
+    if($this->helper !== false) {
+      $params = array_merge($params, array("helper" => new $this->helper($this->params)));
+    }
+    
     $params = array_merge($this->view_params, $params);       
     return $params;
   }

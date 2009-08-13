@@ -209,10 +209,13 @@ class Controller {
   
   
   public function status_code($code) {
-    header("HTTP/1.1 ". $this->status_code[$code] ." ". $this->status_code[$code]);
+    if(array_key_exists($code, $this->status_code)) {
+      header("HTTP/1.1 ". $code ." ". $this->status_code[$code]);
+    }
   }
   
   public function not_found() { 
+    $this->status_code(404);
     $this->render_html("404");
   }
   

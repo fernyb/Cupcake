@@ -98,10 +98,7 @@
           <file name=".htaccess" role="data" />
         </dir>
       </dir>
-      <file baseinstalldir="/" name="cupcake-gen" role="script">
-        <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
+      <file baseinstalldir="/" name="cupcake-gen" role="script" />
     </dir>
   </contents> 
   <dependencies>

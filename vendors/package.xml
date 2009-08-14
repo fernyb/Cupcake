@@ -10,7 +10,7 @@
       <email>fernyb@fernyb.net</email>
       <active>yes</active>
   </lead>
-  <date>2009-08-10</date>
+  <date>2009-08-13</date>
   <version>
       <release>0.8.0</release>
       <api>0.8.0</api>
@@ -77,7 +77,29 @@
             </dir>
           </dir>
         </dir>
-        
+        <dir name="public">
+          <file name="robots.txt" role="data" />
+          <file name="favicon.ico" role="data" />
+          <file name="index.php" role="data" />
+          <file name="cupcake.php" role="data" />
+          <file name=".htaccess" role="data" />
+          <file name="404.html" role="data" />
+          <file name="422.html" role="data" />
+          <file name="500.html" role="data" />
+          <dir name="stylesheets">
+            <file name="master.css" role="data" />
+            <file name="reset.css" role="data" />
+          </dir>
+          <dir name="javascripts">
+            <file name="jquery.js" role="data" />
+          </dir>
+        </dir>
+        <dir name="base">
+          <file name=".htaccess" role="data" />
+        </dir>
+        <dir name="bin">
+          <file name="cupcake" role="script" />
+        </dir>
       </dir>
     </dir>
   </contents> 

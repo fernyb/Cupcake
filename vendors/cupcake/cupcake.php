@@ -15,6 +15,7 @@ define("JAVASCRIPTS_DIR",    PUBLIC_DIR  ."/javascripts");
 define("VENDORS_DIR",        ROOT_PATH   ."/vendors");
 define("VENDOR_CUPCAKE_DIR", VENDORS_DIR . "/Cupcake");
 
+
 $dependencies = array(
   "config",
   "logger",
@@ -35,6 +36,7 @@ $dependencies = array(
   "view",
   "router"
 );
+
 
 foreach($dependencies as $file) {
   $file = VENDOR_CUPCAKE_DIR ."/". $file .".php";

@@ -27,7 +27,7 @@
   </notes>
   <contents>
     <dir name="/">
-      <dir name="Cupcake">
+      <dir name="cupcake">
         <file name="cupcake.php" role="php" />
         <file name="config.php" role="php" />
         <file name="controller.php" role="php" />

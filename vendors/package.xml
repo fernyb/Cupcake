@@ -97,10 +97,11 @@
         <dir name="base">
           <file name=".htaccess" role="data" />
         </dir>
-        <dir name="bin">
-          <file name="cupcake" role="script" />
-        </dir>
       </dir>
+      <file baseinstalldir="/" name="cupcake-gen" role="script">
+        <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
     </dir>
   </contents> 
   <dependencies>

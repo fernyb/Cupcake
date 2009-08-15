@@ -1,9 +1,0 @@
-#!/usr/bin/env php
-<?php
- echo "\n";
- 
- echo "Usage:\n";
- echo "\tcupcake gen controller [name]\n";
- 
- echo "\n";
-?>

@@ -98,7 +98,7 @@
           <file name=".htaccess" role="data" />
         </dir>
       </dir>
-      <file baseinstalldir="/" name="cupcake-gen" role="script" />
+      <file name="cupcake/scripts/cupcake.php" role="script" baseinstalldir="/" />
     </dir>
   </contents> 
   <dependencies>
@@ -109,10 +109,20 @@
       <pearinstaller>
         <min>1.8.1</min>
       </pearinstaller>
+      <package>
+        <name>Console_CommandLine</name>
+        <channel>pear.php.net</channel>
+        <min>1.1.0</min>
+        <recommended>1.1.0</recommended>
+      </package>
       <extension>
         <name>json</name>
       </extension>
     </required>
   </dependencies>
-  <phprelease />
+  <phprelease>
+    <filelist>
+      <install as="cupcake" name="cupcake/scripts/cupcake.php" />
+    </filelist>
+  </phprelease>
 </package>

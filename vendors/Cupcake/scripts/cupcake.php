@@ -190,8 +190,8 @@ function cupcake_generate_controller($opts=array()) {
   $helper_content .= "?>";
   cupcake_generate("app/helpers", "{$controller_name}.php", $helper_content);
   
-  if(!file_exists("views/{$controller_name}")) {
-    if(mkdir("views/{$controller_name}")) {
+  if(!file_exists("app/views/{$controller_name}")) {
+    if(mkdir("app/views/{$controller_name}")) {
       echo "    [CREATE] views/{$controller_name}\n";
     } else {
       echo "    [FAILED] views/{$controller_name}\n";

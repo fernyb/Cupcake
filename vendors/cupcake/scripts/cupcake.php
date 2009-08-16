@@ -36,7 +36,29 @@ $command->addOption('controller', array(
     'description' => 'generate controller'
   ));
 
-# Load any command extended by the application
+
+ini_set("include_path", ini_get("include_path") . DIRECTORY_SEPARATOR . ":/Users/fernyb/php/cupcake/vendors");
+
+$include_paths = preg_split("/:/", ini_get("include_path"));
+$cupcake_path = null;
+foreach($include_paths as $path) {
+  if(file_exists($path . "/Cupcake")) {
+    $cupcake_path = $path . "/Cupcake";
+    break;
+  }
+}
+define("CUPCAKE_PATH", $cupcake_path);
+if(CUPCAKE_PATH === null) {
+  echo "\nCupcake Not Found\nMake sure to set the include_path\n";
+  exit;
+}
+
+# Load any commands extended by the application from /cli
+if(file_exists("cli") && is_dir("cli")) {
+  foreach(glob("cli/*.php") as $cli_file) {
+    include_once $cli_file;
+  }
+}
 
 
 try {
@@ -48,22 +70,17 @@ try {
 
 $options = $result->options;
 
-ini_set("include_path", "/Users/fernyb/php/cupcake/vendors");
-
-$include_paths = preg_split("/:/", ini_get("include_path"));
-
-$cupcake_path = null;
-foreach($include_paths as $path) {
-  if(file_exists($path . "/Cupcake")) {
-    $cupcake_path = $path . "/Cupcake";
+foreach($options as $k => $name) {
+  if(!empty($name)) {
+    $terminal = $command->options[$k];
+    $callback = $terminal->callback;
+    if(is_string($callback) && strlen($callback) > 0) {
+      $callback($options, $terminal);
+    }
   }
 }
 
-define("CUPCAKE_PATH", $cupcake_path);
-if(CUPCAKE_PATH === null) {
-  echo "\nCupcake Not Found\nMake sure to set the include_path\n";
-  exit;
-}
+
 
 function application_path($opts=array()) {
   $path = empty($opts['path']) === true ? "." : $opts['path'];
@@ -238,6 +255,29 @@ function cupcake_generate_assets($opts) {
       }
     }
   } #
+
+  
+  # Generate Sample Command Line File
+  $cli_content = "<?php\n\n";
+  $cli_content .= "#\n";
+  $cli_content .= "# Add your own custom comand line code here\n";
+  $cli_content .= "#\n\n";
+  $cli_content .= "#function sample_method(\$opts=array(), \$command) {\n";
+  $cli_content .= "#  print_r(\$opts);\n";
+  $cli_content .= "#  print_r(\$command);\n";
+  $cli_content .= "#}\n\n";
+  $cli_content .= '#$command->addOption(\'sample\', array(';
+  $cli_content .= "\n";
+  $cli_content .= "#  'short_name'  =>  '-s',\n";
+  $cli_content .= "#  'long_name'   => '--sample',\n";
+  $cli_content .= "#  'action'      => 'StoreString',\n";
+  $cli_content .= "#  'description' => 'a sample cli argument',\n";
+  $cli_content .= "#  'callback'    =>  'sample_method'\n";
+  $cli_content .= "# ));\n\n";
+  $cli_content .= "?>";
+  
+  cupcake_generate("{$app_path}/cli", "application.php", $cli_content);
+  
   
   # Genetate Environment File
   $environment_content = file_get_contents(CUPCAKE_PATH ."/structure/config/environment.php");
@@ -283,7 +323,7 @@ function cupcake_generate_assets($opts) {
   $route_content .= "Route::prepare(function(\$r){\n";
   $route_content .= '  $r->match("/")->to(array("controller" => "application", "action" => "show"))->name("root");';
   $route_content .= "\n";
-  $route_content .= "});\n";
+  $route_content .= "});\n\n";
   $route_content .= "?>";
 
   cupcake_generate("{$app_path}/config", "routes.php", $route_content);

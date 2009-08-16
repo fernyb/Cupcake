@@ -121,7 +121,7 @@
   </dependencies>
   <phprelease>
     <filelist>
-      <install as="cupcake" name="cupcake/scripts/cupcake.php" />
+      <install as="cupcake" name="Cupcake/scripts/cupcake.php" />
     </filelist>
   </phprelease>
 </package>

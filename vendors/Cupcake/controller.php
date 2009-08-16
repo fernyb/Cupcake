@@ -3,7 +3,7 @@
 class Controller {
   public $controller;
   public $request_uri;
-  public $action;
+  public $action = null;
   public $params = array();
   public $view_params = array();
   public $view;
@@ -15,7 +15,9 @@ class Controller {
     $this->request_uri = $uri;
     $this->params      = $params;
     $this->controller  = $this;
-    $this->action      = $params["action"];
+    if(!empty($params["action"])) {
+      $this->action      = $params["action"];
+    }
   }
   
   public function handle_request($params) {

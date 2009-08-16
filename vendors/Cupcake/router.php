@@ -89,11 +89,12 @@ class Router {
     if(count($this->routes) === 0) {
       return false;  
     }
+    $current_route_index = (count($this->routes) - 1);
     if(!empty($name)) {
-     $route_index = (count($this->routes) - 1);
+     $route_index = $current_route_index;
      $route = $this->routes[$route_index];
      $route["name"] = $name;
-     $this->routes[$route_index] = $route;
+     $this->routes[$route_index] = $route;   
     }
     return $this->routes[$current_route_index];
   }

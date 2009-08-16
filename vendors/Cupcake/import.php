@@ -2,9 +2,13 @@
 
 class Import {
   static function controller($name) {
+    if($name === "application") {
+      require_once CONTROLLER_DIR . "/application.php";
+      return true;
+    }
     $file = CONTROLLER_DIR . "/" . $name .".php";
     if(self::file_exists($file)) {
-      @include_once $file;
+      require_once $file;
       return true;
     }
     return false;

@@ -94,9 +94,6 @@
             <file name="jquery.js" role="data" />
           </dir>
         </dir>
-        <dir name="base">
-          <file name=".htaccess" role="data" />
-        </dir>
       </dir>
       <file name="cupcake/scripts/cupcake.php" role="script" baseinstalldir="/" />
     </dir>

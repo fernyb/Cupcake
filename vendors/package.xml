@@ -97,7 +97,7 @@
           </dir>
         </dir>
       </dir>
-      <file name="cupcake/scripts/cupcake.php" role="script" baseinstalldir="/" />
+      <file name="Cupcake/scripts/cupcake.php" role="script" baseinstalldir="/" />
     </dir>
   </contents> 
   <dependencies>

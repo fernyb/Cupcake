@@ -13,7 +13,7 @@ define("LOG_DIR",            ROOT_PATH   ."/log");
 define("STYLESHEETS_DIR",    PUBLIC_DIR  ."/stylesheets");
 define("JAVASCRIPTS_DIR",    PUBLIC_DIR  ."/javascripts");
 define("VENDORS_DIR",        ROOT_PATH   ."/vendors");
-define("VENDOR_CUPCAKE_DIR", VENDORS_DIR . "/Cupcake");
+define("VENDOR_CUPCAKE_DIR", VENDORS_DIR ."/Cupcake");
 
 
 $dependencies = array(

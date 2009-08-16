@@ -90,7 +90,6 @@
           <file name="500.html" role="php" />
           <dir name="stylesheets">
             <file name="master.css" role="php" />
-            <file name="reset.css" role="php" />
           </dir>
           <dir name="javascripts">
             <file name="jquery.js" role="php" />

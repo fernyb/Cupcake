@@ -238,7 +238,7 @@ function cupcake_generate_assets($opts) {
   
   $dir_assets = array(
       'javascripts' => array('jquery.js'),
-      'stylesheets' => array('master.css', 'reset.css')
+      'stylesheets' => array('master.css')
     );
   foreach($dir_assets as $dir => $assets) {
     foreach($assets as $file) {

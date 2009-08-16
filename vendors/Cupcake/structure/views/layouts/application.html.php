@@ -3,7 +3,6 @@
   <head>
     <title>Fresh Cupcake App</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <?= stylesheet_link_tag("reset") ?>
     <?= stylesheet_link_tag("master") ?>
   </head>
   <body>

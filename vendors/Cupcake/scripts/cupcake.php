@@ -42,7 +42,7 @@ ini_set("include_path", ini_get("include_path") . DIRECTORY_SEPARATOR . ":/Users
 $include_paths = preg_split("/:/", ini_get("include_path"));
 $cupcake_path = null;
 foreach($include_paths as $path) {
-  if(file_exists($path . "/Cupcake") && !file_exists($path ."/.htaccess")) {
+  if(file_exists($path . "/Cupcake") && $path !== ".") {
     $cupcake_path = realpath($path . "/Cupcake");
     break;
   }
@@ -320,7 +320,7 @@ function cupcake_generate_assets($opts) {
   $route_content .= "#\n";
   $route_content .= "# The priority is based upon order of creation: first created -> highest priority.\n";
   $route_content .= "#\n";
-  $route_content .= "Route::prepare(function(\$r){\n";
+  $route_content .= "Router::prepare(function(\$r){\n";
   $route_content .= '  $r->match("/")->to(array("controller" => "application", "action" => "show"))->name("root");';
   $route_content .= "\n";
   $route_content .= "});\n\n";

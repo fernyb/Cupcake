@@ -1,7 +1,18 @@
 <?php
+#
+# ROOT_PATH is the base path to the web application
+#
 if(!defined("ROOT_PATH")) {
-  define("ROOT_PATH", realpath(dirname(__FILE__) . "/../../"));
+  define("ROOT_PATH", realpath(dirname(__FILE__)));
 }
+
+#
+# CUPCAKE_FRAMEWORK_PATH is the path to the framework
+#
+if(!defined("CUPCAKE_FRAMEWORK_PATH")) {
+  define("CUPCAKE_FRAMEWORK_PATH", dirname(__FILE__));
+}
+
 
 define("APP_DIR",            ROOT_PATH   ."/app");
 define("CONTROLLER_DIR",     APP_DIR     ."/controllers");
@@ -32,16 +43,21 @@ $dependencies = array(
   "session",
   "session/cookie_store",
   "controller",
-  "controller_exception",
   "view",
   "router"
 );
 
 
 foreach($dependencies as $file) {
-  $file = VENDOR_CUPCAKE_DIR ."/". $file .".php";
+  if(file_exists(VENDOR_CUPCAKE_DIR ."/". $file .".php")) {
+    $file = VENDOR_CUPCAKE_DIR ."/". $file .".php";
+  } else {
+    $file = CUPCAKE_FRAMEWORK_PATH ."/". $file .".php";
+  }
   if(file_exists($file)) {
     require_once $file;
+  } else {
+    throw new Exception("Cupcake Core File Not Found: {$file}");
   }
 }
 

@@ -91,7 +91,7 @@ function cupcake_generate_application($opts=array()) {
   foreach($directories as $k => $v) {
     $app = "{$app_path}/{$k}";  
     if(!file_exists($app)) {
-      if(mkdir($app, 0700, true)) {
+      if(mkdir($app, 0775, true)) {
         echo "    [CREATE] {$app}\n";
       } else {
         echo "    [FAILED] {$app}\n";
@@ -99,7 +99,7 @@ function cupcake_generate_application($opts=array()) {
       foreach($directories[$k] as $index => $subdir) {
         $subdir = "{$app}/{$subdir}";
         if(!file_exists($subdir)) {
-          if(mkdir($subdir, 0700, true)) {
+          if(mkdir($subdir, 0775, true)) {
             echo "    [CREATE] {$subdir}\n";
           } else {
             echo "    [FAILED] {$subdir}\n";
@@ -125,22 +125,53 @@ if(!empty($options["application"])) {
 
 
 #
+# Generate a controller, helper, model, view
+#
+function cupcake_generate($dest_dir, $dest_file, $content) {
+  if(!file_exists($dest_dir)) {
+    if(mkdir($dest_dir, 0775, true)) {
+      echo "    [CREATE] {$dest_dir}\n";
+    } else {
+      echo "    [FAILED] {$dest_dir}\n";
+    }
+  } else {
+    echo "    [EXISTS] {$dest_dir}\n";
+  }
+  $controller = "{$dest_dir}/{$dest_file}";
+  if(!file_exists($controller)) {
+    if(file_put_contents($controller, $content) !== false) {
+      echo "    [CREATE] {$controller}\n";
+    } else {
+      echo "    [FAILED] {$controller}\n";
+    }
+  } else {
+    echo "    [EXISTS] {$controller}\n";
+  }
+}
+
+
+#
 # Generate A Controller
 # * Assumes you are in the root directory of the application
 #
 function cupcake_generate_controller($opts=array()) {
   $controller_name = $opts['controller'];
-  $dir = "app/controllers/{$controller_name}.php";
-  echo "\n";
-  if(file_exists("app/controllers") && !file_exists($dir)) {
-    if(mkdir($dir, 0700, true)) {
-      echo "    [CREATE] {$dir}\n";
-    } else {
-      echo "    [FAILED] {$dir}\n";
-    }
-  } else {
-    echo "    [EXISTS] {$dir}\n";
-  }
+  $controller_class_name = camelize($controller_name);
+  $helper_class_name = camelize($controller_name ."_helper");
+  
+  $controller_content = "<?php\n\n";
+  $controller_content .= "class {$controller_class_name} extends Application {\n";
+  $controller_content .= "\n";
+  $controller_content .= "}\n\n";
+  $controller_content .= "?>";
+  cupcake_generate("app/controllers", "{$controller_name}.php", $controller_content);
+  
+  $helper_content = "<?php\n\n";
+  $helper_content .= "class {$helper_class_name} {\n";
+  $helper_content .= "\n";
+  $helper_content .= "}\n\n";
+  $helper_content .= "?>";
+  cupcake_generate("app/helpers", "{$controller_name}.php", $helper_content);
 } # end of generate controller
 
 if(!empty($options["controller"])) {
@@ -166,12 +197,7 @@ function cupcake_generate_assets($opts) {
   $htaccess .= "  RewriteRule  (.*) public/$1 [L]\n";
   $htaccess .= "</IfModule>\n";
   
-  $htaccess_file = $app_path ."/.htaccess";
-  if(file_put_contents($htaccess_file, $htaccess) !== false) {
-    echo "    [CREATE] {$htaccess_file}\n";
-  } else {
-    echo "    [FAILED] {$htaccess_file}\n";
-  }
+  cupcake_generate("{$app_path}", ".htaccess", $htaccess);
   
   $public = array('.htaccess', '404.html', '422.html', '500.html', 'cupcake.php', 
                   'favicon.ico', 'index.php', 'robots.txt');
@@ -218,47 +244,36 @@ function cupcake_generate_assets($opts) {
   $environment_content = preg_replace("/@app_name@/", $app_name, $environment_content);
   $environment_content = preg_replace("/@secret@/",   random('alpha', 80), $environment_content);
   $environment_file = $app_path ."/config/environment.php";
-  if(file_put_contents($environment_file, $environment_content) !== false) {
-    echo "    [CREATE] {$environment_file}\n";
-  } else {
-    echo "    [FAILED] {$environment_file}\n";
-  }
+  
+  cupcake_generate("{$app_path}/config", "environment.php", $environment_content);
+  
   
   # Generate The Development Environment Files
   $environment_content = "<?php\n";
   $environment_content .= "# Set config values for development here\n";
   $environment_content .= "Config::set(\"debug\", true);\n";
   $environment_content .= "?>";
-  $env_file = $app_path ."/config/environments/development.php";
-  if(file_put_contents($env_file, $environment_content) !== false) {
-    echo "    [CREATE] {$env_file}\n";
-  } else {
-    echo "    [FAILED] {$env_file}\n";
-  }
+ 
+  cupcake_generate("{$app_path}/config/environments", "development.php", $environment_content);
+  
   
   # Generate The Test Environment File
   $environment_content = "<?php\n";
   $environment_content .= "# Set config values for test here\n";
   $environment_content .= "Config::set(\"debug\", false);\n";
   $environment_content .= "?>";
-  $env_file = $app_path ."/config/environments/test.php";
-  if(file_put_contents($env_file, $environment_content) !== false) {
-    echo "    [CREATE] {$env_file}\n";
-  } else {
-    echo "    [FAILED] {$env_file}\n";
-  }
+ 
+  cupcake_generate("{$app_path}/config/environments", "test.php", $environment_content);
+  
     
   # Generate The Production Environment File
   $environment_content = "<?php\n";
   $environment_content .= "# Set config values for production here\n";
   $environment_content .= "Config::set(\"debug\", false);\n";
   $environment_content .= "?>";
-  $env_file = $app_path ."/config/environments/production.php";
-  if(file_put_contents($env_file, $environment_content) !== false) {
-    echo "    [CREATE] {$env_file}\n";
-  } else {
-    echo "    [FAILED] {$env_file}\n";
-  }
+
+  cupcake_generate("{$app_path}/config/environments", "production.php", $environment_content);
+
   
   # Generate Routes File
   $route_content = "<?php\n";
@@ -270,12 +285,9 @@ function cupcake_generate_assets($opts) {
   $route_content .= "\n";
   $route_content .= "});\n";
   $route_content .= "?>";
-  $routes_file = $app_path ."/config/routes.php";
-  if(file_put_contents($routes_file, $route_content) !== false) {
-    echo "    [CREATE] {$routes_file}\n";
-  } else {
-    echo "    [FAILED] {$routes_file}\n";
-  }
+
+  cupcake_generate("{$app_path}/config", "routes.php", $route_content);
+
   
   # Generate Application Controller
   $controller_content = "<?php\n";
@@ -285,12 +297,9 @@ function cupcake_generate_assets($opts) {
   $controller_content .= "}\n";
   $controller_content .= "\n";
   $controller_content .= "?>";
-  $controller_file = $app_path ."/app/controllers/application.php";
-  if(file_put_contents($controller_file, $controller_content) !== false) {
-    echo "    [CREATE] {$controller_file}\n";
-  } else {
-    echo "    [FAILED] {$controller_file}\n";
-  }
+
+  cupcake_generate("{$app_path}/app/controllers", "application.php", $controller_content);
+
   
   # Generate Application Helper
   $helper_content = "<?php\n";
@@ -300,19 +309,16 @@ function cupcake_generate_assets($opts) {
   $helper_content .= "}\n";
   $helper_content .= "\n";
   $helper_content .= "?>";
-  $helper_file = $app_path ."/app/helpers/application.php";
-  if(file_put_contents($helper_file, $helper_content) !== false) {
-    echo "    [CREATE] {$helper_file}\n";
-  } else {
-    echo "    [FAILED] {$helper_file}\n";
-  }
+
+  cupcake_generate("{$app_path}/app/helpers", "application.php", $helper_content);
+
   
-  # Generate Application Layout
+  # Generate Application Layout (copy)
   $source_layout_file = CUPCAKE_PATH ."/structure/views/layouts/application.html.php";
   $layout_dir = $app_path ."/app/views/layouts";
   $dest_layout_file = $layout_dir ."/application.html.php";
   if(!file_exists($layout_dir)) {
-    if(mkdir($layout_dir, 0700, true)) {
+    if(mkdir($layout_dir, 0775, true)) {
       echo "    [CREATE] {$layout_dir}\n";
     } else {
       echo "    [FAILED] {$layout_dir}\n";
@@ -367,6 +373,18 @@ function random ($type='sha1', $len=20) {
             break;
     }
 }
+
+
+function camelize($word) {
+  if(preg_match_all('/\/(.?)/',$word,$got)) {
+    foreach ($got[1] as $k=>$v){
+      $got[1][$k] = '::'.strtoupper($v);
+    }
+    $word = str_replace($got[0],$got[1],$word);
+  }
+  return str_replace(' ','',ucwords(preg_replace('/[^A-Z^a-z^0-9^:]+/',' ',$word)));
+}
+
 
 
 ?>

@@ -77,21 +77,23 @@
             </dir>
           </dir>
         </dir>
+        <file name="structure/config/environment.php" role="php" />
+        <file name="structure/views/layouts/application.html.php" role="php" />
         <dir name="public">
-          <file name="robots.txt" role="data" />
-          <file name="favicon.ico" role="data" />
-          <file name="index.php" role="data" />
-          <file name="cupcake.php" role="data" />
-          <file name=".htaccess" role="data" />
-          <file name="404.html" role="data" />
-          <file name="422.html" role="data" />
-          <file name="500.html" role="data" />
+          <file name="robots.txt" role="php" />
+          <file name="favicon.ico" role="php" />
+          <file name="index.php" role="php" />
+          <file name="cupcake.php" role="php" />
+          <file name=".htaccess" role="php" />
+          <file name="404.html" role="php" />
+          <file name="422.html" role="php" />
+          <file name="500.html" role="php" />
           <dir name="stylesheets">
-            <file name="master.css" role="data" />
-            <file name="reset.css" role="data" />
+            <file name="master.css" role="php" />
+            <file name="reset.css" role="php" />
           </dir>
           <dir name="javascripts">
-            <file name="jquery.js" role="data" />
+            <file name="jquery.js" role="php" />
           </dir>
         </dir>
       </dir>

@@ -43,7 +43,7 @@ $include_paths = preg_split("/:/", ini_get("include_path"));
 $cupcake_path = null;
 foreach($include_paths as $path) {
   if(file_exists($path . "/Cupcake")) {
-    $cupcake_path = $path . "/Cupcake";
+    $cupcake_path = realpath($path . "/Cupcake");
     break;
   }
 }

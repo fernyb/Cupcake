@@ -79,12 +79,9 @@ class CookieStore {
   }
   
   public function build_cookie($key, $value) {
-    if(!empty($value["domain"])) {
-      $domain = $value["domain"];
-    }
-    if(!empty($value["path"])) {
-      $path = $value["path"];
-    }
+    $domain = !empty($value["domain"]) ? $value["domain"] : null;
+    $path   = !empty($value["path"]) ? $value["path"] : "/";
+    
     if(!empty($value["expires"])) {
       $expires = (int)$value["expires"];
     }

@@ -12,9 +12,9 @@ function to_attributes($attr=array()) {
   return $attributes;
 }
 
-function content_tag($tag_name, $content=nil, $attr=array()) {
+function content_tag($tag_name, $content=null, $attr=array()) {
   $attributes = to_attributes($attr);
-  if($content === nil || $content === null) {
+  if($content === null) {
     $html = "<{$tag_name} " . join(" ", $attributes) . " />";
   } else {
     $tag_options = " " . join(" ", $attributes);
@@ -30,7 +30,7 @@ function stylesheet_link_tag($stylesheet, $options=array()) {
   $default = array("href" => "", "media" => "screen", "rel" => "stylesheet", "type" => "text/css");
   $default = array_merge($default, array("href" => "/stylesheets/" . $stylesheet . ".css"));
   $attributes = array_merge($default, $options);
-  return content_tag("link", nil, $attributes);
+  return content_tag("link", null, $attributes);
 } 
 
 
@@ -44,7 +44,7 @@ function image_tag($image_name, $options=array()) {
   $suffix = end(array_values($suffix));
   $attributes = array("alt" => basename($image_name, ".{$suffix}"), "src" => "/images/" . $image_name);
   $attributes = array_merge($attributes, $options);
-  return content_tag("img", nil, $attributes);
+  return content_tag("img", null, $attributes);
 }
 
 function truncate($string, $length=30, $truncate_string="...") {

@@ -2,8 +2,8 @@
 
 class Import {
   static function controller($name) {
+    require_once CONTROLLER_DIR . "/application.php";
     if($name === "application") {
-      require_once CONTROLLER_DIR . "/application.php";
       return true;
     }
     $file = CONTROLLER_DIR . "/" . $name .".php";

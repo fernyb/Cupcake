@@ -62,9 +62,13 @@ class View {
   public function render_partial($partial_name, $options=array()) {
     $start   = microseconds();
     $params  = $this->view_params();
-    if(is_array($options["locals"])) {
-      $params = array_merge($params, $options["locals"]);
+    
+    if(array_key_exists("locals", $options)) {
+      if(is_array($options["locals"])) {
+        $params = array_merge($params, $options["locals"]);
+      }
     }
+    
     # When partial_name has a slash assume they 
     # know what template they are looking for.
     # Otherwise look for the partial name in the default location.

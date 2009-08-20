@@ -26,7 +26,7 @@ class Controller {
     Logger::process_controller($controller_name, $params["action"], env("REQUEST_METHOD"), $params);
     
     if(Import::controller($params["controller"])) {
-      Import::helper($params["controler"]);
+      Import::helper($params["controller"]);
       $this->controller = new $controller_name($this->request_uri, $params);
       $action = $params["action"];  
     } else {

@@ -7,6 +7,7 @@ class Controller {
   public $params = array();
   public $view_params = array();
   public $view;
+  public $helper = null;
   public $before_filter = array();
   public $after_filter = array();
   protected $render_called = false;
@@ -27,7 +28,11 @@ class Controller {
     
     if(Import::controller($params["controller"])) {
       Import::helper($params["controller"]);
+      $helper_name = "{$controller_name}Helper";
       $this->controller = new $controller_name($this->request_uri, $params);
+      if(class_exists($helper_name)) {
+        $this->controller->helper = new $helper_name();
+      }
       $action = $params["action"];  
     } else {
       $this->controller = new self($this->request_uri, $params);

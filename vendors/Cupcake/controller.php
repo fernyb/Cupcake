@@ -26,6 +26,7 @@ class Controller {
     Logger::process_controller($controller_name, $params["action"], env("REQUEST_METHOD"), $params);
     
     if(Import::controller($params["controller"])) {
+      Import::helper($params["controler"]);
       $this->controller = new $controller_name($this->request_uri, $params);
       $action = $params["action"];  
     } else {
@@ -44,7 +45,7 @@ class Controller {
   public function run_filter_methods($filters, $action, $methods) {
     foreach($filters as $key => $value) {
       $filter_method = $value[0];
-      if($action === $value["skip"]) {
+      if(array_key_exists("skip", $value) && $action === $value["skip"]) {
         continue;
       }
         

@@ -67,12 +67,14 @@ class Logger {
   }
   
   public function write_to_log($message) {
-    if(CUPCAKE_ENV !== "test") {
-      $file = LOG_DIR ."/". $this->filename;
-      if($fp = fopen($file, "a+")) {
-        fwrite($fp, $message);
-        fclose($fp);
-      } 
+    if(Config::get("debug") === true) {
+      if(CUPCAKE_ENV !== "test") {
+        $file = LOG_DIR ."/". $this->filename;
+        if($fp = fopen($file, "a+")) {
+          fwrite($fp, $message);
+          fclose($fp);
+        } 
+      }
     } 
   }
   

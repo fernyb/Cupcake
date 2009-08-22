@@ -116,7 +116,7 @@ class HelperForm {
 
 
 function form_tag($url, $options=array()) {
-  if($options["multipart"] === true) {
+  if(array_key_exists("multipart", $options) && $options["multipart"] === true) {
     if(empty($options["method"])) {
       $options["method"] = "post";
     }

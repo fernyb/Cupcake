@@ -93,7 +93,7 @@ class Controller {
     $this->run_filter_methods($this->before_filter, $action, $methods);
     
     # Search for action Methods
-    if(array_search($action, $methods)) {
+    if(array_key_exists($action, array_flip($methods))) {
       $this->{$action}();
     }
     

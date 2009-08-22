@@ -40,6 +40,8 @@
         <file name="session.php" role="php" />
         <file name="view.php" role="php" />
         <file name="basics.php" role="php" />
+        <file name="dispatcher_test.php" role="php" />
+        <file name="request.php" role="php" />
         <dir name="helper">
           <file name="flash.php" role="php" />
           <file name="form.php" role="php" />

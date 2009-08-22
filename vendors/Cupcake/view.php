@@ -26,6 +26,23 @@ class View {
   public function render() {
     $layout = $this->content_for_template();
     $body   = $this->content_for_layout($layout);
+    
+    // Needed for testing
+    if(CUPCAKE_ENV === "test") {
+      $dispatcher = DispatcherTest::getInstance();
+      $dispatcher->__params      = $this->view_params();
+      $dispatcher->__view_params = $this->view_params;
+      $dispatcher->__template    = $this->template;
+      $dispatcher->__layout      = $this->layout;
+      
+      # Action might be false positive and controller aswell.
+      $dispatcher->__controller  = $this->controller;
+      $dispatcher->__action      = $this->params["action"];
+      $dispatcher->__request_uri = $this->request_uri;
+      $dispatcher->__body        = $body;
+      return;
+    } 
+    
     echo $body;
     exit;
   }
@@ -99,7 +116,8 @@ class View {
       $params = array_merge($params, array("helper" => new $this->helper($this->params)));
     }
     
-    $params = array_merge($this->view_params, $params);       
+    $params = array_merge($this->view_params, $params);
+      
     return $params;
   }
 }

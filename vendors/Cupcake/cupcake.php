@@ -44,7 +44,9 @@ $dependencies = array(
   "session/cookie_store",
   "controller",
   "view",
-  "router"
+  "router",
+  "dispatcher_test",
+  "request"
 );
 
 

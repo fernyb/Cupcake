@@ -162,13 +162,19 @@ class Controller {
 		}
 		
     if(!empty($status)) {
-      header($status);
+      if(CUPCAKE_ENV !== "test") {
+        header($status);
+      }
 		}
 		if($url !== null) {
-		  header("Location: {$url}");
+		  if(CUPCAKE_ENV !== "test") {
+		    header("Location: {$url}");
+	    }
 		}
 		if(!empty($status) && ($status >= 300 && $status < 400)) {
-			header($status);
+		  if(CUPCAKE_ENV !== "test") {
+			  header($status);
+		  }
 		}
     exit;
   }
@@ -218,7 +224,9 @@ class Controller {
   
   public function status_code($code) {
     if(array_key_exists($code, $this->status_code)) {
-      header("HTTP/1.1 ". $code ." ". $this->status_code[$code]);
+      if(CUPCAKE_ENV !== "test") {
+        header("HTTP/1.1 ". $code ." ". $this->status_code[$code]);
+      }
     }
   }
   

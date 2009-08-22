@@ -2,8 +2,10 @@
 
 class Import {
   static function controller($name) {
-    require_once CONTROLLER_DIR . "/application.php";
-    if($name === "application") {
+    if(!class_exists("Application")) {
+      require_once CONTROLLER_DIR . "/application.php";
+    }
+    if($name === "application" && class_exists("Application")) {
       return true;
     }
     $file = CONTROLLER_DIR . "/" . $name .".php";

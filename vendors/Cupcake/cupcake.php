@@ -38,6 +38,7 @@ $dependencies = array(
   "helper/form",
   "helper/flash",
   "helper/session",
+  "helper/css_selector",
   "response/xml",
   "response/json",
   "session",

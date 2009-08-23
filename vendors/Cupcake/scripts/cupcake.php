@@ -321,6 +321,31 @@ function cupcake_generate_assets($opts) {
   
   cupcake_generate("{$app_path}/cli", "application.php", $cli_content);
   
+  # Generate Run Specs Command Option
+  $runspec_content = "<?php\n\n";
+  $runspec_content .= "function run_specs(\$opts=array(), \$command) {\n";
+  $runspec_content .= "  include_once dirname(__FILE__).\"/../specs/spec_helper.php\";\n";
+  $runspec_content .= "  include_once \"Spectest/spec_test.php\";\n\n";
+  $runspec_content .= "  \$controllers_path = realpath(dirname(__FILE__).\"/../app/controllers\");\n";
+  $runspec_content .= "  foreach(glob(\"{\$controllers_path}/*.php\") as \$file) {\n";
+  $runspec_content .= "    include_once \$file;\n";
+  $runspec_content .= "  }\n\n";
+  $runspec_content .= "\$runner = new SpecRunner();\n";
+  $runspec_content .= "\$runner->require_all(dirname(__FILE__) . \"/../specs/functional\");\n";
+  $runspec_content .= "\$runner->setDescriptiveOutput(false);\n";
+  $runspec_content .= "\$runner->run();\n";
+  $runspec_content .= "}\n\n";
+  $runspec_content .= "\$command->addOption('run_specs', array(\n";
+  $runspec_content .= "  'short_name'  =>  '-r',\n";
+  $runspec_content .= "  'long_name'   => '--run-specs',\n";
+  $runspec_content .= "  'action'      => 'StoreTrue',\n";
+  $runspec_content .= "  'description' => 'Run Specs',\n";
+  $runspec_content .= "  'callback'    =>  'run_specs'\n";
+  $runspec_content .= "));\n\n";
+  $runspec_content .= "?>";
+  
+  cupcake_generate("{$app_path}/cli", "run_specs.php", $runspec_content);
+  
   
   # Genetate Environment File
   $environment_content = file_get_contents(CUPCAKE_PATH ."/structure/config/environment.php");

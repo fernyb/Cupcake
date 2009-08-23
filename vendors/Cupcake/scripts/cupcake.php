@@ -202,6 +202,25 @@ function cupcake_generate_controller($opts=array()) {
   $test_content .= "});";
   cupcake_generate("specs/functional", "{$controller_name}_spec.php", $test_content);
   
+  $test_helper_content = "<?php\n";
+  $test_helper_content .= "define(\"CUPCAKE_ENV\", \"test\");\n\n";
+  $test_helper_content .= "define(\"ROOT_PATH\",          realpath(dirname(__FILE__).\"/../\"));\n";
+  $test_helper_content .= "define(\"CONFIG_DIR\",         ROOT_PATH   .\"/config\");\n";
+  $test_helper_content .= "define(\"APP_DIR\",            ROOT_PATH   .\"/app\");\n";
+  $test_helper_content .= "define(\"CONTROLLER_DIR\",     APP_DIR     .\"/controllers\");\n";
+  $test_helper_content .= "define(\"VIEW_DIR\",           APP_DIR     .\"/views\");\n";
+  $test_helper_content .= "define(\"HELPER_DIR\",         APP_DIR     .\"/helpers\");\n";
+  $test_helper_content .= "define(\"PUBLIC_DIR\",         ROOT_PATH   .\"/public\");\n";
+  $test_helper_content .= "define(\"CONFIG_DIR\",         ROOT_PATH   .\"/config\");\n";
+  $test_helper_content .= "define(\"LOG_DIR\",            ROOT_PATH   .\"/log\");\n";
+  $test_helper_content .= "define(\"STYLESHEETS_DIR\",    PUBLIC_DIR  .\"/stylesheets\");\n";
+  $test_helper_content .= "define(\"JAVASCRIPTS_DIR\",    PUBLIC_DIR  .\"/javascripts\");\n";
+  $test_helper_content .= "define(\"VENDORS_DIR\",        ROOT_PATH   .\"/vendors\");\n";
+  $test_helper_content .= "define(\"VENDOR_CUPCAKE_DIR\", VENDORS_DIR .\"/Cupcake\");\n\n";
+  $test_helper_content .= "?>";
+  cupcake_generate("specs", "spec_helper.php", $test_helper_content);
+  
+  
   if(!file_exists("app/views/{$controller_name}")) {
     if(mkdir("app/views/{$controller_name}")) {
       echo "    [CREATE] views/{$controller_name}\n";

@@ -1,5 +1,5 @@
 coverage
 coverage/*
-log/
-log/*
+log
+log/*.log
 .DS_Store

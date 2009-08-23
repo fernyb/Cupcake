@@ -115,6 +115,12 @@
         <min>1.1.0</min>
         <recommended>1.1.0</recommended>
       </package>
+      <package>
+        <name>Spectest</name>
+        <channel>pear.php.net</channel>
+        <min>0.7.0</min>
+        <recommended>0.7.0</recommended>
+      </package>
       <extension>
         <name>json</name>
       </extension>

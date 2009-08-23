@@ -190,6 +190,18 @@ function cupcake_generate_controller($opts=array()) {
   $helper_content .= "?>";
   cupcake_generate("app/helpers", "{$controller_name}.php", $helper_content);
   
+  $test_content = "<?php\n\n";
+  $test_content .= "describe(\"{$controller_name}\", function(\$request){\n";
+  $test_content .= "  before(function(){\n";
+  $test_content .= "    \$request = new Request();\n";
+  $test_content .= "  });\n";
+  $test_content .= "\n";
+  $test_content .= "  it(\"asserts true\", function(){\n";
+  $test_content .= "    assert_equal(true, true); \n";
+  $test_content .= "  });\n";
+  $test_content .= "});";
+  cupcake_generate("specs/functional", "{$controller_name}_spec.php", $test_content);
+  
   if(!file_exists("app/views/{$controller_name}")) {
     if(mkdir("app/views/{$controller_name}")) {
       echo "    [CREATE] views/{$controller_name}\n";

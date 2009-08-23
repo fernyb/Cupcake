@@ -217,6 +217,7 @@ function cupcake_generate_controller($opts=array()) {
   $test_helper_content .= "define(\"JAVASCRIPTS_DIR\",    PUBLIC_DIR  .\"/javascripts\");\n";
   $test_helper_content .= "define(\"VENDORS_DIR\",        ROOT_PATH   .\"/vendors\");\n";
   $test_helper_content .= "define(\"VENDOR_CUPCAKE_DIR\", VENDORS_DIR .\"/Cupcake\");\n\n";
+  $test_helper_content .= "require \"Cupcake/Cupcake.php\";\n\n";
   $test_helper_content .= "?>";
   cupcake_generate("specs", "spec_helper.php", $test_helper_content);
   

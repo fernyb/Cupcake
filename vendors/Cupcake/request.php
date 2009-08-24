@@ -7,10 +7,20 @@ class Request {
   public $params;
   public $dispatcher;
 
-  public function get($request_uri) {
+  public function post($request_uri) {
+    $_POST = $query;
+    $this->make_request($request_uri);
+  }
+
+  public function get($request_uri, $query=array()) {
+    $_GET = $query;
+    $this->make_request($request_uri);
+  }
+  
+  public function make_request($request_uri) {
     $_SERVER['REQUEST_URI'] = $request_uri;
     $this->dispatcher = DispatcherTest::getInstance();
-    DispatcherTest::run();
+    DispatcherTest::run();    
   }
   
   public function params($key=null) {

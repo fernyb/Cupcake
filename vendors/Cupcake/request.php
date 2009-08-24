@@ -7,7 +7,7 @@ class Request {
   public $params;
   public $dispatcher;
 
-  public function post($request_uri) {
+  public function post($request_uri, $query=array()) {
     $_POST = $query;
     $this->make_request($request_uri);
   }

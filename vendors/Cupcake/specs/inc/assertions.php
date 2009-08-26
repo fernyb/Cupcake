@@ -115,6 +115,7 @@ function assert_not_null($v, $msg = "") {
 	ensure($v !== null, $msg);	
 }
 
+
 // NOTE: this assertion swallows all exceptions
 function assert_throws($exception_class, $lambda, $msg = '') {
     try {

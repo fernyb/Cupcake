@@ -22,6 +22,10 @@ class Controller {
   }
   
   public function handle_request($params) {
+    if(array_key_exists("format", $params) === false) {
+      $params["format"] = "html";
+    }
+    
     $this->params = $params;
     $controller_name  = Inflector::camelize($params["controller"], "first");
     Logger::process_controller($controller_name, $params["action"], env("REQUEST_METHOD"), $params);
@@ -39,6 +43,8 @@ class Controller {
       $action = "not_found";
       $this->controller->{$action}();
     }
+    
+    $this->controller->format = $this->params["format"];
     
     $this->controller->handle_action($action);        
   }
@@ -109,6 +115,9 @@ class Controller {
     if($this->render_called === false) {
       $this->view = new View($this->request_uri, $this->params, $this->view_params);
       $this->view->controller = $this->controller;
+      $this->view->content_type = MimeType::lookup_by_extension($this->format);
+      $this->view->format = $this->format;
+      
       
       // Figure out the template to use:
       if(!empty($options["action"]) && strpos("/", $options["action"])) {
@@ -155,27 +164,19 @@ class Controller {
 				$code = $msg = $codes[$status];
 				if(is_numeric($status)) { $code = $status; }
 				if(is_string($status))  { $msg = $status;  }
+				Header::set_raw("HTTP/1.1 {$code} {$msg}");
 				$status = "HTTP/1.1 {$code} {$msg}";
 			} else {
 				$status = null;
 			}
 		}
-		
-    if(!empty($status)) {
-      if(CUPCAKE_ENV !== "test") {
-        header($status);
-      }
-		}
+	
 		if($url !== null) {
-		  if(CUPCAKE_ENV !== "test") {
-		    header("Location: {$url}");
-	    }
+		  Header::set("Location", "{$url}");
 		}
-		if(!empty($status) && ($status >= 300 && $status < 400)) {
-		  if(CUPCAKE_ENV !== "test") {
-			  header($status);
-		  }
-		}
+		if(CUPCAKE_ENV !== "test") {
+		  Header::send();
+		}		
     exit;
   }
   
@@ -239,6 +240,10 @@ class Controller {
     if($key !== "controller" && $key !== "action") {
       $this->view_params[$key] = $value;
     }
+  }
+  
+  public function xhr() {
+    return (env("X-Requested-With") === "XMLHttpRequest");
   }
 }
 

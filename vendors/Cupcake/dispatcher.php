@@ -60,7 +60,7 @@ class Dispatcher {
   # Load the environment
   public static function load_environment() {
     include_once CONFIG_DIR ."/environment.php";
-    include_once CONFIG_DIR ."/environments/". CUPCAKE_ENV .".php";
+    include_once CONFIG_DIR ."/environments/". CUPCAKE_ENV .".php";    
     Logger::info("*** Cupcake using environment: ". CUPCAKE_ENV);
     include_once CONFIG_DIR ."/routes.php";
   }

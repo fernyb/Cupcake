@@ -144,9 +144,13 @@ function form_tag($url, $options=array()) {
 }
 
 
-function form_for($name, $object, $url, $block) {
+function form_for($name, $object, $url, $options=array(), $block=nil) {
   $h = HelperForm::getInstance();
-  return $h->form_for($name, $object, $url, $block);
+  if(is_closure($options)) {
+    $block = $options;
+    $options = array();
+  }
+  return $h->form_for($name, $object, $url, $options, $block);
 }
 
 function fields_for($record_or_name_of_array, $options=array(), $block=null) {

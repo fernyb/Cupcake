@@ -30,6 +30,9 @@ Router::prepare(function($r){
   
   $r->match("/user/profile")->to(array("controller" => "application", "action" => "profile"))->name("user_profile");
   
+  $r->match("/app/:action")->to(array("controller" => "application"))->name("app");
+  $r->match("/app/:action.:format")->to(array("controller" => "application"));
+  
   $r->match("/:controller/:action(/:id)")->to();
 });
 

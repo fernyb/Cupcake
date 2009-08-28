@@ -72,6 +72,19 @@ class Application extends Controller {
     $this->set("set_after_filter", "yes");
     $this->set("album_name", "X&Y");
   }
+  
+  function ajax() {
+    if($this->xhr()) {
+      $this->set("ajax_request", true);
+    } else {
+      $this->set("ajax_request", false);
+    }
+    $this->set("varname", "Value from Controller Method!");
+    $this->set("format", $this->params["format"]);
+    
+    $user = $this->params["user"];
+    $this->set("introduce", "Hello, ". $user["name"] ." have a good day!");
+  }
 }
 
 ?>

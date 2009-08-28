@@ -7,8 +7,10 @@ class View {
   public $view_params = array();
   public $layout = "layouts/application";
   public $template;
-  public $ext = "html.php";
   public $helper = false;
+  public $content_type = "text/html";
+  public $format = "html";
+  public $ext = "php";
   
   public function __construct($request_uri, $params=array(), $view_params=array()) {
     $this->request_uri = $request_uri;
@@ -42,17 +44,24 @@ class View {
       $dispatcher->__body        = $body;
       return;
     } 
-    
+    if(!empty($this->content_type)) {
+      Header::set("Content-Type", $this->content_type);
+      Header::send();
+    }
     echo $body;
     exit;
+  }
+  
+  public function file_extension() {
+    return ($this->format .".". $this->ext);
   }
   
   public function content_for_template() {
     $start = microseconds();
     $params = $this->view_params();
     ob_start();
-    if(Import::view($this->template, $this->ext, $params) === false) {
-      Import::view("exceptions/not_found", $this->ext, $params);
+    if(Import::view($this->template, $this->file_extension(), $params) === false) {
+      Import::view("exceptions/not_found", $this->file_extension(), $params);
       Logger::render("Rendering template within exceptions/not_found (". (microseconds() - $start) ." ms)\n");
     } else {
       Logger::render("Rendering template within {$this->template} (". (microseconds() - $start) ." ms)\n");
@@ -67,12 +76,14 @@ class View {
     $params = $this->view_params();
     $params = array_merge($params, array("content_for_layout" => $content));    
     ob_start();
-    if(!Import::view($this->layout, $this->ext, $params)) {
+    if(!Import::view($this->layout, $this->file_extension(), $params)) {
       echo $content;
     }
     $output = ob_get_contents();
     ob_end_clean();
-    Logger::render("Rendering {$this->layout} (". (microseconds() - $start) ." ms)\n");      
+    Logger::render("Rendering {$this->layout} (". (microseconds() - $start) ." ms)\n");
+    Logger::new_line();
+          
     return $output;
   }
   
@@ -97,7 +108,7 @@ class View {
       $partial = $params["params"]["controller"] ."/". "_{$partial_name}";
     }
     ob_start();
-    Import::view($partial, $this->ext, $params);
+    Import::view($partial, $this->file_extension(), $params);
     $output = ob_get_contents();
     ob_end_clean();
     Logger::render("Rendering {$partial} (". (microseconds() - $start) ." ms)\n");      

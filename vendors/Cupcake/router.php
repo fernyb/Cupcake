@@ -46,7 +46,6 @@ class Router {
   
   static function prepare($block) {
     $_this = self::getInstance();
-    Logger::new_line();
     Logger::info("*** Compiling Routes");
     $block($_this);
     return $_this;

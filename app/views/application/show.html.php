@@ -68,6 +68,10 @@
 <br />
 <?= link_to("API Recent with action", url("the_name_format", array("action" => "api_recent", "format" => "xml"))) ?>
 
+
+<br />
+<br />
+<?= link_to("Ajax", url("app", array("action" => "ajax"))) ?>
 <br />
 <br />
 

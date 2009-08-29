@@ -430,7 +430,7 @@ function cupcake_generate_assets($opts) {
   $mime_content .= "#\n";
   $mime_content .= "?>";
   
-  cupcake_generate("{$app_path}/config/mime_types.php", "mime_types.php", $mime_content);
+  cupcake_generate("{$app_path}/config", "mime_types.php", $mime_content);
   
 
   # Generate Application Layout (copy)

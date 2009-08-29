@@ -59,7 +59,6 @@ class MimeType {
       "gz"      => "application/x-gzip",
       "h"       => "text/x-c",
       "hh"      => "text/x-c",
-      "htm"     => "text/html",
       "html"    => "text/html",
       "ico"     => "image/vnd.microsoft.icon",
       "ics"     => "text/calendar",
@@ -68,8 +67,8 @@ class MimeType {
       "jar"     => "application/java-archive",
       "java"    => "text/x-java-source",
       "jnlp"    => "application/x-java-jnlp-file",
-      "jpeg"    => "image/jpeg",
       "jpg"     => "image/jpeg",
+      "jpeg"    => "image/jpeg",
       "js"      => "application/javascript",
       "json"    => "application/json",
       "log"     => "text/plain",
@@ -167,8 +166,8 @@ class MimeType {
       "xpm"     => "image/x-xpixmap",
       "xsl"     => "application/xml",
       "xslt"    => "application/xslt+xml",
-      "yaml"    => "text/yaml",
       "yml"     => "text/yaml",
+      "yaml"    => "text/yaml",
       "zip"     => "application/zip"
     );
   
@@ -179,11 +178,23 @@ class MimeType {
     return self::$instance;
   }
   
-  static function register($mime_type, $extension)
+  static function register($mime_type, $extension, $alias_extensions=array())
   {
     // $format is the $extension
     $instance = self::getInstance();
     $instance->mime_types[$extension] = $mime_type;
+    foreach($alias_extensions as $alias_ext) {
+      $instance->mime_types[$alias_ext] = $mime_type;
+    }
+  }
+  
+  static function extension_by_mime_type($mime_type="text/html") {
+    $instance = self::getInstance();
+    $extension = array_search($mime_type, $instance->mime_types);
+    if($extension === false) {
+      throw new MimeTypeException("MimeType Not Found: {$mime_type}");
+    }
+    return $extension;
   }
   
   static function lookup_by_extension($extension="html") {
@@ -195,8 +206,9 @@ class MimeType {
   }
 }
 
+class MimeTypeException extends Exception { }
 
-MimeType::register("text/html",       "html");
+MimeType::register("text/html",       "html", array("htm"));
 MimeType::register("text/json",       "json");
 MimeType::register("text/javascript", "js");
 MimeType::register("text/css",        "css");

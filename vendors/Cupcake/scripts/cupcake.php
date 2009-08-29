@@ -420,7 +420,19 @@ function cupcake_generate_assets($opts) {
 
   cupcake_generate("{$app_path}/app/helpers", "application.php", $helper_content);
 
+  # Generate Mime Type config
+  $mime_content = "<?php\n";
+  $mime_content .= "\n";
+  $mime_content .= "#\n";
+  $mime_content .= "# Set any Extra Mime Types here\n";
+  $mime_content .= "#\n";
+  $mime_content .= "# MimeType::register(\"text/html\", \"html\");\n";
+  $mime_content .= "#\n";
+  $mime_content .= "?>";
   
+  cupcake_generate("{$app_path}/config/mime_types.php", "mime_types.php", $mime_content);
+  
+
   # Generate Application Layout (copy)
   $source_layout_file = CUPCAKE_PATH ."/structure/views/layouts/application.html.php";
   $layout_dir = $app_path ."/app/views/layouts";

@@ -140,9 +140,9 @@ class Controller {
       if(!empty($options["layout"])) {
         $this->view->layout = "layouts/". $options["layout"];
       }
-      
+   
       $this->view->content_type = MimeType::lookup_by_extension($this->format);
-      $this->view->format = $this->format;
+      $this->view->format = MimeType::extension_by_mime_type($this->view->content_type);
       
       $this->render_called = true;
       $this->view->render();

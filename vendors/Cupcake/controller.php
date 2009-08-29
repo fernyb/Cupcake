@@ -115,10 +115,7 @@ class Controller {
     if($this->render_called === false) {
       $this->view = new View($this->request_uri, $this->params, $this->view_params);
       $this->view->controller = $this->controller;
-      $this->view->content_type = MimeType::lookup_by_extension($this->format);
-      $this->view->format = $this->format;
-      
-      
+  
       // Figure out the template to use:
       if(!empty($options["action"]) && strpos("/", $options["action"])) {
         $this->view->template = $options["action"];
@@ -126,10 +123,26 @@ class Controller {
         $this->view->template = $this->params["controller"] ."/". $options["action"];
       }
       
+      if(!empty($options["template"])) {
+       $parts = explode("/", $options["template"]);
+       if(count($parts) === 0) {
+         $this->view->template = $this->params["controller"] ."/". $options["template"];
+       }
+      }
+      if(!empty($options["ext"])) {
+        $this->view->ext = $options["ext"];
+      }
+      if(!empty($options["format"])) {
+        $this->format = $options["format"];
+      }
+      
       // Figure out the layout to use:
       if(!empty($options["layout"])) {
         $this->view->layout = "layouts/". $options["layout"];
       }
+      
+      $this->view->content_type = MimeType::lookup_by_extension($this->format);
+      $this->view->format = $this->format;
       
       $this->render_called = true;
       $this->view->render();
@@ -139,6 +152,15 @@ class Controller {
   public function render_action($action, $options=array()) {
     $this->save_session();
     $this->render(array_merge(array("action" => $action), $options));
+  }
+  
+  public function render_template($template_name, $options=array()) {
+    list($template, $format, $ext) = explode(".", $template_name, 3);
+    $this->render(array_merge(array(
+      "template" => $template,
+      "format"   => $format,
+      "ext"      => $ext
+      ), $options));
   }
   
   public function render_text($text="") {

@@ -1,13 +1,18 @@
 
-jQuery.ajaxSetup({ 
-  "beforeSend": function(xhr) {
-    xhr.setRequestHeader("Accept", "text/javascript");
-  }
-})
+(function($){
+  $.cupcake = {
+    remoteFormSubmit: function(that) {
+      var action = that.action + ".js";
+      if(that.method.toLowerCase() == "post") {
+        $.post(action, $(that).serialize(), null, "script");
+      } else {
+        $.get(action, $(that).serialize(), null, "script");
+      }
+      return false;
+    }
+  };
+})(jQuery);
 
-function remoteFormSubmit(that) {
-  
-  $.post(that.action, $(that).serialize(), null, "script");
-  return false;
-}
+
+
 

@@ -3,3 +3,9 @@ html,body {
   font-family:helvetica;
   color:#333;
 }
+strong {
+  font-weight:bold;
+}
+.clear {
+  clear:both;
+}

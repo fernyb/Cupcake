@@ -84,10 +84,15 @@ class Application extends Controller {
     
     $user = $this->params["user"];
     $this->set("introduce", "Hello, ". $user["name"] ." have a good day!");
-    
-    #if($this->params["format"] === "json" || $this->params["format"] === "iphone") {
-    #  $this->render_template("ajax.html.php");
-    #}
+  }
+  
+  function ajax_response() {
+    $user = $this->params["user"];
+    if($user["name"] === "error") {
+      $this->set("error", true);
+    } else {
+      $this->set("error", false);
+    }
   }
 }
 

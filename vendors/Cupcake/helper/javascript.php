@@ -6,7 +6,7 @@ function remote_form_for($name, $object=null, $url="", $options=null, $block=nul
     $options = array();
   }
   
-  $options = array_merge(array("onsubmit" => "remoteFormSubmit(this); return false;"), $options);
+  $options = array_merge(array("onsubmit" => "jQuery.cupcake.remoteFormSubmit(this); return false;"), $options);
   form_for($name, $object, $url, $options, $block);
 }
 

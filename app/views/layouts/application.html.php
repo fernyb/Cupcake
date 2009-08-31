@@ -6,7 +6,7 @@
     <?= javascript_include_tag("jquery") ?>
     <?= javascript_include_tag("application") ?>
     
-    <?= stylesheet_link_tag("reset") ?>
+    <? stylesheet_link_tag("reset") ?>
     <?= stylesheet_link_tag("master") ?>
   </head>
   <body>

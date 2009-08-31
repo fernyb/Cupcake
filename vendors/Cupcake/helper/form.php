@@ -27,9 +27,10 @@ class HelperForm {
   
   private function value_for($method) {
     $value = "";
-    if(is_array($this->object)) {
+    if(is_array($this->object) && array_key_exists($method, $this->object)) {
       $value = $this->object[$method];
-    } else if(is_object($this->object)) {
+    } else if(is_object($this->object) && 
+    array_key_exists($method, get_class_methods(array_flip($this->object)) )) {
       $value = $this->object->{$method}();
     }
     return $value;

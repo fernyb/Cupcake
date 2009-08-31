@@ -11,7 +11,7 @@ $("body").css("min-height", "200px");
   //$("#box").html("<strong style='color:green'>Thanks for your name</strong>");
 <?php } ?>
 
-$("#box").hide("slow");
+$("#box").hide(1000 * 2);
 
 $("#go-back-link").remove();
 $("#box").parent().append('<div id="go-back-link"><br /><?= link_to("Go Home", url("root")) ?></div>');

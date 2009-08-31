@@ -11,6 +11,8 @@ class Application extends Controller {
     );
   
   function show() {
+    $this->set("welcome", "Welcome to Cupcake!");
+    $this->set("description", "Cupcake is a MVC Framework built with PHP");
   }
   
   function profile() {
@@ -82,18 +84,24 @@ class Application extends Controller {
     $this->set("varname", "Value from Controller Method!");
     $this->set("format", $this->params["format"]);
     
-    $user = $this->params["user"];
-    $this->set("introduce", "Hello, ". $user["name"] ." have a good day!");
+    if(array_key_exists("user", $this->params)) {
+      $user = $this->params["user"];
+      $this->set("introduce", "Hello, ". $user["name"] ." have a good day!");
+    }
   }
   
   function ajax_response() {
-    $user = $this->params["user"];
-    if($user["name"] === "error") {
-      $this->set("error", true);
+    if(array_key_exists("user", $this->params)) {
+      if($this->params["user"]["name"] === "error") {
+        $this->set("error", true);
+      } else {
+        $this->set("error", false);
+      }
     } else {
       $this->set("error", false);
     }
   }
+  
 }
 
 ?>

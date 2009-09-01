@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+date_default_timezone_set("America/Los_Angeles");
 
 echo 'rm Cupcake-0.8.0.tgz';
 

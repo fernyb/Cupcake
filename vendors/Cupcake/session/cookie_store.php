@@ -111,6 +111,7 @@ class CookieStore {
   }
   
   public function load_session($session_data="") {
+    $data = "";
     if(!empty($session_data)) {
       try {
         $data = $this->verify($session_data);

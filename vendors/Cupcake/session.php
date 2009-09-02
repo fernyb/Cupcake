@@ -42,8 +42,14 @@ class Session {
   public function load() {
     $session_key = Config::get("session_key");
     if(!empty($session_key)) {
-      $cookie = $_COOKIE[$session_key];
-      $this->session_store->load_session($cookie);
+    
+      if(array_key_exists($session_key, $_COOKIE)) {
+        $cookie = $_COOKIE[$session_key];
+      } else {
+        $cookie = "";
+      }
+        $this->session_store->load_session($cookie);
+      
     }
   }
 }

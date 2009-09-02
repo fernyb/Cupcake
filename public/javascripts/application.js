@@ -21,19 +21,21 @@
       */
       var element = $(that);
       var href    = element.attr("href");
+      var query   = "";
       if(href == undefined) {
         return false;
       } else {
+        var parts = href.split("?", 2);
+        query = parts[1];
+        href  = parts[0];
         href += ".js";
       }
+      
       var method  = element.attr("data-method");
       if(method == undefined) {
         method = "get";
       }
-      var query = element.attr("data-query");
-      if(query == undefined) {
-        query = null;
-      }
+      
       var args = [that];
 
       $(document).trigger("cupcake.linkToRemoteBefore", [method, that]);
@@ -56,6 +58,12 @@
       }
     }
   };
+  
+  $("a#data-remote").live("click", function(eventObject){
+    $.cupcake.linkToRemote(this);
+    return false;
+  });
+  
 })(jQuery);
 
 

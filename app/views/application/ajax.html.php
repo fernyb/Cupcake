@@ -11,6 +11,7 @@
     }
     $("body").append("<div><strong>Response Complete!</strong></div>");
   });
+  
 </script>
 
 <h2>Display Ajax Here!</h2>
@@ -28,12 +29,20 @@
   </p>
 <? }); ?>
 
+
 <br />
 <div class="clear"></div>
 </div>
 
 <p></p>
+<br />
 
+<div style="padding:10px; margin:10px; background-color:#f4f4f4; border:1px solid #ccc;">
+  <?= link_to_remote("Link To Remote", url("app", array("action" => "ajax_response"))) ?>
+</div>
+
+<br />
+<p></p>
 <div>
   <p>link_to_remote</p>
   <p>Link to remote is a link that will execute an ajax request to the destination url from the href value.</p>

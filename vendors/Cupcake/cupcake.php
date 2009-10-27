@@ -42,7 +42,6 @@ $dependencies = array(
   "helper/session",
   "helper/css_selector",
   "helper/test_helper",
-  "helper/javascript",
   "response/xml",
   "response/json",
   "session",

@@ -75,33 +75,6 @@ class Application extends Controller {
     $this->set("album_name", "X&Y");
   }
   
-  function ajax() {
-    if($this->xhr()) {
-      $this->set("ajax_request", true);
-    } else {
-      $this->set("ajax_request", false);
-    }
-    $this->set("varname", "Value from Controller Method!");
-    $this->set("format", $this->params["format"]);
-    
-    if(array_key_exists("user", $this->params)) {
-      $user = $this->params["user"];
-      $this->set("introduce", "Hello, ". $user["name"] ." have a good day!");
-    }
-  }
-  
-  function ajax_response() {
-    if(array_key_exists("user", $this->params)) {
-      if($this->params["user"]["name"] === "error") {
-        $this->set("error", true);
-      } else {
-        $this->set("error", false);
-      }
-    } else {
-      $this->set("error", false);
-    }
-  }
-  
 }
 
 ?>

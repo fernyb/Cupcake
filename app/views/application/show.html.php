@@ -71,9 +71,6 @@
 
 <br />
 <br />
-<?= link_to("Ajax", url("app", array("action" => "ajax"))) ?>
-<br />
-<br />
 
 <strong>Environment &nbsp; => &nbsp; <?= CUPCAKE_ENV ?></strong>
 <br />

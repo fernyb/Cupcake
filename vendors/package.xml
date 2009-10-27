@@ -52,7 +52,6 @@
           <file name="session.php" role="php" />
           <file name="css_selector.php" role="php" />
           <file name="test_helper.php" role="php" />
-          <file name="javascript.php" role="php" />
         </dir>
         <dir name="response">
           <file name="json.php" role="php" />

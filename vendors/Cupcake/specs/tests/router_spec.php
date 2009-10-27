@@ -530,5 +530,34 @@ describe("NewRotuer -> is_param_key", function(){
   });    
 });
 
+describe("Creates an Array of Routes", function(){
+  before(function(){
+    Router::map(function($r){
+      $r->connect("/", array("controller" => "application", "action" => "show"));
+      $r->show_books("/", array("controller" => "application", "action" => "view_books"));
+    });
+    return Router::getInstance();
+  });
+  
+  it("has two routes", function($router){
+    assert_equal(count($router->routes), 2);
+  });
+  
+  it("has one named route", function($r){
+    $route = array();
+    foreach($r->routes as $routes) {
+      if(!empty($routes["name"])) {
+        $route = $routes;
+        break;
+      }
+    }
+    
+    assert_equal("show_books", $route["name"]);
+    #assert_equal($route["params"]["controller"], "application");
+    #assert_equal($route["params"]["action"], "show");
+    
+  });
+});
+
 
 ?>

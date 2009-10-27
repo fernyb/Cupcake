@@ -99,6 +99,40 @@ class Router {
   }
   
   /**
+  * Map path to params
+  */
+  public function map($closure) {
+    $that = self::getInstance();
+    $closure($that);
+    return $that;
+  }
+  
+  public function connect($path, $params=array()) {
+    $this->routes[] = array("path" => $path, "params" => $params);
+  }
+  
+  /**
+  * Catch missing methods and add them as route names
+  */
+  public function __call($method_name, $args) {
+    $methods = get_class_methods($this);
+    if(in_array($method_name, $methods)) {
+      return;
+    }
+    $path = $args[0];
+    if(count($args) > 1) {
+      $params = $args[1];
+    } else {
+      $params = array();
+    }
+    
+    
+    $this->routes[] = array("name" => $method_name, "path" => $path, "params" => $params);
+    $current_route_index = (count($this->routes) - 1);
+    return $this->routes[$current_route_index];
+  }
+  
+  /**
   * Returns a string replaces variables in path with the ones from the $options array.
   * Example: 
   * /user/profile/:id becomes /user/profile/100 when $options is array("id" => "100")

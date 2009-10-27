@@ -553,9 +553,9 @@ describe("Creates an Array of Routes", function(){
     }
     
     assert_equal("show_books", $route["name"]);
-    #assert_equal($route["params"]["controller"], "application");
-    #assert_equal($route["params"]["action"], "show");
-    
+    assert_equal("application", $route["params"]["controller"]);
+    assert_equal("view_books", $route["params"]["action"]);
+    assert_equal("/", $route["path"]);
   });
 });
 

@@ -221,6 +221,15 @@ function cupcake_generate_controller($opts=array()) {
   $test_helper_content .= "?>";
   cupcake_generate("specs", "spec_helper.php", $test_helper_content);
   
+  if(!file_exists("specs/spec_helper.php")) {
+    if(file_put_contents("specs/spec_helper.php", $test_helper_content)) {
+      echo "  [CREATE] specs/spec_helper.php\n";
+    } else {
+      echo "  [FAILED] specs/spec_helper.php\n";
+    }
+  } else {
+    echo "  [EXISTS] spec/spec_helper.php\n";
+  }
   
   if(!file_exists("app/views/{$controller_name}")) {
     if(mkdir("app/views/{$controller_name}")) {
@@ -324,7 +333,7 @@ function cupcake_generate_assets($opts) {
   # Generate Run Specs Command Option
   $runspec_content = "<?php\n\n";
   $runspec_content .= "function run_specs(\$opts=array(), \$command) {\n";
-  $runspec_content .= "  include_once dirname(__FILE__).\"/../specs/spec_helper.php\";\n";
+  $runspec_content .= "  include_once realpath(dirname(__FILE__) .\"/..\") . \"/specs/spec_helper.php\";\n";
   $runspec_content .= "  include_once \"Spectest/spec_test.php\";\n\n";
   $runspec_content .= "  \$controllers_path = realpath(dirname(__FILE__).\"/../app/controllers\");\n";
   $runspec_content .= "  foreach(glob(\"{\$controllers_path}/*.php\") as \$file) {\n";

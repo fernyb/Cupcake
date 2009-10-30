@@ -76,7 +76,7 @@
 <br />
 
 <p>
-Debug: <?= Config::get("debug") ? "true" : "false" ?>
+Debug: <?= CupcakeConfig::get("debug") ? "true" : "false" ?>
 </p>
 
 <?php if(!empty($set_some_text)) { ?>

@@ -1,6 +1,6 @@
 <?php
 
-class Config {
+class CupcakeConfig {
   public static $instance = false;
   public $values = array();
   

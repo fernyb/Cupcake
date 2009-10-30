@@ -28,7 +28,7 @@ define("VENDOR_CUPCAKE_DIR", VENDORS_DIR ."/Cupcake");
 
 
 $dependencies = array(
-  "config",
+  "cupcake_config",
   "logger",
   "basics",
   "inflector",

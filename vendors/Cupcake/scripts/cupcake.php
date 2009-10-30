@@ -368,7 +368,7 @@ function cupcake_generate_assets($opts) {
   # Generate The Development Environment Files
   $environment_content = "<?php\n";
   $environment_content .= "# Set config values for development here\n";
-  $environment_content .= "Config::set(\"debug\", true);\n";
+  $environment_content .= "CupcakeConfig::set(\"debug\", true);\n";
   $environment_content .= "?>";
  
   cupcake_generate("{$app_path}/config/environments", "development.php", $environment_content);
@@ -377,7 +377,7 @@ function cupcake_generate_assets($opts) {
   # Generate The Test Environment File
   $environment_content = "<?php\n";
   $environment_content .= "# Set config values for test here\n";
-  $environment_content .= "Config::set(\"debug\", false);\n";
+  $environment_content .= "CupcakeConfig::set(\"debug\", false);\n";
   $environment_content .= "?>";
  
   cupcake_generate("{$app_path}/config/environments", "test.php", $environment_content);
@@ -386,7 +386,7 @@ function cupcake_generate_assets($opts) {
   # Generate The Production Environment File
   $environment_content = "<?php\n";
   $environment_content .= "# Set config values for production here\n";
-  $environment_content .= "Config::set(\"debug\", false);\n";
+  $environment_content .= "CupcakeConfig::set(\"debug\", false);\n";
   $environment_content .= "?>";
 
   cupcake_generate("{$app_path}/config/environments", "production.php", $environment_content);

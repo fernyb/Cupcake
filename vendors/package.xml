@@ -29,7 +29,7 @@
     <dir name="/">
       <dir name="Cupcake">
         <file name="cupcake.php" role="php" />
-        <file name="config.php" role="php" />
+        <file name="cupcake_config.php" role="php" />
         <file name="controller.php" role="php" />
         <file name="dispatcher.php" role="php" />
         <file name="helpers.php" role="php" />

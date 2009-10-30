@@ -1,5 +1,5 @@
 <?php
 
-Config::set("debug", true);
+CupcakeConfig::set("debug", true);
 
 ?>

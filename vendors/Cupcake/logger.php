@@ -67,7 +67,7 @@ class Logger {
   }
   
   public function write_to_log($message) {
-    if(Config::get("debug") === true) {
+    if(CupcakeConfig::get("debug") === true) {
       if(CUPCAKE_ENV !== "test") {
         $file = LOG_DIR ."/". $this->filename;
         if($fp = fopen($file, "a+")) {

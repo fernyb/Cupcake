@@ -13,8 +13,8 @@ class Session {
   
   public static function initialize() {
     $cookie = new CookieStore(array(
-        "session_key" => Config::get("session_key"),
-        "secret"      => Config::get("secret")
+        "session_key" => CupcakeConfig::get("session_key"),
+        "secret"      => CupcakeConfig::get("secret")
       ));
     self::getInstance($cookie);
   }
@@ -40,7 +40,7 @@ class Session {
   }
   
   public function load() {
-    $session_key = Config::get("session_key");
+    $session_key = CupcakeConfig::get("session_key");
     if(!empty($session_key)) {
     
       if(array_key_exists($session_key, $_COOKIE)) {

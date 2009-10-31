@@ -1,7 +1,0 @@
-<?php
-
-describe("Controller", function(){
-  
-});
-
-?>

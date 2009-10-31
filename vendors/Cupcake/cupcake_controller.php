@@ -1,6 +1,6 @@
 <?php
 
-class Controller {
+class CupcakeController {
   public $controller;
   public $request_uri;
   public $action = null;
@@ -107,7 +107,7 @@ class Controller {
     $this->run_filter_methods($this->after_filter, $action, $methods);
     
     $this->render();
-    Logger::info("Controller Action: ". (microseconds() - $start_timer) ." ms");
+    Logger::info("CupcakeController Action: ". (microseconds() - $start_timer) ." ms");
   }
 
   public function render($options=array()) {

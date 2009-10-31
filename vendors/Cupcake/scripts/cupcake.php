@@ -409,7 +409,7 @@ function cupcake_generate_assets($opts) {
   # Generate Application Controller
   $controller_content = "<?php\n";
   $controller_content .= "\n";
-  $controller_content .= "class Application extends Controller {\n";
+  $controller_content .= "class Application extends CupcakeController {\n";
   $controller_content .= "\n";
   $controller_content .= "}\n";
   $controller_content .= "\n";

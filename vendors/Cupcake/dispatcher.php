@@ -52,7 +52,7 @@ class Dispatcher {
   public function dispatch_to($uri, $params=array()) {
     Logger::info("Dispatcher, dispatch_to: $uri");
     if(empty($this->controller)) {
-      $this->controller = new Controller($uri);
+      $this->controller = new CupcakeController($uri);
     }
     $this->controller->handle_request($params);
   }

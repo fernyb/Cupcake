@@ -1,6 +1,6 @@
 <?php
 
-class Application extends Controller {
+class Application extends CupcakeController {
   public $before_filter = array(
       array("set_some_text_only", "only" => "html_form"),
       array("set_some_text",      "skip" => "show")

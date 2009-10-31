@@ -1,0 +1,7 @@
+<?php
+
+describe("CupcakeController", function(){
+  
+});
+
+?>

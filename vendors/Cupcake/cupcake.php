@@ -35,7 +35,7 @@ $dependencies = array(
   "import",
   "http/mime_types",
   "http/header",  
-  "dispatcher",
+  "cupcake_dispatcher",
   "helpers",
   "helper/form",
   "helper/flash",

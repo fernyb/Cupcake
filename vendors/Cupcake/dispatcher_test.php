@@ -2,7 +2,7 @@
 #
 # Used for testing
 #
-class DispatcherTest extends Dispatcher {
+class DispatcherTest extends CupcakeDispatcher {
   public $__params = array();
   public $__body = "";
   public $__view_params = array();

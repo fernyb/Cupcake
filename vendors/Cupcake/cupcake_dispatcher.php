@@ -9,7 +9,7 @@
 * @package cupcake-core
 */
 
-class Dispatcher {
+class CupcakeDispatcher {
   static $instance = false;
   private $router;
   private $controller;

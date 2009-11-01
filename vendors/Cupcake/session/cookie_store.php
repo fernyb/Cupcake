@@ -116,9 +116,9 @@ class CookieStore {
       try {
         $data = $this->verify($session_data);
         $this->params = $data;
-        Logger::session_params($data);
+        CupcakeLogger::session_params($data);
       } catch(InvalidSignature $e) {
-        Logger::info($e);
+        CupcakeLogger::info($e);
         $this->params = array();
         $data = "";
       }

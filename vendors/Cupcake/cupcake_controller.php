@@ -28,7 +28,7 @@ class CupcakeController {
     
     $this->params = $params;
     $controller_name  = Inflector::camelize($params["controller"], "first");
-    Logger::process_controller($controller_name, $params["action"], env("REQUEST_METHOD"), $params);
+    CupcakeLogger::process_controller($controller_name, $params["action"], env("REQUEST_METHOD"), $params);
     
     if(CupcakeImport::controller($params["controller"])) {
       CupcakeImport::helper($params["controller"]);
@@ -107,7 +107,7 @@ class CupcakeController {
     $this->run_filter_methods($this->after_filter, $action, $methods);
     
     $this->render();
-    Logger::info("CupcakeController Action: ". (microseconds() - $start_timer) ." ms");
+    CupcakeLogger::info("CupcakeController Action: ". (microseconds() - $start_timer) ." ms");
   }
 
   public function render($options=array()) {

@@ -1,6 +1,6 @@
 <?php
 
-class Logger {
+class CupcakeLogger {
   static $instance = false;
   public $filename = "cupcake.log";
   public $colors = array(

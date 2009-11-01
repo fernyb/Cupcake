@@ -46,7 +46,7 @@ class Router {
   
   static function prepare($block) {
     $_this = self::getInstance();
-    Logger::info("*** Compiling Routes");
+    CupcakeLogger::info("*** Compiling Routes");
     $block($_this);
     return $_this;
   }

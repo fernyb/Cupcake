@@ -62,9 +62,9 @@ class View {
     ob_start();
     if(CupcakeImport::view($this->template, $this->file_extension(), $params) === false) {
       CupcakeImport::view("exceptions/not_found", $this->file_extension(), $params);
-      Logger::render("Rendering template within exceptions/not_found (". (microseconds() - $start) ." ms)\n");
+      CupcakeLogger::render("Rendering template within exceptions/not_found (". (microseconds() - $start) ." ms)\n");
     } else {
-      Logger::render("Rendering template within {$this->template} (". (microseconds() - $start) ." ms)\n");
+      CupcakeLogger::render("Rendering template within {$this->template} (". (microseconds() - $start) ." ms)\n");
     }
     $output = ob_get_contents();
     ob_end_clean();
@@ -81,8 +81,8 @@ class View {
     }
     $output = ob_get_contents();
     ob_end_clean();
-    Logger::render("Rendering {$this->layout} (". (microseconds() - $start) ." ms)\n");
-    Logger::new_line();
+    CupcakeLogger::render("Rendering {$this->layout} (". (microseconds() - $start) ." ms)\n");
+    CupcakeLogger::new_line();
           
     return $output;
   }
@@ -111,7 +111,7 @@ class View {
     CupcakeImport::view($partial, $this->file_extension(), $params);
     $output = ob_get_contents();
     ob_end_clean();
-    Logger::render("Rendering {$partial} (". (microseconds() - $start) ." ms)\n");      
+    CupcakeLogger::render("Rendering {$partial} (". (microseconds() - $start) ." ms)\n");      
     return $output;
   }
   

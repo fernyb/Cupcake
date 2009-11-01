@@ -31,7 +31,7 @@ class View {
     
     // Needed for testing
     if(CUPCAKE_ENV === "test") {
-      $dispatcher = DispatcherTest::getInstance();
+      $dispatcher = CupcakeDispatcherTest::getInstance();
       $dispatcher->__params      = $this->view_params();
       $dispatcher->__view_params = $this->view_params;
       $dispatcher->__template    = $this->template;

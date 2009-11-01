@@ -31,7 +31,7 @@
         <file name="cupcake.php" role="php" />
         <file name="cupcake_config.php" role="php" />
         <file name="cupcake_controller.php" role="php" />
-        <file name="dispatcher.php" role="php" />
+        <file name="cupcake_dispatcher.php" role="php" />
         <file name="helpers.php" role="php" />
         <file name="import.php" role="php" />
         <file name="inflector.php" role="php" />
@@ -40,7 +40,7 @@
         <file name="session.php" role="php" />
         <file name="view.php" role="php" />
         <file name="basics.php" role="php" />
-        <file name="dispatcher_test.php" role="php" />
+        <file name="cupcake_dispatcher_test.php" role="php" />
         <file name="request.php" role="php" />
         <dir name="http">
           <file name="header.php" role="php" />

@@ -19,8 +19,8 @@ class Request {
   
   public function make_request($request_uri) {
     $_SERVER['REQUEST_URI'] = $request_uri;
-    $this->dispatcher = DispatcherTest::getInstance();
-    DispatcherTest::run();    
+    $this->dispatcher = CupcakeDispatcherTest::getInstance();
+    CupcakeDispatcherTest::run();    
   }
   
   public function params($key=null) {

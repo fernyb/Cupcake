@@ -49,7 +49,7 @@ $dependencies = array(
   "cupcake_controller",
   "view",
   "router",
-  "dispatcher_test",
+  "cupcake_dispatcher_test",
   "request"
 );
 

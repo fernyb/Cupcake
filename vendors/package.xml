@@ -32,8 +32,8 @@
         <file name="cupcake_config.php" role="php" />
         <file name="cupcake_controller.php" role="php" />
         <file name="cupcake_dispatcher.php" role="php" />
+        <file name="cupcake_import.php" role="php" />
         <file name="helpers.php" role="php" />
-        <file name="import.php" role="php" />
         <file name="inflector.php" role="php" />
         <file name="logger.php" role="php" />
         <file name="router.php" role="php" />

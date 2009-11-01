@@ -32,7 +32,7 @@ $dependencies = array(
   "logger",
   "basics",
   "inflector",
-  "import",
+  "cupcake_import",
   "http/mime_types",
   "http/header",  
   "cupcake_dispatcher",

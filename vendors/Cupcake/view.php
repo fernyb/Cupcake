@@ -18,7 +18,7 @@ class View {
     $this->view_params = $view_params;
     $this->template    = $params["controller"] ."/". $params["action"];
     
-    if(Import::helper($params["controller"])) {
+    if(CupcakeImport::helper($params["controller"])) {
       $this->helper = $params['controller'] ."Helper";
     } else {
       $this->helper = false;
@@ -60,8 +60,8 @@ class View {
     $start = microseconds();
     $params = $this->view_params();
     ob_start();
-    if(Import::view($this->template, $this->file_extension(), $params) === false) {
-      Import::view("exceptions/not_found", $this->file_extension(), $params);
+    if(CupcakeImport::view($this->template, $this->file_extension(), $params) === false) {
+      CupcakeImport::view("exceptions/not_found", $this->file_extension(), $params);
       Logger::render("Rendering template within exceptions/not_found (". (microseconds() - $start) ." ms)\n");
     } else {
       Logger::render("Rendering template within {$this->template} (". (microseconds() - $start) ." ms)\n");
@@ -76,7 +76,7 @@ class View {
     $params = $this->view_params();
     $params = array_merge($params, array("content_for_layout" => $content));    
     ob_start();
-    if(!Import::view($this->layout, $this->file_extension(), $params)) {
+    if(!CupcakeImport::view($this->layout, $this->file_extension(), $params)) {
       echo $content;
     }
     $output = ob_get_contents();
@@ -108,7 +108,7 @@ class View {
       $partial = $params["params"]["controller"] ."/". "_{$partial_name}";
     }
     ob_start();
-    Import::view($partial, $this->file_extension(), $params);
+    CupcakeImport::view($partial, $this->file_extension(), $params);
     $output = ob_get_contents();
     ob_end_clean();
     Logger::render("Rendering {$partial} (". (microseconds() - $start) ." ms)\n");      

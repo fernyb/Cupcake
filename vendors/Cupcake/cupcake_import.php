@@ -1,6 +1,6 @@
 <?php
 
-class Import {
+class CupcakeImport {
   static function controller($name) {
     if(!class_exists("Application")) {
       require_once CONTROLLER_DIR . "/application.php";

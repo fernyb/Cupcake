@@ -30,8 +30,8 @@ class CupcakeController {
     $controller_name  = Inflector::camelize($params["controller"], "first");
     Logger::process_controller($controller_name, $params["action"], env("REQUEST_METHOD"), $params);
     
-    if(Import::controller($params["controller"])) {
-      Import::helper($params["controller"]);
+    if(CupcakeImport::controller($params["controller"])) {
+      CupcakeImport::helper($params["controller"]);
       $helper_name = "{$controller_name}Helper";
       $this->controller = new $controller_name($this->request_uri, $params);
       if(class_exists($helper_name)) {
@@ -171,7 +171,7 @@ class CupcakeController {
   
   public function render_html($file) {
     $this->save_session();
-    Import::html($file, $this->view_params);
+    CupcakeImport::html($file, $this->view_params);
     exit;
   }
   

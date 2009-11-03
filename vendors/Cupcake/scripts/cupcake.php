@@ -193,7 +193,7 @@ function cupcake_generate_controller($opts=array()) {
   $test_content = "<?php\n\n";
   $test_content .= "describe(\"{$controller_name}\", function(\$request){\n";
   $test_content .= "  before(function(){\n";
-  $test_content .= "    \$request = new Request();\n";
+  $test_content .= "    \$request = new CupcakeRequest();\n";
   $test_content .= "  });\n";
   $test_content .= "\n";
   $test_content .= "  it(\"asserts true\", function(){\n";

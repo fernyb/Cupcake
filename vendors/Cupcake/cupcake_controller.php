@@ -113,7 +113,7 @@ class CupcakeController {
   public function render($options=array()) {
     $this->save_session();
     if($this->render_called === false) {
-      $this->view = new View($this->request_uri, $this->params, $this->view_params);
+      $this->view = new CupcakeView($this->request_uri, $this->params, $this->view_params);
       $this->view->controller = $this->controller;
   
       // Figure out the template to use:

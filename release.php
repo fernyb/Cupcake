@@ -2,7 +2,7 @@
 <?php
 date_default_timezone_set("America/Los_Angeles");
 
-echo 'rm Cupcake-0.8.0.tgz';
+echo 'rm Cupcake-0.7.0.tgz';
 
 
 $package_file = "vendors/package.xml";

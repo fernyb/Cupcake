@@ -1,6 +1,6 @@
 <?php
 
-class View {
+class CupcakeView {
   public $request_uri;
   public $controller;
   public $params = array();

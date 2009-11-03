@@ -4,7 +4,7 @@ require_once 'Console/CommandLine.php';
 
 $command = new Console_CommandLine(array(
     "description" => "The 'cupcake' command create a new Cupcake application with a default directory structure and configuration at the path you specify.",
-    "version" => "0.8.0"
+    "version" => "0.7.0"
   ));
   
 $command->addOption('quiet', array(

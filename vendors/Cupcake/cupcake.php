@@ -47,7 +47,7 @@ $dependencies = array(
   "cupcake_session",
   "session/cookie_store",
   "cupcake_controller",
-  "view",
+  "cupcake_view",
   "router",
   "cupcake_dispatcher_test",
   "cupcake_request"

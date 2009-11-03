@@ -44,71 +44,19 @@ class Router {
     return self::$instance;
   }
   
-  static function prepare($block) {
-    $_this = self::getInstance();
-    CupcakeLogger::info("*** Compiling Routes");
-    $block($_this);
-    return $_this;
-  }
-  
-  /**
-  * Adds a new match to the routes array. You should then call the to method.
-  *
-  * @param $path string A Route Path to match. Example: /user/profile/:id
-  * @return Object string Returns an instance of Router so it can be chained with to.
-  */
-  public function match($path) {
-    $this->routes[] = array("path" => $path);
-    return $this;
-  }
-  
-  /**
-  * Adds parameters to the route path from the match method.
-  * These parameters become the defaults. 
-  * An Exception is thrown when there are no routes available.
-  * Must call match before calling to.
-  *
-  * @param $params Array An array of key value parameters
-  * @return Array array Returns an array with the route containing the parameters
-  */
-  public function to($params=array()) {
-    if(count($this->routes) === 0) {
-      throw new RouterException("No Routes Available. Must call match before calling to.");
-    }
-    $current_route_index = (count($this->routes) - 1);
-    $route_path = $this->routes[$current_route_index]["path"];
-    $this->routes[$current_route_index] = array("path" => $route_path, "params" => $params);
-    return $this;
-  }
-  
-  /**
-  * Sets the name of the route. It should be called called calling the to method.
-  */
-  public function name($name) {
-    if(count($this->routes) === 0) {
-      return false;  
-    }
-    $current_route_index = (count($this->routes) - 1);
-    if(!empty($name)) {
-     $route_index = $current_route_index;
-     $route = $this->routes[$route_index];
-     $route["name"] = $name;
-     $this->routes[$route_index] = $route;   
-    }
-    return $this->routes[$current_route_index];
-  }
-  
   /**
   * Map path to params
   */
   public function map($closure) {
     $that = self::getInstance();
+    CupcakeLogger::info("*** Compiling Routes");
     $closure($that);
     return $that;
   }
   
   public function connect($path, $params=array()) {
     $this->routes[] = array("path" => $path, "params" => $params);
+    return $this;
   }
   
   /**
@@ -117,6 +65,7 @@ class Router {
   public function __call($method_name, $args) {
     $methods = get_class_methods($this);
     if(in_array($method_name, $methods)) {
+      throw new RouterException("Router Method exists in router class, use a different route name");
       return;
     }
     $path = $args[0];
@@ -125,7 +74,6 @@ class Router {
     } else {
       $params = array();
     }
-    
     
     $this->routes[] = array("name" => $method_name, "path" => $path, "params" => $params);
     $current_route_index = (count($this->routes) - 1);

@@ -36,8 +36,8 @@ describe("Dispatcher -> setRouter", function(){
 
 describe("Dispatcher -> find_route", function(){
   it("returns an array with controller and action", function(){
-    Router::prepare(function($r){
-      $r->match("/:controller/:action")->to(array("controller" => "application", "action" => "method"));
+    Router::map(function($r){
+      $r->connect("/:controller/:action", array("controller" => "application", "action" => "method"));
     });
     $d = CupcakeDispatcher::getInstance();
     $d->setRouter(Router::getInstance());
@@ -49,8 +49,8 @@ describe("Dispatcher -> find_route", function(){
   });
 
   it("returns an array with controller and action and ids", function(){
-    Router::prepare(function($r){
-      $r->match("/:controller/:action")->to(array("controller" => "application", "action" => "method"));
+    Router::map(function($r){
+      $r->connect("/:controller/:action", array("controller" => "application", "action" => "method"));
     });
     $d = CupcakeDispatcher::getInstance();
     $params = $d->find_route("/application/method");
@@ -121,8 +121,8 @@ describe("Dispatcher -> env", function(){
 describe("Dispatcher -> params_for_request", function(){
   it("returns an array", function(){
     Router::getInstance()->reset();
-    Router::prepare(function($r){
-      $r->match("/:controller/:action")->to(array());
+    Router::map(function($r){
+      $r->connect("/:controller/:action", array());
     });
     $d = CupcakeDispatcher::getInstance();
     $params = $d->params_for_request("/application/method");
@@ -134,8 +134,8 @@ describe("Dispatcher -> params_for_request", function(){
   it("merges GET with router params", function(){
     Router::getInstance()->reset();
     $_GET["id"] = 25;
-    Router::prepare(function($r){
-      $r->match("/blog/:action")->to(array("controller" => "application"));
+    Router::map(function($r){
+      $r->connect("/blog/:action", array("controller" => "application"));
     });
     $d = CupcakeDispatcher::getInstance();
     $params = $d->params_for_request("/blog/method");
@@ -150,8 +150,8 @@ describe("Dispatcher -> params_for_request", function(){
     Router::getInstance()->reset();
     $_GET["controller"] = "get_application";
     $_GET["user_id"] = 100;
-    Router::prepare(function($r){
-      $r->match("/blog/:action")->to(array("controller" => "application"));
+    Router::map(function($r){
+      $r->connect("/blog/:action", array("controller" => "application"));
     });
     $d = CupcakeDispatcher::getInstance();
     $params = $d->params_for_request("/blog/method");
@@ -165,8 +165,8 @@ describe("Dispatcher -> params_for_request", function(){
   it("returns false when it cannot merge", function(){
     Router::getInstance()->reset();
     $_GET["user_id"] = 100;
-    Router::prepare(function($r){
-      $r->match("/blog/:action")->to(array("controller" => "application"));
+    Router::map(function($r){
+      $r->connect("/blog/:action", array("controller" => "application"));
     });
     $d = CupcakeDispatcher::getInstance();
     $params = $d->params_for_request("/user/method");

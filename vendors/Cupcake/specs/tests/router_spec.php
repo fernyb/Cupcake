@@ -18,7 +18,7 @@ describe("Router -> match", function(){
 
   it("returns an instance of Router", function(){
     $r = Router::getInstance();
-    $resp = $r->match("/new/current_path");
+    $resp = $r->connect("/new/current_path", array());
     assert_equal(get_class($resp), "Router", "Failed to return an instance of Router");
     $r->reset();
   });
@@ -26,8 +26,8 @@ describe("Router -> match", function(){
 
 describe("Router -> current_path_params", function(){
   it("returns an array", function(){
-    Router::prepare(function($r){
-      $r->match("/blog/postpage")->to(array("controller" => "article", "action" => "show"));
+    Router::map(function($r){
+      $r->connect("/blog/postpage", array("controller" => "article", "action" => "show"));
     });
     $r = Router::getInstance();
     $params = $r->current_path_params("/blog/postpage", array("controller" => "article", "action" => "show"));
@@ -39,7 +39,7 @@ describe("Router -> current_path_params", function(){
   
   it("return an array with merged params from current_path route", function(){
     $r = Router::getInstance();
-    $r->match("/blog/post")->to(array("controller" => "article", "action" => "show"));
+    $r->connect("/blog/post", array("controller" => "article", "action" => "show"));
     $params = $r->current_path_params("/blog/post", array("controller" => "article", "action" => "show"));
     
     assert_equal($params[0], 0, "Failed to set the index for current path params");
@@ -50,7 +50,7 @@ describe("Router -> current_path_params", function(){
   
   it("has controller and action for params", function(){
     $r = Router::getInstance();
-    $r->match("/blog/post")->to(array("controller" => "article", "action" => "show"));
+    $r->connect("/blog/post", array("controller" => "article", "action" => "show"));
     $params = $r->current_path_params("/blog/post", array("controller" => "article", "action" => "show"));
    
     ensure(is_array($params[1]), "Params should be an array");
@@ -61,7 +61,7 @@ describe("Router -> current_path_params", function(){
   
   it("returns false when current_path not found in routes", function(){
     $r = Router::getInstance();
-    $r->match("/blog/post")->to(array("controller" => "article", "action" => "show"));
+    $r->connect("/blog/post", array("controller" => "article", "action" => "show"));
     $params = $r->current_path_params("/blog/post-not-found", array("controller" => "article", "action" => "show"));
     
     assert_equal($params, false, "Failed to return false when current_path is not found in routes");
@@ -71,29 +71,16 @@ describe("Router -> current_path_params", function(){
 
 
 describe("Router -> to", function(){
-  it("calling to without calling match throws an exception", function(){
-    $r = Router::getInstance();
-    try {
-      $resp = $r->to(array("controller" => "main", "action" => "show"));
-      ensure(false, "Failed throw an Exception");
-    } catch(RouterException $e) {
-      ensure(true);
-    }
-    $r->reset();
-  });
-  
   it("returns an instance of Router", function(){
     $r = Router::getInstance();
-    $r->match("/blog/post");
-    $resp = $r->to(array("controller" => "main", "action" => "show"));
+    $resp = $r->connect("/blog/post", array("controller" => "main", "action" => "show"));
     assert_equal(get_class($resp), "Router", "Should have returned an instance of router");    
     $r->reset();    
   });
   
   it("return array with path", function(){
     $r = Router::getInstance();
-    $r->match("/blog/post");
-    $r->to(array("controller" => "main", "action" => "show"));
+    $r->connect("/blog/post", array("controller" => "main", "action" => "show"));
     $resp = end($r->routes);
     assert_equal($resp['path'], "/blog/post", "Failed to have path /blog/post");
     $r->reset();     
@@ -101,8 +88,7 @@ describe("Router -> to", function(){
   
   it("return array with params merged", function(){
     $r = Router::getInstance();
-    $r->match("/blog/post");
-    $r->to(array("controller" => "main", "action" => "show"));
+    $r->connect("/blog/post", array("controller" => "main", "action" => "show"));
     $resp = end($r->routes);
     assert_equal($resp['params'], array("controller" => "main", "action" => "show"), "Failed to merge params");
     $r->reset();     
@@ -112,8 +98,8 @@ describe("Router -> to", function(){
 
 describe("Router -> name", function(){
   it("sets name key in the routes array", function(){
-    Router::prepare(function($r){
-      $r->match("/books/recent")->to(array("controller" => "books", "action" => "recent"))->name("recent_books");
+    Router::map(function($r){
+      $r->recent_books("/books/recent", array("controller" => "books", "action" => "recent"));
     });
     $r = Router::getInstance();
     $route = end($r->routes);
@@ -122,20 +108,20 @@ describe("Router -> name", function(){
   });
   
   it("returns false when routes is zero", function(){
-    Router::prepare(function($r){
-      $r->match("/books/recent")->to(array("controller" => "books", "action" => "recent"))->name("recent_books");
+    Router::map(function($r){
+      $r->recent_books("/books/recent", array("controller" => "books", "action" => "recent"));
     });
     $r = Router::getInstance();
     $r->routes = array();
-    assert_equal($r->name("recent_books"), false, "Named route should be false when there ni no routes");
+    assert_equal(count($r->routes), 0, "Named route should be zero / false when there no routes");
     $r->reset();
   });
 });
 
 describe("Router -> url", function(){
   it("returns a route path string", function() {
-    Router::prepare(function($r){
-      $r->match("/books/recent")->to(array("controller" => "books", "action" => "recent"))->name("recent_books");
+    Router::map(function($r){
+      $r->recent_books("/books/recent", array("controller" => "books", "action" => "recent"));
     });
     $params = Router::url("recent_books");
     assert_equal($params, "/books/recent");
@@ -143,8 +129,8 @@ describe("Router -> url", function(){
   });
 
   it("returns a route path string with query parameters", function() {
-    Router::prepare(function($r){
-      $r->match("/books/recent")->to(array("controller" => "books", "action" => "recent"))->name("recent_books");
+    Router::map(function($r){
+      $r->recent_books("/books/recent", array("controller" => "books", "action" => "recent"));
     });
     $params = Router::url("recent_books", array("username" => "fernyb"));
     assert_equal($params, "/books/recent?username=fernyb");
@@ -152,8 +138,8 @@ describe("Router -> url", function(){
   });
   
   it("returns a route with params in route path", function(){
-    Router::prepare(function($r){
-      $r->match("/book/show/:id")->to(array("controller" => "books", "action" => "show"))->name("show_book");
+    Router::map(function($r){
+      $r->show_book("/book/show/:id", array("controller" => "books", "action" => "show"));
     });
     $params = Router::url("show_book", array("id" => "100", "sort" => "recent", "author" => "fernyb"));
     assert_equal($params, "/book/show/100?sort=recent&author=fernyb");
@@ -164,15 +150,15 @@ describe("Router -> url", function(){
 
 describe("Routerr -> prepare", function(){
   it("returns an instance of Router", function(){
-	  $rsp = Router::prepare(function($r){ });
+	  $rsp = Router::map(function($r){ });
 	  assert_equal(get_class($rsp), "Router", "Failed to return an instance of Router");
 	  $rsp->reset();
   });
   
   it("creates build routes like merb", function(){
-    Router::prepare(function($r){
-      $r->match("/")->to(array("controller" => "public", "action" => "index"));
-      $r->match("/blog/post")->to(array("controller" => "article", "action" => "show"));
+    Router::map(function($r){
+      $r->connect("/", array("controller" => "public", "action" => "index"));
+      $r->connect("/blog/post", array("controller" => "article", "action" => "show"));
     });
   
     $r = Router::getInstance();
@@ -181,9 +167,9 @@ describe("Routerr -> prepare", function(){
   });
   
   it("matches all paths", function(){
-    Router::prepare(function($r){
-      $r->match("/")->to(array("controller" => "application", "action" => "index"));  
-      $r->match("/book(/:id)")->to(array("controller" => "book", "action" => "details_show"));
+    Router::map(function($r){
+      $r->connect("/", array("controller" => "application", "action" => "index"));  
+      $r->connect("/book(/:id)", array("controller" => "book", "action" => "details_show"));
     });
     $router = Router::getInstance();
     $params = $router->find_route("/book/100");
@@ -198,9 +184,9 @@ describe("Routerr -> prepare", function(){
 
 describe("Router -> route_for", function(){
   it("returns an array with route index", function(){
-    Router::prepare(function($r){
-      $r->match("/")->to(array("controller" => "public", "action" => "index"));
-      $r->match("/blog/post")->to(array("controller" => "article", "action" => "show"));
+    Router::map(function($r){
+      $r->connect("/", array("controller" => "public", "action" => "index"));
+      $r->connect("/blog/post", array("controller" => "article", "action" => "show"));
     });
     
     $r = Router::getInstance();
@@ -213,9 +199,9 @@ describe("Router -> route_for", function(){
   });
   
   it("returns an array with params", function(){
-    Router::prepare(function($r){
-      $r->match("/")->to(array("controller" => "public", "action" => "index"));
-      $r->match("/blog/post")->to(array("controller" => "article", "action" => "show"));
+    Router::map(function($r){
+      $r->connect("/", array("controller" => "public", "action" => "index"));
+      $r->connect("/blog/post", array("controller" => "article", "action" => "show"));
     });
     $r = Router::getInstance();
     $route = $r->route_for("/");
@@ -268,8 +254,8 @@ describe("Router -> arrays_to_regexps", function(){
   });
   
   it("should match /book(/:id) to /book", function(){
-    Router::prepare(function($r){
-      $r->match("/book(/:id)")->to(array("controller" => "store", "action" => "books"));
+    Router::map(function($r){
+      $r->connect("/book(/:id)", array("controller" => "store", "action" => "books"));
     });
     $r = Router::getInstance();
     $pattern = $r->arrays_to_regexps(array("path" => "/book(/:id)"));
@@ -373,8 +359,8 @@ describe("Router -> param_keys_for_path", function(){
 
 describe("Router -> map_route_to_params", function(){
   it("maps route to params", function(){
-    Router::prepare(function($r){
-      $r->match("/book/:id")->to(array("controller" => "catalog", "action" => "show"));
+    Router::map(function($r){
+      $r->connect("/book/:id", array("controller" => "catalog", "action" => "show"));
     });
     $r = Router::getInstance();
     $params = $r->map_route_to_params("/book/500");
@@ -386,8 +372,8 @@ describe("Router -> map_route_to_params", function(){
   });
 
   it("params from to take precedence over request params", function(){
-    Router::prepare(function($r){
-      $r->match("/book/:id")->to(array("controller" => "catalog", "action" => "show", "id" => "25"));
+    Router::map(function($r){
+      $r->connect("/book/:id", array("controller" => "catalog", "action" => "show", "id" => "25"));
     });
     $r = Router::getInstance();
     $params = $r->map_route_to_params("/book/5");
@@ -399,8 +385,8 @@ describe("Router -> map_route_to_params", function(){
   });
 
   it("should match some params", function(){
-    Router::prepare(function($r){
-      $r->match("/book/:id(/:name)")->to(array("controller" => "catalog", "action" => "show_book"));
+    Router::map(function($r){
+      $r->connect("/book/:id(/:name)", array("controller" => "catalog", "action" => "show_book"));
     });
     $r = Router::getInstance();
     $params = $r->map_route_to_params("/book/5/LearnToRead");
@@ -411,8 +397,8 @@ describe("Router -> map_route_to_params", function(){
   });    
 
   it("should match params when having dashes", function(){
-    Router::prepare(function($r){
-      $r->match("/new/:id(/:name)")->to(array("controller" => "catalog", "action" => "show_book"));
+    Router::map(function($r){
+      $r->connect("/new/:id(/:name)", array("controller" => "catalog", "action" => "show_book"));
     });
     $r = Router::getInstance();
     $params = $r->map_route_to_params("/new/5/learn-to-read");
@@ -422,8 +408,8 @@ describe("Router -> map_route_to_params", function(){
   });    
   
   it("should match all params when having dashes", function(){
-    Router::prepare(function($r){
-      $r->match("/new/:id(/:name)")->to(array("controller" => "catalog", "action" => "show_book"));
+    Router::map(function($r){
+      $r->connect("/new/:id(/:name)", array("controller" => "catalog", "action" => "show_book"));
     });
     $r = Router::getInstance();
     $params = $r->map_route_to_params("/new/new-release/learn-to-read");
@@ -434,8 +420,8 @@ describe("Router -> map_route_to_params", function(){
   });
 
   it("should match all optional params", function(){
-    Router::prepare(function($r){
-      $r->match("/artist/:id(/:name(/:page(/:sort_order)))")->to(array("controller" => "catalog", "action" => "show_book"));
+    Router::map(function($r){
+      $r->connect("/artist/:id(/:name(/:page(/:sort_order)))", array("controller" => "catalog", "action" => "show_book"));
     });
     $r = Router::getInstance();
     $params = $r->map_route_to_params("/artist/1234/coldplay/1/recent");
@@ -448,8 +434,8 @@ describe("Router -> map_route_to_params", function(){
   });
   
   it("should match all params in path", function(){
-    Router::prepare(function($r){
-      $r->match("/artist/:id/:name/:page/:sort_order")->to(array("controller" => "catalog", "action" => "show_book"));
+    Router::map(function($r){
+      $r->connect("/artist/:id/:name/:page/:sort_order", array("controller" => "catalog", "action" => "show_book"));
     });
     $r = Router::getInstance();
     $params = $r->map_route_to_params("/artist/1234/coldplay/1/recent");

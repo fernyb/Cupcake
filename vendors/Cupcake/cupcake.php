@@ -37,7 +37,7 @@ $dependencies = array(
   "http/header",  
   "cupcake_dispatcher",
   "helpers",
-  "helper/form",
+  "helper/cupcake_form",
   "helper/flash",
   "helper/session",
   "helper/css_selector",

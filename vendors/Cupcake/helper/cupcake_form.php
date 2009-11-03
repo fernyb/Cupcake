@@ -1,6 +1,6 @@
 <?php
 
-class HelperForm {
+class CupcakeHelperForm {
   public static $instance = false;
   public $content = "";
   public $object_name;
@@ -146,7 +146,7 @@ function form_tag($url, $options=array()) {
 
 
 function form_for($name, $object, $url, $options=array(), $block=nil) {
-  $h = HelperForm::getInstance();
+  $h = CupcakeHelperForm::getInstance();
   if(is_closure($options)) {
     $block = $options;
     $options = array();
@@ -159,7 +159,7 @@ function fields_for($record_or_name_of_array, $options=array(), $block=null) {
     $block = $options;
     $options = array();
   }
-  $h = new HelperForm();
+  $h = new CupcakeHelperForm();
   foreach($options as $index => $object) {
     $h->object      = $object;    
     $h->object_name = $record_or_name_of_array;

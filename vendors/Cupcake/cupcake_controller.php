@@ -79,11 +79,11 @@ class CupcakeController {
   }
   
   public function load_session() {
-    Session::getInstance()->load();
+    CupcakeSession::getInstance()->load();
   }
   
   public function save_session() {
-    Session::getInstance()->save();
+    CupcakeSession::getInstance()->save();
   }
   
   #

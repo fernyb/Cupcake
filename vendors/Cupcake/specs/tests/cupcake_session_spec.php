@@ -7,7 +7,7 @@ describe("Session Management", function(){
         "secret"       =>  "abcdef"
       ));
     
-    $session = new Session($cookie_store);
+    $session = new CupcakeSession($cookie_store);
     
     return array($session);
   });

@@ -35,7 +35,7 @@ class CupcakeDispatcher {
   public static function run() {
     self::load_environment();
     CupcakeLogger::info("Dispatcher run!");
-    Session::initialize();
+    CupcakeSession::initialize();
     self::handle();
   }
   

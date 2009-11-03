@@ -44,7 +44,7 @@ $dependencies = array(
   "helper/test_helper",
   "response/xml",
   "response/json",
-  "session",
+  "cupcake_session",
   "session/cookie_store",
   "cupcake_controller",
   "view",

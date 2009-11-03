@@ -1,6 +1,6 @@
 <?php
 
-class Session {
+class CupcakeSession {
   public $session_store;
   public static $instance = false;
   

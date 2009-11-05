@@ -1,27 +1,12 @@
 <?php
 /**
 * router.php
-*  
-* A Merb like router in PHP
-* Usage:
-*
-*  Router::prepare(function($r){
-*    $r->match("/user/profile")->to(array("controller" => "user", "action" => "show"));
-*    $r->match("/user/photo/:id(/:name)")->to(array("controller" => "user", "action" => "show_photo"));
-*  });
-*
-*  $r = Router::getInstance();
-*  $r->find_route("/user/profile");           # => Returns array("controller" => "user", "action" => "show");
-*  $r->find_route("/user/photo/5");           # => Returns array("controller" => "user", "action" => "show", "id" => "5");
-*  $r->find_route("/user/photo/5/funny-day"); # => Returns array("controller" => "user", "action" => "show", "id" => "5", "name" => "funny-day");
-*
-*
 * @author Fernando Barajas <fernyb@fernyb.net>
 * @version 1.0
 * @package cupcake-core
 */
 
-class Router {
+class CupcakeRouter {
   
   public $conditions = array();
   private $params = array();
@@ -65,7 +50,7 @@ class Router {
   public function __call($method_name, $args) {
     $methods = get_class_methods($this);
     if(in_array($method_name, $methods)) {
-      throw new RouterException("Router Method exists in router class, use a different route name");
+      throw new CupcakeRouterException("Router Method exists in router class, use a different route name");
       return;
     }
     $path = $args[0];
@@ -309,6 +294,6 @@ class Router {
   }
 }
 
-class RouterException extends Exception { }
+class CupcakeRouterException extends Exception { }
 
 ?>

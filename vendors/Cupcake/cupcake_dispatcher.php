@@ -84,7 +84,7 @@ class CupcakeDispatcher {
   # Otherwise returns false when no route is found.
   public function find_route($uri) {
     if(empty($this->router)) {
-      $this->setRouter(Router::getInstance());
+      $this->setRouter(CupcakeRouter::getInstance());
     }
     return $this->router->find_route($uri);
   }

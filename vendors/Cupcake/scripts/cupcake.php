@@ -397,7 +397,7 @@ function cupcake_generate_assets($opts) {
   $route_content .= "#\n";
   $route_content .= "# The priority is based upon order of creation: first created -> highest priority.\n";
   $route_content .= "#\n";
-  $route_content .= "Router::prepare(function(\$r){\n";
+  $route_content .= "CupcakeRouter::prepare(function(\$r){\n";
   $route_content .= '  $r->match("/")->to(array("controller" => "application", "action" => "show"))->name("root");';
   $route_content .= "\n";
   $route_content .= "});\n\n";

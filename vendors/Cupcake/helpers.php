@@ -54,7 +54,7 @@ function truncate($string, $length=30, $truncate_string="...") {
 }
 
 function url($name, $options=array()) {
-  return Router::url($name, $options);
+  return CupcakeRouter::url($name, $options);
 }
 
 function link_to($name, $link, $options=array()) {

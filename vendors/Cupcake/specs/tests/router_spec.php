@@ -2,14 +2,14 @@
 
 describe("Router -> match", function(){
   it("creates an array of routes with path", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $r->match("/new/router");
     ensure((count($r->routes) > 0), "Failed to create an array of routes");
     $r->reset();
   });
   
   it("can build more than one route", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $r->match("/new/router");
     $r->match("/another/route");
     ensure((count($r->routes) == 2), "Failed to build more than one route");
@@ -17,19 +17,19 @@ describe("Router -> match", function(){
   });
 
   it("returns an instance of Router", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $resp = $r->connect("/new/current_path", array());
-    assert_equal(get_class($resp), "Router", "Failed to return an instance of Router");
+    assert_equal(get_class($resp), "CupcakeRouter", "Failed to return an instance of Router");
     $r->reset();
   });
 });
 
 describe("Router -> current_path_params", function(){
   it("returns an array", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->connect("/blog/postpage", array("controller" => "article", "action" => "show"));
     });
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->current_path_params("/blog/postpage", array("controller" => "article", "action" => "show"));
     
     ensure(is_array($params), "Failed to return an array");
@@ -38,7 +38,7 @@ describe("Router -> current_path_params", function(){
   });
   
   it("return an array with merged params from current_path route", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $r->connect("/blog/post", array("controller" => "article", "action" => "show"));
     $params = $r->current_path_params("/blog/post", array("controller" => "article", "action" => "show"));
     
@@ -49,7 +49,7 @@ describe("Router -> current_path_params", function(){
   });
   
   it("has controller and action for params", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $r->connect("/blog/post", array("controller" => "article", "action" => "show"));
     $params = $r->current_path_params("/blog/post", array("controller" => "article", "action" => "show"));
    
@@ -60,7 +60,7 @@ describe("Router -> current_path_params", function(){
   });
   
   it("returns false when current_path not found in routes", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $r->connect("/blog/post", array("controller" => "article", "action" => "show"));
     $params = $r->current_path_params("/blog/post-not-found", array("controller" => "article", "action" => "show"));
     
@@ -72,14 +72,14 @@ describe("Router -> current_path_params", function(){
 
 describe("Router -> to", function(){
   it("returns an instance of Router", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $resp = $r->connect("/blog/post", array("controller" => "main", "action" => "show"));
-    assert_equal(get_class($resp), "Router", "Should have returned an instance of router");    
+    assert_equal(get_class($resp), "CupcakeRouter", "Should have returned an instance of router");    
     $r->reset();    
   });
   
   it("return array with path", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $r->connect("/blog/post", array("controller" => "main", "action" => "show"));
     $resp = end($r->routes);
     assert_equal($resp['path'], "/blog/post", "Failed to have path /blog/post");
@@ -87,7 +87,7 @@ describe("Router -> to", function(){
   });
   
   it("return array with params merged", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $r->connect("/blog/post", array("controller" => "main", "action" => "show"));
     $resp = end($r->routes);
     assert_equal($resp['params'], array("controller" => "main", "action" => "show"), "Failed to merge params");
@@ -98,20 +98,20 @@ describe("Router -> to", function(){
 
 describe("Router -> name", function(){
   it("sets name key in the routes array", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->recent_books("/books/recent", array("controller" => "books", "action" => "recent"));
     });
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $route = end($r->routes);
     assert_equal($route["name"], "recent_books", "Failed to return name of route");
     $r->reset();
   });
   
   it("returns false when routes is zero", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->recent_books("/books/recent", array("controller" => "books", "action" => "recent"));
     });
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $r->routes = array();
     assert_equal(count($r->routes), 0, "Named route should be zero / false when there no routes");
     $r->reset();
@@ -120,58 +120,58 @@ describe("Router -> name", function(){
 
 describe("Router -> url", function(){
   it("returns a route path string", function() {
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->recent_books("/books/recent", array("controller" => "books", "action" => "recent"));
     });
-    $params = Router::url("recent_books");
+    $params = CupcakeRouter::url("recent_books");
     assert_equal($params, "/books/recent");
-    Router::getInstance()->reset();
+    CupcakeRouter::getInstance()->reset();
   });
 
   it("returns a route path string with query parameters", function() {
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->recent_books("/books/recent", array("controller" => "books", "action" => "recent"));
     });
-    $params = Router::url("recent_books", array("username" => "fernyb"));
+    $params = CupcakeRouter::url("recent_books", array("username" => "fernyb"));
     assert_equal($params, "/books/recent?username=fernyb");
-    Router::getInstance()->reset();
+    CupcakeRouter::getInstance()->reset();
   });
   
   it("returns a route with params in route path", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->show_book("/book/show/:id", array("controller" => "books", "action" => "show"));
     });
-    $params = Router::url("show_book", array("id" => "100", "sort" => "recent", "author" => "fernyb"));
+    $params = CupcakeRouter::url("show_book", array("id" => "100", "sort" => "recent", "author" => "fernyb"));
     assert_equal($params, "/book/show/100?sort=recent&author=fernyb");
-    Router::getInstance()->reset();
+    CupcakeRouter::getInstance()->reset();
   });  
 });
 
 
 describe("Routerr -> prepare", function(){
   it("returns an instance of Router", function(){
-	  $rsp = Router::map(function($r){ });
-	  assert_equal(get_class($rsp), "Router", "Failed to return an instance of Router");
+	  $rsp = CupcakeRouter::map(function($r){ });
+	  assert_equal(get_class($rsp), "CupcakeRouter", "Failed to return an instance of Router");
 	  $rsp->reset();
   });
   
   it("creates build routes like merb", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->connect("/", array("controller" => "public", "action" => "index"));
       $r->connect("/blog/post", array("controller" => "article", "action" => "show"));
     });
   
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     assert_equal(count($r->routes), 2, "It should have a count of 2 routes");
     $r->reset();
   });
   
   it("matches all paths", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->connect("/", array("controller" => "application", "action" => "index"));  
       $r->connect("/book(/:id)", array("controller" => "book", "action" => "details_show"));
     });
-    $router = Router::getInstance();
+    $router = CupcakeRouter::getInstance();
     $params = $router->find_route("/book/100");
     
     assert_equal($params["id"], "100");
@@ -184,12 +184,12 @@ describe("Routerr -> prepare", function(){
 
 describe("Router -> route_for", function(){
   it("returns an array with route index", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->connect("/", array("controller" => "public", "action" => "index"));
       $r->connect("/blog/post", array("controller" => "article", "action" => "show"));
     });
     
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $route = $r->route_for("/");
     assert_equal($route[0], 0, "It should have returned path: /");
     
@@ -199,11 +199,11 @@ describe("Router -> route_for", function(){
   });
   
   it("returns an array with params", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->connect("/", array("controller" => "public", "action" => "index"));
       $r->connect("/blog/post", array("controller" => "article", "action" => "show"));
     });
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $route = $r->route_for("/");
     
     $params = array("path" => "/", "params" => array("controller" => "public", "action" => "index"));
@@ -222,7 +222,7 @@ describe("Router -> route_for", function(){
 */
 describe("Router -> arrays_to_regexps", function(){
   it("returns a string", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $pattern = $r->arrays_to_regexps(array("path" => "/music/artist/:id(/:artist_name)"));
     
     ensure(is_string($pattern));
@@ -230,7 +230,7 @@ describe("Router -> arrays_to_regexps", function(){
   });
   
   it("should match /music/artist/:id(/:artist_name) to /music/artist/5/coldplay", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $pattern = $r->arrays_to_regexps(array("path" => "/music/artist/:id(/:artist_name)"));
     $match   = preg_match("/". $pattern ."/", "/music/artist/5/coldplay", $matches);
     
@@ -242,7 +242,7 @@ describe("Router -> arrays_to_regexps", function(){
   });
 
   it("should match /music/artist/:id(/:artist_name) to /music/artist/5", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $pattern = $r->arrays_to_regexps(array("path" => "/music/artist/:id(/:artist_name)"));
     $match   = preg_match("/". $pattern ."/", "/music/artist/5", $matches);
     
@@ -254,10 +254,10 @@ describe("Router -> arrays_to_regexps", function(){
   });
   
   it("should match /book(/:id) to /book", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->connect("/book(/:id)", array("controller" => "store", "action" => "books"));
     });
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $pattern = $r->arrays_to_regexps(array("path" => "/book(/:id)"));
     $match   = preg_match("/". $pattern ."/", "/book", $matches);
     
@@ -266,7 +266,7 @@ describe("Router -> arrays_to_regexps", function(){
   });
   
   it("should match /book(/:id) to /book/100", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $pattern = $r->arrays_to_regexps(array("path" => "/book(/:id)"));
     $match   = preg_match("/". $pattern ."/", "/book/100", $matches);
     
@@ -277,7 +277,7 @@ describe("Router -> arrays_to_regexps", function(){
 
 describe("Router -> param_keys_for_path", function(){
   it("should extract :controller, :action, :id for /:controller/:action/:id", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->param_keys_for_path("/:controller/:action/:id");
     
     assert_equal($params[0], ":controller", "Failed to match :controller");
@@ -288,7 +288,7 @@ describe("Router -> param_keys_for_path", function(){
   });  
   
   it("should extract :controller, :action for /:controller/:action", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->param_keys_for_path("/:controller/:action");
     
     assert_equal($params[0], ":controller", "Failed to match :controller");
@@ -298,7 +298,7 @@ describe("Router -> param_keys_for_path", function(){
   });  
   
   it("should extract :action for /controller/:action", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->param_keys_for_path("/controller/:action");
     
     assert_equal($params[0], ":action", "Failed to match :action");
@@ -307,7 +307,7 @@ describe("Router -> param_keys_for_path", function(){
   }); 
     
   it("should extract :id for /book/:id", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->param_keys_for_path("/book/:id");
     
     assert_equal($params[0], ":id", "Failed to match :id");
@@ -315,7 +315,7 @@ describe("Router -> param_keys_for_path", function(){
   });
   
   it("should extract :id, :artist for /music/:id(/:artist)", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->param_keys_for_path("/music/:id(/:artist)");
     
     assert_equal($params[0], ":id",     "Failed to match :id");
@@ -325,7 +325,7 @@ describe("Router -> param_keys_for_path", function(){
   }); 
   
   it("returns an empty array for /:action", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->param_keys_for_path("/:action");
     assert_equal($params[0], ":action", "Failed to match :action");
     assert_equal(count($params), 1,     "Failed to have 1 key");
@@ -333,7 +333,7 @@ describe("Router -> param_keys_for_path", function(){
   });
   
   it("returns an empty array for (/:action)", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->param_keys_for_path("(/:action)");
     assert_equal($params[0], ":action", "Failed to match :action");
     assert_equal(count($params), 1,     "Failed to have 1 key");
@@ -341,14 +341,14 @@ describe("Router -> param_keys_for_path", function(){
   });
         
   it("returns an empty array for /", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->param_keys_for_path("/");
     assert_equal(count($params), 0,     "Failed to have 0 keys");
     $r->reset();   
   });
     
   it("returns an empty array", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->param_keys_for_path("");
     assert_equal(count($params), 0,     "Failed to have 0 keys");
     $r->reset();   
@@ -359,10 +359,10 @@ describe("Router -> param_keys_for_path", function(){
 
 describe("Router -> map_route_to_params", function(){
   it("maps route to params", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->connect("/book/:id", array("controller" => "catalog", "action" => "show"));
     });
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->map_route_to_params("/book/500");
     
     assert_equal($params["controller"], "catalog");
@@ -372,10 +372,10 @@ describe("Router -> map_route_to_params", function(){
   });
 
   it("params from to take precedence over request params", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->connect("/book/:id", array("controller" => "catalog", "action" => "show", "id" => "25"));
     });
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->map_route_to_params("/book/5");
     
     assert_equal($params["controller"], "catalog");
@@ -385,10 +385,10 @@ describe("Router -> map_route_to_params", function(){
   });
 
   it("should match some params", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->connect("/book/:id(/:name)", array("controller" => "catalog", "action" => "show_book"));
     });
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->map_route_to_params("/book/5/LearnToRead");
     
     assert_equal($params["name"], "LearnToRead");
@@ -397,10 +397,10 @@ describe("Router -> map_route_to_params", function(){
   });    
 
   it("should match params when having dashes", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->connect("/new/:id(/:name)", array("controller" => "catalog", "action" => "show_book"));
     });
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->map_route_to_params("/new/5/learn-to-read");
     
     assert_equal($params["name"], "learn-to-read");
@@ -408,10 +408,10 @@ describe("Router -> map_route_to_params", function(){
   });    
   
   it("should match all params when having dashes", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->connect("/new/:id(/:name)", array("controller" => "catalog", "action" => "show_book"));
     });
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->map_route_to_params("/new/new-release/learn-to-read");
     
     assert_equal($params["name"], "learn-to-read");
@@ -420,10 +420,10 @@ describe("Router -> map_route_to_params", function(){
   });
 
   it("should match all optional params", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->connect("/artist/:id(/:name(/:page(/:sort_order)))", array("controller" => "catalog", "action" => "show_book"));
     });
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->map_route_to_params("/artist/1234/coldplay/1/recent");
     
     assert_equal($params["id"], "1234");
@@ -434,10 +434,10 @@ describe("Router -> map_route_to_params", function(){
   });
   
   it("should match all params in path", function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->connect("/artist/:id/:name/:page/:sort_order", array("controller" => "catalog", "action" => "show_book"));
     });
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $params = $r->map_route_to_params("/artist/1234/coldplay/1/recent");
     
     assert_equal($params["id"], "1234");
@@ -451,13 +451,13 @@ describe("Router -> map_route_to_params", function(){
 
 describe("Router -> route_path_to_regexp", function(){
   it("should return a regular expression", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $pattern = $r->route_path_to_regexp("/artist/:id/:name");
     assert_equal(preg_match("/{$pattern}/", "/artist/100/coldplay"), true, "It should return a regular expression");
   });
   
   it("should return a regular expression with optional", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $pattern = $r->route_path_to_regexp("/artist/:id(/:name)");
     assert_equal(preg_match("/{$pattern}/", "/artist/100"), true, "It should return a regular expression");
   });  
@@ -466,25 +466,25 @@ describe("Router -> route_path_to_regexp", function(){
 
 describe("Router -> remove_parenthesis", function(){
   it("should remove parentheses", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $response = $r->remove_parenthesis("(:id)");
     assert_equal($response, ":id", "Failed to remove parentheses");
   });
   
   it("should remove left parenthese", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $response = $r->remove_parenthesis("(:id");
     assert_equal($response, ":id", "Failed to remove parentheses");
   });
   
   it("should remove right parenthese", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $response = $r->remove_parenthesis(":id)");
     assert_equal($response, ":id", "Failed to remove parentheses");
   });  
   
   it("should remove all parentheses", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $response = $r->remove_parenthesis("/:controller(/:id(/:name))");
     assert_equal($response, "/:controller/:id/:name", "Failed to remove parentheses");    
   });
@@ -492,25 +492,25 @@ describe("Router -> remove_parenthesis", function(){
 
 describe("NewRotuer -> is_param_key", function(){
   it("returns true when string begins with colon", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $response = $r->is_param_key(":name");
     assert_equal($response, true, "Should return true for, :name");
   });
   
   it("returns false when string does not have colon", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $response = $r->is_param_key("name");
     assert_equal($response, false, "Should return false for, name");    
   });
   
   it("returns false for name:", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $response = $r->is_param_key("name:");
     assert_equal($response, false);    
   });
   
   it("returns false for na:me", function(){
-    $r = Router::getInstance();
+    $r = CupcakeRouter::getInstance();
     $response = $r->is_param_key("na:me");
     assert_equal($response, false);    
   });    
@@ -518,11 +518,11 @@ describe("NewRotuer -> is_param_key", function(){
 
 describe("Creates an Array of Routes", function(){
   before(function(){
-    Router::map(function($r){
+    CupcakeRouter::map(function($r){
       $r->connect("/", array("controller" => "application", "action" => "show"));
       $r->show_books("/", array("controller" => "application", "action" => "view_books"));
     });
-    return Router::getInstance();
+    return CupcakeRouter::getInstance();
   });
   
   it("has two routes", function($router){

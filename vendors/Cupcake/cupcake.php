@@ -13,18 +13,18 @@ if(!defined("CUPCAKE_FRAMEWORK_PATH")) {
   define("CUPCAKE_FRAMEWORK_PATH", dirname(__FILE__));
 }
 
-
-define("APP_DIR",            ROOT_PATH   ."/app");
-define("CONTROLLER_DIR",     APP_DIR     ."/controllers");
-define("VIEW_DIR",           APP_DIR     ."/views");
-define("HELPER_DIR",         APP_DIR     ."/helpers");
-define("PUBLIC_DIR",         ROOT_PATH   ."/public");
-define("CONFIG_DIR",         ROOT_PATH   ."/config");
-define("LOG_DIR",            ROOT_PATH   ."/log");
-define("STYLESHEETS_DIR",    PUBLIC_DIR  ."/stylesheets");
-define("JAVASCRIPTS_DIR",    PUBLIC_DIR  ."/javascripts");
-define("VENDORS_DIR",        ROOT_PATH   ."/vendors");
-define("VENDOR_CUPCAKE_DIR", VENDORS_DIR ."/Cupcake");
+define("DS",                 DIRECTORY_SEPARATOR);
+define("APP_DIR",            ROOT_PATH   . DS . "app");
+define("CONTROLLER_DIR",     APP_DIR     . DS . "controllers");
+define("VIEW_DIR",           APP_DIR     . DS . "views");
+define("HELPER_DIR",         APP_DIR     . DS . "helpers");
+define("PUBLIC_DIR",         ROOT_PATH   . DS . "public");
+define("CONFIG_DIR",         ROOT_PATH   . DS . "config");
+define("LOG_DIR",            ROOT_PATH   . DS . "log");
+define("STYLESHEETS_DIR",    PUBLIC_DIR  . DS . "stylesheets");
+define("JAVASCRIPTS_DIR",    PUBLIC_DIR  . DS . "javascripts");
+define("VENDORS_DIR",        ROOT_PATH   . DS . "vendors");
+define("VENDOR_CUPCAKE_DIR", VENDORS_DIR . DS . "Cupcake");
 
 
 $dependencies = array(
@@ -56,9 +56,9 @@ $dependencies = array(
 
 foreach($dependencies as $file) {
   if(file_exists(VENDOR_CUPCAKE_DIR ."/". $file .".php")) {
-    $file = VENDOR_CUPCAKE_DIR ."/". $file .".php";
+    $file = VENDOR_CUPCAKE_DIR . DS . $file .".php";
   } else {
-    $file = CUPCAKE_FRAMEWORK_PATH ."/". $file .".php";
+    $file = CUPCAKE_FRAMEWORK_PATH . DS . $file .".php";
   }
   if(file_exists($file)) {
     require_once $file;

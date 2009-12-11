@@ -18,7 +18,7 @@ class CupcakeConfig {
   
   public static function get($k) {
     $c = self::getInstance();
-    return $c->values[$k];
+    return (array_key_exists($k, $c->values) ? $c->values[$k] : null);
   }
 }
 

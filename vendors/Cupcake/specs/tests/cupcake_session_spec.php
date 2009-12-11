@@ -59,7 +59,7 @@ describe("Session Management", function(){
     for($i=0; $i<=94; $i++) {
       $session->set("svar_{$i}", "number: {$i}");
     }
-    assert_throws(CookieOverflow, function() use($session) {
+    assert_throws("CookieOverflow", function() use($session) {
       $session->save();
     }, "Failed to throw CookieOverflow");
     

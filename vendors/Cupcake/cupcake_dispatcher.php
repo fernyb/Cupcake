@@ -14,7 +14,7 @@ class CupcakeDispatcher {
   private $router;
   private $controller;
   
-  public function &getInstance() {
+  static public function &getInstance() {
     if(self::$instance === false) {
       self::$instance = new self();
     }

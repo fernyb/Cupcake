@@ -41,7 +41,9 @@ function javascript_include_tag($javascript_file) {
 
 function image_tag($image_name, $options=array()) {
   $suffix = explode(".", $image_name);
-  $suffix = end(array_values($suffix));
+  $suffix_values = array_values($suffix);
+  $suffix = end($suffix_values);
+  
   $attributes = array("alt" => basename($image_name, ".{$suffix}"), "src" => "/images/" . $image_name);
   $attributes = array_merge($attributes, $options);
   return content_tag("img", null, $attributes);

@@ -190,7 +190,7 @@ class CookieStore {
   }
   
   public function get($key) {
-    return $this->params[$key];
+    return (array_key_exists($key, $this->params) ? $this->params[$key] : null);
   }
   
   public function clear() {

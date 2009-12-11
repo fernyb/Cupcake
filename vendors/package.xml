@@ -10,7 +10,7 @@
       <email>fernyb@fernyb.net</email>
       <active>yes</active>
   </lead>
-  <date>2009-11-08</date>
+  <date>2009-12-10</date>
   <version>
       <release>0.7.0</release>
       <api>0.7.0</api>
@@ -123,7 +123,7 @@
       </package>
       <package>
         <name>Spectest</name>
-        <channel>pear.php.net</channel>
+        <channel>pear.fernyb.net</channel>
         <min>0.7.0</min>
         <recommended>0.7.0</recommended>
       </package>

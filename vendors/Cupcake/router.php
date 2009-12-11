@@ -32,7 +32,7 @@ class CupcakeRouter {
   /**
   * Map path to params
   */
-  public function map($closure) {
+  static public function map($closure) {
     $that = self::getInstance();
     CupcakeLogger::info("*** Compiling Routes");
     $closure($that);

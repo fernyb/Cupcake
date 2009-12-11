@@ -249,7 +249,8 @@ describe("Router -> arrays_to_regexps", function(){
     ensure($match, "Failed to match route: /music/artist/5 using path: /music/artist/:id(/:artist_name) with pattern: $pattern");
     assert_equal($matches[0], "/music/artist/5", "Failed to match path");
     assert_equal($matches[1], "5", "Failed to match :id");
-    assert_equal($matches[2], "", "Failure, Tried to over match paths");
+    //assert_equal($matches[2], "", "Failure, Tried to over match paths");
+    assert_equal(2, count($matches));
     $r->reset();
   });
   

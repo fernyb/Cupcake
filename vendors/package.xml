@@ -123,7 +123,7 @@
       </package>
       <package>
         <name>Spectest</name>
-        <channel>pear.fernyb.net</channel>
+        <channel>pear.php.net</channel>
         <min>0.7.0</min>
         <recommended>0.7.0</recommended>
       </package>

@@ -219,18 +219,7 @@ function cupcake_generate_controller($opts=array()) {
   $test_helper_content .= "define(\"VENDOR_CUPCAKE_DIR\", VENDORS_DIR .\"/Cupcake\");\n\n";
   $test_helper_content .= "require \"Cupcake/Cupcake.php\";\n\n";
   $test_helper_content .= "?>";
-  cupcake_generate("specs", "spec_helper.php", $test_helper_content);
-  
-  if(!file_exists("specs/spec_helper.php")) {
-    if(file_put_contents("specs/spec_helper.php", $test_helper_content)) {
-      echo "  [CREATE] specs/spec_helper.php\n";
-    } else {
-      echo "  [FAILED] specs/spec_helper.php\n";
-    }
-  } else {
-    echo "  [EXISTS] specs/spec_helper.php\n";
-  }
-  
+
   if(!file_exists("app/views/{$controller_name}")) {
     if(mkdir("app/views/{$controller_name}")) {
       echo "    [CREATE] views/{$controller_name}\n";
@@ -459,18 +448,19 @@ function cupcake_generate_assets($opts) {
   $test_helper_content .= "define(\"VENDOR_CUPCAKE_DIR\", VENDORS_DIR .\"/Cupcake\");\n\n";
   $test_helper_content .= "require \"Cupcake/Cupcake.php\";\n\n";
   $test_helper_content .= "?>";
-  cupcake_generate("specs", "spec_helper.php", $test_helper_content);
   
-  if(!file_exists("specs/spec_helper.php")) {
-    if(file_put_contents("specs/spec_helper.php", $test_helper_content)) {
-      echo "    [CREATE] specs/spec_helper.php\n";
+  
+  cupcake_generate("{$app_path}/specs", "spec_helper.php", $test_helper_content);
+  
+  if(!file_exists("{$app_path}/specs/spec_helper.php")) {
+    if(file_put_contents("{$app_path}/specs/spec_helper.php", $test_helper_content)) {
+      echo "    [CREATE] {$app_path}/specs/spec_helper.php\n";
     } else {
-      echo "    [FAILED] specs/spec_helper.php\n";
+      echo "    [FAILED] {$app_path}/specs/spec_helper.php\n";
     }
   } else {
-    echo "    [EXISTS] specs/spec_helper.php\n";
+    echo "    [EXISTS] {$app_path}/specs/spec_helper.php\n";
   }
-  
   
 
   # Generate Application Layout (copy)

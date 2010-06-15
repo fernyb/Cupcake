@@ -1,10 +1,9 @@
 #!/usr/bin/env php
 <?php
+$vendor_path = realpath(dirname(__FILE__) . "/../vendors");
+ini_set("include_path", ini_get("include_path") . DIRECTORY_SEPARATOR . ":${vendor_path}:${vendor_path}/Console_CommandLine-1.1.3");
 
-ini_set("include_path", ini_get("include_path") . DIRECTORY_SEPARATOR . ":/Users/fernyb/php/cupcake/vendors");
-
-
-require_once 'Console_CommandLine-1.1.3/Console/CommandLine.php';
+require_once 'Console/CommandLine.php';
 
 $command = new Console_CommandLine(array(
     "description" => "The 'cupcake' command create a new Cupcake application with a default directory structure and configuration at the path you specify.",

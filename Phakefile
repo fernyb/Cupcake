@@ -2,9 +2,21 @@
 
 class ReleasePackage {
   public static $env;
+  private static $_instance;
   
-  public static function package() {
-    $current_path = dirname(__FILE__);
+  public static function sharedInstance() {
+    if(!self::$_instance) {
+      self::$_instance = new self();
+    }
+    return self::$_instance;
+  }
+  
+  public function current_path() {
+    return dirname(__FILE__);
+  }
+  
+  public function package() {
+    $current_path = $this->current_path();
   
     if(!file_exists("{$current_path}/tmp")) {
       exec("mkdir -p {$current_path}/tmp");
@@ -32,6 +44,8 @@ class ReleasePackage {
     
     exec("cp -r {$current_path}/vendors/* {$current_path}/tmp/template/vendors/");
     
+    $this->generate_controller("Application");
+    $this->generate_helper("Application");
     
     /*
     // zip the directory
@@ -42,7 +56,30 @@ class ReleasePackage {
       exec("mv {$current_path}/vendors/Cupcake.zip {$current_path}/tmp/Cupcake.zip");
     }
     */  
-    
+  }
+  
+  public function generate_controller($name) {
+    $this->generate_file("controller", $name);
+  }
+  
+  public function generate_helper($name) {
+    $this->generate_file("helper", $name);
+  }
+  
+  private function file_path($current_path, $type, $name) {
+    return "{$current_path}/tmp/template/app/{$type}s/". strtolower($name) .".php";
+  }
+  
+  private function generate_file($type, $name) {
+    $name = ucfirst($name);
+    $current_path = $this->current_path();
+    ob_start();
+    include "./vendors/Cupcake/templates/{$type}.php";
+    $code = ob_get_contents();
+    ob_end_clean();
+    $f = fopen($this->file_path($current_path, $type, $name), "a");
+    fwrite($f, "<?php\n\n{$code}\n\n?>");
+    fclose($f); 
   }
 }
 
@@ -54,6 +91,6 @@ group("build", function() {
   });
   
   task("package", function() {    
-    ReleasePackage::package();
+    ReleasePackage::sharedInstance()->package();
   });
 });

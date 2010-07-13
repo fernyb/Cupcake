@@ -1,0 +1,3 @@
+class <?= $name ?> extends CupcakeController {
+  
+}

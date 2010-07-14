@@ -1,4 +1,5 @@
 <?php
+require "vendors/Cupcake/inflector.php";
 
 class ReleasePackage {
   public static $env;
@@ -27,25 +28,21 @@ class ReleasePackage {
     if(file_exists("{$current_path}/vendors/Cupcake.zip")) {
       exec("rm {$current_path}/vendors/Cupcake.zip");
     }
-    
-    exec("mkdir -p {$current_path}/tmp/template/app");
-    exec("mkdir -p {$current_path}/tmp/template/app/controllers");
-    exec("mkdir -p {$current_path}/tmp/template/app/helpers");
-    exec("mkdir -p {$current_path}/tmp/template/app/views");
-    
-    exec("mkdir -p {$current_path}/tmp/template/config/environments");
-    
-    exec("mkdir -p {$current_path}/tmp/template/public");
-    exec("mkdir -p {$current_path}/tmp/template/public/javascripts");
-    exec("mkdir -p {$current_path}/tmp/template/public/stylesheets");
-    
-    exec("mkdir -p {$current_path}/tmp/template/scripts");
-    exec("mkdir -p {$current_path}/tmp/template/vendors");
+
+    $this->mkdir("app/controllers");
+    $this->mkdir("app/helpers");
+    $this->mkdir("app/views");
+    $this->mkdir("config/environments");
+    $this->mkdir("public/javascripts");
+    $this->mkdir("public/stylesheets");
+    $this->mkdir("scripts");
+    $this->mkdir("vendors");
     
     exec("cp -r {$current_path}/vendors/* {$current_path}/tmp/template/vendors/");
     
     $this->generate_controller("Application");
     $this->generate_helper("Application");
+    $this->generate_layout("Application");
     
     /*
     // zip the directory
@@ -66,19 +63,42 @@ class ReleasePackage {
     $this->generate_file("helper", $name);
   }
   
-  private function file_path($current_path, $type, $name) {
-    return "{$current_path}/tmp/template/app/{$type}s/". strtolower($name) .".php";
+  public function generate_layout($name) {
+    $name = strtolower($name);
+    $this->mkdir("app/views/{$name}");
+    $this->mkdir("app/views/layouts");
+    $this->generate_file("layout", "{$name}.html", false);
   }
   
-  private function generate_file($type, $name) {
+  public function mkdir($path) {
+    $current_path = $this->current_path();
+    exec("mkdir -p {$current_path}/tmp/template/{$path}");
+  }
+  
+  private function file_path($current_path, $type, $name) {
+    $type = Inflector::pluralize($type);
+    return "{$current_path}/tmp/template/app/{$type}/". strtolower($name) .".php";
+  }
+  
+  private function generate_file($type, $name, $eval=true) {
     $name = ucfirst($name);
     $current_path = $this->current_path();
-    ob_start();
-    include "./vendors/Cupcake/templates/{$type}.php";
-    $code = ob_get_contents();
-    ob_end_clean();
-    $f = fopen($this->file_path($current_path, $type, $name), "a");
-    fwrite($f, "<?php\n\n{$code}\n\n?>");
+    $filename = Inflector::singularize($type);
+    $file_path = "./vendors/Cupcake/templates/{$filename}.php";
+    if($eval) {
+      ob_start();
+      include $file_path;
+      $code = ob_get_contents();
+      ob_end_clean();
+    } else {
+      $code = file_get_contents($file_path);
+    }
+    
+    $type = ($type == "layout" ? "views/layouts" : $type);
+    $filename = $this->file_path($current_path, $type, $name);
+    
+    $f = fopen($filename, "w+");
+    ( $eval ? fwrite($f, "<?php\n\n{$code}\n\n?>") : fwrite($f, $code) );
     fclose($f); 
   }
 }

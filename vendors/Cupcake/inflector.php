@@ -51,7 +51,7 @@ class AkInflector
     * @param    string    $word    English noun to pluralize
     * @return string Plural noun
     */
-    function pluralize($word)
+    static function pluralize($word)
     {
         $plural = array(
         '/(quiz)$/i' => '\1zes',
@@ -116,7 +116,7 @@ class AkInflector
     * @param    string    $word    English noun to singularize
     * @return string Singular noun.
     */
-    function singularize($word)
+    static function singularize($word)
     {
         $singular = array (
         '/(quiz)zes$/i' => '\\1',

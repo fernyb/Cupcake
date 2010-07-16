@@ -37,6 +37,17 @@ class ReleasePackage {
     $this->mkdir("public/stylesheets");
     $this->mkdir("scripts");
     $this->mkdir("vendors");
+    $this->cp(".htaccess", ".htaccess");
+    
+    $this->cp("public/.htaccess",    "public/.htaccess");
+    $this->cp("public/favicon.ico",  "public/favicon.ico");
+    $this->cp("public/404.html",     "public/404.html");
+    $this->cp("public/500.html",     "public/500.html");
+    $this->cp("public/favicon.ico",  "public/favicon.ico");
+    $this->cp("public/robots.txt",   "public/robots.txt");
+    $this->cp("public/javascripts/jquery.js",   "public/javascripts/jquery.js");
+    $this->cp("public/stylesheets/master.css",   "public/stylesheets/master.css");
+    
     
     exec("cp -r {$current_path}/vendors/* {$current_path}/tmp/template/vendors/");
     
@@ -44,30 +55,47 @@ class ReleasePackage {
     $this->generate_helper("Application");
     $this->generate_layout("Application");
     
+    $this->generate_config("environment");
+    $this->generate_config("mime_types");
+    $this->generate_config("routes");
+    $this->generate_config("environments/test");
+    $this->generate_config("environments/development");
+    $this->generate_config("environments/production");
+    
     /*
     // zip the directory
     exec("cd {$current_path}/vendors; ditto -c -k --keepParent -rsrc Cupcake Cupcake.zip");
-    
-    // Move zip file to tmp directory
-    if(file_exists("{$current_path}/vendors//Cupcake.zip")) {
-      exec("mv {$current_path}/vendors/Cupcake.zip {$current_path}/tmp/Cupcake.zip");
-    }
     */  
   }
   
+  public function generate_config($name) {
+    $vars = array("name" => $name, "secret_key" => $this->random('alpha', 80));
+    
+    $this->generate_file("config", $name, "config", $vars);
+  }
+  
   public function generate_controller($name) {
-    $this->generate_file("controller", $name);
+    $vars = array("name" => $name);
+    $this->generate_file("controller", "controller", "controller", $vars);
   }
   
   public function generate_helper($name) {
-    $this->generate_file("helper", $name);
+    $vars = array("name" => $name);
+    $this->generate_file("helper", "helper", "helper", $vars);
   }
   
   public function generate_layout($name) {
+    $vars = array("name" => "{$name}.html");
+    
     $name = strtolower($name);
     $this->mkdir("app/views/{$name}");
     $this->mkdir("app/views/layouts");
-    $this->generate_file("layout", "{$name}.html", false);
+    $this->generate_file("layout", "layout", "views/layout", $vars, false);
+  }
+  
+  public function cp($from, $to) {
+    $current_path = $this->current_path();
+    exec("cp {$current_path}/{$from} {$current_path}/tmp/template/{$to}");
   }
   
   public function mkdir($path) {
@@ -75,16 +103,26 @@ class ReleasePackage {
     exec("mkdir -p {$current_path}/tmp/template/{$path}");
   }
   
-  private function file_path($current_path, $type, $name) {
-    $type = Inflector::pluralize($type);
-    return "{$current_path}/tmp/template/app/{$type}/". strtolower($name) .".php";
+  private function file_path($current_path, $dir, $type, $name) {
+    $base = "{$current_path}/tmp/template";
+    if($type == "controller" || $type == "helper" || $type == "view" || $type == "views/layout") {
+      $type = Inflector::pluralize($type);
+      $type = "app/{$type}";
+      $base .= "/{$type}/". strtolower($name) .".php";
+    } 
+    else if($dir == "config") {
+      $base .= "/config/". strtolower($name) .".php";
+    }
+    
+    return $base;
   }
   
-  private function generate_file($type, $name, $eval=true) {
-    $name = ucfirst($name);
+  private function generate_file($dir, $template_name, $type, $vars, $eval=true) {
+    extract($vars);
+    $name = ucfirst($name);    
     $current_path = $this->current_path();
-    $filename = Inflector::singularize($type);
-    $file_path = "./vendors/Cupcake/templates/{$filename}.php";
+    
+    $file_path = "vendors/Cupcake/templates/". strtolower($template_name) .".php";
     if($eval) {
       ob_start();
       include $file_path;
@@ -94,14 +132,66 @@ class ReleasePackage {
       $code = file_get_contents($file_path);
     }
     
-    $type = ($type == "layout" ? "views/layouts" : $type);
-    $filename = $this->file_path($current_path, $type, $name);
+    $type = $this->file_location($type);
+    $filename = $this->file_path($current_path, $dir, $type, $name);
     
     $f = fopen($filename, "w+");
     ( $eval ? fwrite($f, "<?php\n\n{$code}\n\n?>") : fwrite($f, $code) );
     fclose($f); 
   }
+  
+  public function file_location($type) {
+    if($type == "layout") {
+      return "views/layouts";
+    }
+    if($type == "environment") {
+      return "config";
+    }
+    
+    return $type;
+  }
+  
+  #
+  # Taken from:
+  # http://www.imanpage.com/code/simple-php-function-generate-random-string-based-alpha-numeric-nozero-md5-and-sha1-type
+  #
+  public function random($type='sha1', $len=20) {
+      mt_srand(time());
+      switch ($type) {
+          case 'basic':
+              return mt_rand();
+              break;
+          case 'alpha':
+          case 'numeric':
+          case 'nozero':
+              switch ($type) {
+                  case 'alpha':
+                      $param = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                      break;
+                  case 'numeric':
+                      $param = '0123456789';
+                      break;
+                  case 'nozero':
+                      $param = '123456789';
+                      break;
+              }
+              $str = '';
+              for ($i = 0; $i < $len; $i ++) {
+                  $str .= substr($param, mt_rand(0, strlen($param) - 1), 1);
+              }
+              return $str;
+              break;
+          case 'md5':
+              return md5(uniqid(mt_rand(), TRUE));
+              break;
+          case 'sha1':
+              return sha1(uniqid(mt_rand(), TRUE));
+              break;
+      }
+  }
+
 }
+
 
 
 group("build", function() {

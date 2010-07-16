@@ -1,0 +1,1 @@
+CupcakeConfig::set("debug", true);

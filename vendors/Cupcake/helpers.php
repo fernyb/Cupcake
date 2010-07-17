@@ -15,13 +15,13 @@ function to_attributes($attr=array()) {
 function content_tag($tag_name, $content=null, $attr=array()) {
   $attributes = to_attributes($attr);
   if($content === null) {
-    $html = "<{$tag_name} " . join(" ", $attributes) . " />";
+    $html = "<{$tag_name} " . join(" ", $attributes) . " />\n";
   } else {
     $tag_options = " " . join(" ", $attributes);
     if(count($attributes) == 0) {
       $tag_options = trim($tag_options);
     }
-    $html = "<{$tag_name}{$tag_options}>{$content}</{$tag_name}>";
+    $html = "<{$tag_name}{$tag_options}>{$content}</{$tag_name}>\n";
   }
   return $html;
 }

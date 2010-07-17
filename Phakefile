@@ -37,23 +37,30 @@ class ReleasePackage {
     $this->mkdir("public/stylesheets");
     $this->mkdir("scripts");
     $this->mkdir("vendors");
-    $this->cp(".htaccess", ".htaccess");
+    $this->mkdir("log");
     
+    $this->cp(".htaccess", ".htaccess");
     $this->cp("public/.htaccess",    "public/.htaccess");
+    $this->cp("public/index.php",    "public/index.php");
+    $this->cp("public/cupcake.php",  "public/cupcake.php");
     $this->cp("public/favicon.ico",  "public/favicon.ico");
     $this->cp("public/404.html",     "public/404.html");
     $this->cp("public/500.html",     "public/500.html");
     $this->cp("public/favicon.ico",  "public/favicon.ico");
     $this->cp("public/robots.txt",   "public/robots.txt");
     $this->cp("public/javascripts/jquery.js",   "public/javascripts/jquery.js");
-    $this->cp("public/stylesheets/master.css",   "public/stylesheets/master.css");
+    $this->cp("scripts/phake",   "scripts/phake");
     
-    
+    $this->generate_javascript("application");
+    $this->generate_css("master");
+    $this->generate_phake("Phakefile");
+     
     exec("cp -r {$current_path}/vendors/* {$current_path}/tmp/template/vendors/");
     
     $this->generate_controller("Application");
     $this->generate_helper("Application");
     $this->generate_layout("Application");
+    $this->generate_view("application/show.html.php", "application", "show");
     
     $this->generate_config("environment");
     $this->generate_config("mime_types");
@@ -62,10 +69,50 @@ class ReleasePackage {
     $this->generate_config("environments/development");
     $this->generate_config("environments/production");
     
-    /*
-    // zip the directory
-    exec("cd {$current_path}/vendors; ditto -c -k --keepParent -rsrc Cupcake Cupcake.zip");
-    */  
+    $this->zip();  
+  }
+  
+  public function generate_phake($name) {
+    $current_path = $this->current_path();
+    $fp = fopen("{$current_path}/tmp/template/{$name}", "w+");
+    fwrite($fp, '<?php' ."\n");
+    fwrite($fp, 'desc("Run tests");'. "\n");
+    fwrite($fp, 'task("test", function(){' ."\n");
+    fwrite($fp, "  echo 'TODO: run the test code....';\n");
+    fwrite($fp, "});\n");
+    fwrite($fp, "\n?>");
+    fclose($fp);    
+  }
+  
+  public function generate_javascript($name) {
+    $current_path = $this->current_path();
+    $name = strtolower($name);
+    $fp = fopen("{$current_path}/tmp/template/public/javascripts/{$name}.js", "w+");
+    fclose($fp);
+  }
+  
+  public function generate_css($name) {
+    $current_path = $this->current_path();
+    $name = strtolower($name);
+    $fp = fopen("{$current_path}/tmp/template/public/stylesheets/{$name}.css", "w+");
+    fclose($fp);
+  }
+  
+  public function zip() {
+    $current_path = $this->current_path();
+    exec("mv {$current_path}/tmp/template {$current_path}/tmp/cupcake");
+    exec("cd {$current_path}/tmp; ditto -c -k --keepParent -rsrc cupcake Cupcake.zip");
+    if(file_exists("{$current_path}/tmp/Cupcake.zip")) {
+      exec("rm -rf {$current_path}/tmp/cupcake");
+    }
+  }
+  
+  public function generate_view($filepath, $controller, $action) {
+    $current_path = $this->current_path();
+    $fp = fopen("{$current_path}/tmp/template/app/views/{$filepath}", "w+");
+    fwrite($fp, "<h2>". ucfirst($controller)." -> ". strtolower($action)."</h2>\n");
+    fwrite($fp, '<p>The current date and time is: <strong><?= $current_date ?></strong></p>');
+    fclose($fp);
   }
   
   public function generate_config($name) {

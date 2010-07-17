@@ -1,0 +1,17 @@
+== Cupcake PHP Framework
+Cupcake is a simple PHP MVC Framework
+
+== Build
+From the root of project directory run
+
+    scripts/phake build:release
+    
+Once that completes a tmp directory is created with a zip file named "Cupcake.zip"
+
+"Cupcake.zip" is the bare framework can be distributed and the one that is downloaded to get easily started.
+
+Cupcake should just work when placed on your server there should be no configurations to set up.
+
+It is recommended you change your cupcake secret hash. If not changed it does pose a security issue with cupcake sessions.
+
+For questions email fernyb at fernyb dot net

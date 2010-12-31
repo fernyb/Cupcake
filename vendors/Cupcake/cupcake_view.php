@@ -90,6 +90,13 @@ class CupcakeView {
   public function render_partial($partial_name, $options=array()) {
     $start   = microseconds();
     $params  = $this->view_params();
+    $collection = array();
+    $should_render_collection = false;
+    
+    if (array_key_exists("collection", $options)) {
+      $should_render_collection = true;
+      $collection = $options['collection'];
+    }
     
     if(array_key_exists("locals", $options)) {
       if(is_array($options["locals"])) {
@@ -107,11 +114,26 @@ class CupcakeView {
     } else {
       $partial = $params["params"]["controller"] ."/". "_{$partial_name}";
     }
+    
+    $output = "";
+    
+    if ($should_render_collection == true) {  
+     for ($i=0; $i < count($collection); $i++) {        
+       $output .= $this->_render_partial($partial, $this->file_extension(), $params, $start);
+     } 
+    } else {
+     $output = $this->_render_partial($partial, $this->file_extension(), $params, $start);   
+    }
+   
+    return $output;
+  }
+  
+  public function _render_partial($partial, $file_extension, $params, $start) {
     ob_start();
     CupcakeImport::view($partial, $this->file_extension(), $params);
     $output = ob_get_contents();
     ob_end_clean();
-    CupcakeLogger::render("Rendering {$partial} (". (microseconds() - $start) ." ms)\n");      
+    CupcakeLogger::render("Rendering {$partial} (". (microseconds() - $start) ." ms)\n");  
     return $output;
   }
   

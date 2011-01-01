@@ -118,10 +118,14 @@ class CupcakeView {
     $output = "";
     
     if ($should_render_collection == true) {  
-     for ($i=0; $i < count($collection); $i++) {        
+      $item_name = end(preg_split("/\//", $partial_name));
+      
+     for ($i=0; $i < count($collection); $i++) {
+       $params[$item_name] = $collection[$i];
+       $params["{$item_name}_counter"] = $i;
        $output .= $this->_render_partial($partial, $this->file_extension(), $params, $start);
      } 
-    } else {
+   } else {
      $output = $this->_render_partial($partial, $this->file_extension(), $params, $start);   
     }
    

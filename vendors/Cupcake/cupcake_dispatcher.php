@@ -34,6 +34,7 @@ class CupcakeDispatcher {
   
   public static function run() {
     self::load_environment();
+    self::load_lib_files();    
     CupcakeLogger::info("Dispatcher run!");
     CupcakeSession::initialize();
     self::handle();
@@ -66,6 +67,18 @@ class CupcakeDispatcher {
     include_once CONFIG_DIR ."/mime_types.php";
   }
   
+  # Load lib files
+  public static function load_lib_files() {
+    if (is_dir(ROOT_PATH ."/lib")) {  
+      $dir_iterator = new RecursiveDirectoryIterator(ROOT_PATH ."/lib");
+      $iterator = new RecursiveIteratorIterator($dir_iterator, RecursiveIteratorIterator::SELF_FIRST);
+      foreach ($iterator as $file) {
+        if (is_file($file)) {
+          include_once $file;
+        }
+      }
+    }
+  }
     
   # Returns an array of parameters. 
   # Returns false when no route is found
